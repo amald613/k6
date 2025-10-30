@@ -1,0 +1,113 @@
+name: K6 All Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:  # Manual trigger
+
+env:
+  NODE_VERSION: '18'
+
+jobs:
+  run-all-tests:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+
+    - name: Install K6
+      run: |
+        sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C5AD17C747E3415A3642D57D77C6C491D6AC1D69
+        echo "deb https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
+        sudo apt-get update
+        sudo apt-get install k6
+
+    - name: Install HTML Reporter
+      run: npm install -g k6-html-reporter
+
+    - name: Discover test files
+      id: discover-tests
+      run: |
+        cd tests
+        TEST_FILES=$(find . -name "*.js" -type f | grep -v node_modules | jq -R -s -c 'split("\n") | map(select(. != ""))')
+        echo "test_files=$TEST_FILES" >> $GITHUB_OUTPUT
+        echo "Found test files:"
+        echo "$TEST_FILES"
+
+    - name: Create results directory
+      run: mkdir -p test-results
+
+    - name: Run all K6 tests
+      id: run-tests
+      run: |
+        cd tests
+        for test_file in *.js; do
+          if [ -f "$test_file" ]; then
+            echo "▶Running test: $test_file"
+            filename=$(basename "$test_file" .js)
+            k6 run "../$test_file" --out json="../test-results/$filename-results.json" || echo "❌ Test $test_file failed, continuing..."
+          fi
+        done
+
+    - name: Generate HTML reports for all tests
+      run: |
+        for file in test-results/*-results.json; do
+          if [ -f "$file" ]; then
+            filename=$(basename "$file" -results.json)
+            echo "Generating report for: $filename"
+            k6-html-reporter "$file" -o "test-results/$filename-report.html"
+          fi
+        done
+
+    - name: Generate Test Summary
+      run: |
+        echo "##  K6 Performance Test Results" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "###  Tests Executed:" >> $GITHUB_STEP_SUMMARY
+        
+        for file in test-results/*-results.json; do
+          if [ -f "$file" ]; then
+            filename=$(basename "$file" -results.json)
+            metrics=$(cat "$file" | jq -r '.metrics | keys[]' | grep -E "(http_req_duration|http_reqs|checks)" | head -3)
+            echo "- **${filename}**" >> $GITHUB_STEP_SUMMARY
+          fi
+        done
+        
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "###  Quick Stats:" >> $GITHUB_STEP_SUMMARY
+        
+        for file in test-results/*-results.json; do
+          if [ -f "$file" ]; then
+            filename=$(basename "$file" -results.json)
+            total_requests=$(cat "$file" | jq -r '.metrics.http_reqs.values.count // 0')
+            avg_duration=$(cat "$file" | jq -r '.metrics.http_req_duration.values.avg // 0 | round')
+            success_rate=$(cat "$file" | jq -r '(.metrics.checks.values.rate // 0) * 100 | round')
+            echo "- **${filename}**: ${total_requests} reqs, ${avg_duration}ms avg, ${success_rate}% success" >> $GITHUB_STEP_SUMMARY
+          fi
+        done
+        
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "###  Download Reports:" >> $GITHUB_STEP_SUMMARY
+        echo "Download the artifacts below to view detailed HTML reports with interactive charts for each test." >> $GITHUB_STEP_SUMMARY
+
+    - name: Upload All HTML Reports
+      uses: actions/upload-artifact@v4
+      with:
+        name: k6-all-html-reports
+        path: test-results/*-report.html
+        retention-days: 30
+
+    - name: Upload All JSON Results
+      uses: actions/upload-artifact@v4
+      with:
+        name: k6-all-json-results
+        path: test-results/*-results.json
+        retention-days: 30
