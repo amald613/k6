@@ -1,4 +1,4 @@
-name: K6 Tests with Built-in HTML Report
+name: K6 Simple Reports
 
 on:
   push:
@@ -25,8 +25,7 @@ jobs:
     - name: Create results directory
       run: mkdir -p test-results
 
-    - name: Run all K6 tests with summary
-      id: run-tests
+    - name: Run all K6 tests
       run: |
         echo "🚀 Running all K6 tests..."
         
@@ -35,7 +34,6 @@ jobs:
             filename=$(basename "$test_file" .js)
             echo "▶️ Running: $filename"
             
-            # Run test and capture summary
             k6 run "$test_file" --summary-export="test-results/$filename-summary.json" && \
             echo "✅ PASS: $filename" || \
             echo "❌ FAIL: $filename"
@@ -44,12 +42,12 @@ jobs:
           fi
         done
 
-    - name: Generate simple HTML report
+    - name: Generate HTML report
       run: |
-        echo "📊 Generating HTML reports from summaries..."
+        echo "📊 Generating HTML report..."
         
-        # Create a simple HTML report
-        cat > test-results/index.html << 'EOF'
+        # Create HTML header
+        cat > test-results/report.html << 'HTMLHEAD'
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -65,6 +63,7 @@ jobs:
         table { width: 100%; border-collapse: collapse; margin: 10px 0; }
         th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
         th { background-color: #f2f2f2; }
+        .summary { background: #f8f9fa; padding: 15px; border-radius: 5px; }
     </style>
 </head>
 <body>
@@ -73,27 +72,52 @@ jobs:
     
     <script>
         const tests = [];
-        EOF
-        
-        # Add each test summary to the HTML
+HTMLHEAD
+
+        # Add test data to HTML
         for file in test-results/*-summary.json; do
           if [ -f "$file" ]; then
             filename=$(basename "$file" -summary.json)
-            echo "tests.push({name: '$filename', data: $(cat "$file")});" >> test-results/index.html
+            echo "tests.push({name: '$filename', data: $(cat "$file")});" >> test-results/report.html
           fi
         done
+
+        # Add JavaScript to render the report
+        cat >> test-results/report.html << 'HTMLFOOT'
         
-        # Add the JavaScript to render the report
-        cat >> test-results/index.html << 'EOF'
+        const testsContainer = document.getElementById('tests');
+        
+        // Create summary table
+        const summaryTable = document.createElement('table');
+        summaryTable.innerHTML = `
+            <tr>
+                <th>Test</th>
+                <th>Status</th>
+                <th>Requests</th>
+                <th>Avg Response</th>
+                <th>Success Rate</th>
+            </tr>
+        `;
         
         tests.forEach(test => {
-            const testDiv = document.createElement('div');
-            testDiv.className = 'test ' + (test.data.state.pass ? 'pass' : 'fail');
-            
             const metrics = test.data.metrics;
             const httpReqs = metrics.http_reqs;
             const httpDuration = metrics.http_req_duration;
             const checks = metrics.checks;
+            
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td><strong>${test.name}</strong></td>
+                <td>${test.data.state.pass ? '✅ PASS' : '❌ FAIL'}</td>
+                <td>${httpReqs ? httpReqs.values.count : 0}</td>
+                <td>${httpDuration ? httpDuration.values.avg.toFixed(2) + 'ms' : 'N/A'}</td>
+                <td>${checks ? (checks.values.rate * 100).toFixed(2) + '%' : 'N/A'}</td>
+            `;
+            summaryTable.appendChild(row);
+            
+            // Add detailed test section
+            const testDiv = document.createElement('div');
+            testDiv.className = 'test ' + (test.data.state.pass ? 'pass' : 'fail');
             
             testDiv.innerHTML = `
                 <h2>${test.name} ${test.data.state.pass ? '✅' : '❌'}</h2>
@@ -104,19 +128,27 @@ jobs:
                 <div class="metric"><strong>p(95) Response Time:</strong> ${httpDuration ? httpDuration.values['p(95)'].toFixed(2) + 'ms' : 'N/A'}</div>
             `;
             
-            document.getElementById('tests').appendChild(testDiv);
+            testsContainer.appendChild(testDiv);
         });
+        
+        // Insert summary at the top
+        testsContainer.insertBefore(summaryTable, testsContainer.firstChild);
     </script>
 </body>
 </html>
-EOF
+HTMLFOOT
 
-    - name: Generate detailed summary
+        echo "✅ HTML report generated: test-results/report.html"
+
+    - name: Generate GitHub Summary
       run: |
         echo "## 🧪 K6 Performance Test Results" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "### 📋 Test Execution Summary" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
+        
+        PASS_COUNT=0
+        FAIL_COUNT=0
         
         for file in test-results/*-summary.json; do
           if [ -f "$file" ]; then
@@ -129,17 +161,24 @@ EOF
             
             if [ "$state" = "true" ]; then
               echo "✅ **$filename**: $http_reqs requests, ${avg_duration}ms avg, ${success_rate}% success" >> $GITHUB_STEP_SUMMARY
+              ((PASS_COUNT++))
             else
               echo "❌ **$filename**: Test failed" >> $GITHUB_STEP_SUMMARY
+              ((FAIL_COUNT++))
             fi
           fi
         done
         
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "### 📁 Download Reports:" >> $GITHUB_STEP_SUMMARY
-        echo "Download the artifacts to view the HTML report with detailed metrics." >> $GITHUB_STEP_SUMMARY
+        echo "### 📊 Summary" >> $GITHUB_STEP_SUMMARY
+        echo "**Total Tests:** $((PASS_COUNT + FAIL_COUNT))" >> $GITHUB_STEP_SUMMARY
+        echo "**Passed:** $PASS_COUNT" >> $GITHUB_STEP_SUMMARY
+        echo "**Failed:** $FAIL_COUNT" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### 📁 Download Reports" >> $GITHUB_STEP_SUMMARY
+        echo "Download the artifacts to view the detailed HTML report." >> $GITHUB_STEP_SUMMARY
 
-    - name: Upload HTML Report and Summaries
+    - name: Upload Results
       uses: actions/upload-artifact@v4
       with:
         name: k6-test-results
