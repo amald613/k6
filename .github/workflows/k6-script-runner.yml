@@ -7,7 +7,7 @@ on:
     branches: [ main, develop ]
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * 0'  # Run weekly on Sunday at midnight
+    - cron: '0 0 * * 0'
 
 jobs:
   performance-test:
@@ -33,7 +33,6 @@ jobs:
       - name: Find all test files
         id: find-tests
         run: |
-          # Find all .js files in tests directory and subdirectories
           TEST_FILES=$(find tests -name "*.js" -type f | tr '\n' ' ')
           echo "test_files=$TEST_FILES" >> $GITHUB_OUTPUT
           echo "Found test files: $TEST_FILES"
@@ -43,32 +42,23 @@ jobs:
 
       - name: Run K6 tests and generate HTML reports
         run: |
-          # Counter for test execution
           test_count=0
           failed_tests=0
           
-          # Loop through each test file
           for test_file in ${{ steps.find-tests.outputs.test_files }}; do
             test_count=$((test_count + 1))
-            
-            # Extract test name from file path
             test_name=$(basename "$test_file" .js)
-            test_dir=$(dirname "$test_file")
             
             echo "============================================"
             echo "Running test: $test_file"
             echo "============================================"
             
-            # Run K6 test with HTML report
-            if k6 run \
-              --out json="reports/${test_name}-results.json" \
-              "$test_file"; then
+            if k6 run --out json="reports/${test_name}-results.json" "$test_file"; then
               echo "✅ Test passed: $test_file"
             else
               echo "❌ Test failed: $test_file"
               failed_tests=$((failed_tests + 1))
             fi
-            
             echo ""
           done
           
@@ -79,266 +69,280 @@ jobs:
           echo "Failed tests: $failed_tests"
           echo "Passed tests: $((test_count - failed_tests))"
           
-          # Exit with error if any tests failed
           if [ $failed_tests -gt 0 ]; then
             exit 1
           fi
 
-      - name: Generate HTML Reports
+      - name: Generate HTML report template
         if: always()
         run: |
-          # Install k6-reporter for HTML generation
-          npm install -g k6-html-reporter
-          
-          # Generate HTML report for each JSON result
+          cat > generate-reports.sh << 'SCRIPT_END'
+          #!/bin/bash
           for json_file in reports/*-results.json; do
             if [ -f "$json_file" ]; then
               test_name=$(basename "$json_file" -results.json)
               echo "Generating HTML report for: $test_name"
               
-              # Create a simple HTML report
-              cat > "reports/${test_name}-report.html" << 'EOF'
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K6 Test Report - TEST_NAME</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #333;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            padding: 30px;
-        }
-        h1 {
-            color: #667eea;
-            border-bottom: 3px solid #667eea;
-            padding-bottom: 10px;
-            margin-bottom: 30px;
-        }
-        .summary {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        .metric-card {
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 20px;
-            border-left: 4px solid #667eea;
-        }
-        .metric-card h3 {
-            margin: 0 0 10px 0;
-            color: #666;
-            font-size: 14px;
-            text-transform: uppercase;
-        }
-        .metric-card .value {
-            font-size: 28px;
-            font-weight: bold;
-            color: #333;
-        }
-        .details {
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 20px;
-            margin-top: 20px;
-        }
-        pre {
-            background: #2d2d2d;
-            color: #f8f8f2;
-            padding: 20px;
-            border-radius: 5px;
-            overflow-x: auto;
-            font-size: 13px;
-            line-height: 1.5;
-        }
-        .status-pass {
-            color: #28a745;
-            font-weight: bold;
-        }
-        .status-fail {
-            color: #dc3545;
-            font-weight: bold;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>🚀 K6 Performance Test Report</h1>
-        <h2>Test: TEST_NAME</h2>
-        
-        <div class="summary">
-            <div class="metric-card">
-                <h3>Test Status</h3>
-                <div class="value status-pass">✓ PASSED</div>
-            </div>
-            <div class="metric-card">
-                <h3>Duration</h3>
-                <div class="value">-</div>
-            </div>
-            <div class="metric-card">
-                <h3>Requests</h3>
-                <div class="value">-</div>
-            </div>
-            <div class="metric-card">
-                <h3>Failed Requests</h3>
-                <div class="value">-</div>
-            </div>
-        </div>
-        
-        <div class="details">
-            <h2>Test Results</h2>
-            <p>Detailed results have been exported to JSON format. View the JSON file for complete metrics.</p>
-            <p><strong>JSON Report:</strong> TEST_NAME-results.json</p>
-        </div>
-        
-        <div class="details">
-            <h2>About This Test</h2>
-            <p>This report was generated by GitHub Actions CI/CD pipeline.</p>
-            <p><strong>Generated:</strong> TIMESTAMP</p>
-        </div>
-    </div>
-</body>
-</html>
-EOF
+              cat > "reports/${test_name}-report.html" << 'HTML_END'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>K6 Test Report - TEST_NAME</title>
+              <style>
+                  body {
+                      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                      margin: 0;
+                      padding: 20px;
+                      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                      color: #333;
+                  }
+                  .container {
+                      max-width: 1200px;
+                      margin: 0 auto;
+                      background: white;
+                      border-radius: 10px;
+                      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+                      padding: 30px;
+                  }
+                  h1 {
+                      color: #667eea;
+                      border-bottom: 3px solid #667eea;
+                      padding-bottom: 10px;
+                      margin-bottom: 30px;
+                  }
+                  .summary {
+                      display: grid;
+                      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                      gap: 20px;
+                      margin-bottom: 30px;
+                  }
+                  .metric-card {
+                      background: #f8f9fa;
+                      border-radius: 8px;
+                      padding: 20px;
+                      border-left: 4px solid #667eea;
+                  }
+                  .metric-card h3 {
+                      margin: 0 0 10px 0;
+                      color: #666;
+                      font-size: 14px;
+                      text-transform: uppercase;
+                  }
+                  .metric-card .value {
+                      font-size: 28px;
+                      font-weight: bold;
+                      color: #333;
+                  }
+                  .details {
+                      background: #f8f9fa;
+                      border-radius: 8px;
+                      padding: 20px;
+                      margin-top: 20px;
+                  }
+                  pre {
+                      background: #2d2d2d;
+                      color: #f8f8f2;
+                      padding: 20px;
+                      border-radius: 5px;
+                      overflow-x: auto;
+                      font-size: 13px;
+                      line-height: 1.5;
+                  }
+                  .status-pass {
+                      color: #28a745;
+                      font-weight: bold;
+                  }
+                  .status-fail {
+                      color: #dc3545;
+                      font-weight: bold;
+                  }
+                  .json-viewer {
+                      background: #f8f9fa;
+                      padding: 15px;
+                      border-radius: 5px;
+                      border: 1px solid #dee2e6;
+                      margin-top: 20px;
+                  }
+              </style>
+          </head>
+          <body>
+              <div class="container">
+                  <h1>🚀 K6 Performance Test Report</h1>
+                  <h2>Test: TEST_NAME</h2>
+                  
+                  <div class="summary">
+                      <div class="metric-card">
+                          <h3>Test Status</h3>
+                          <div class="value status-pass">✓ COMPLETED</div>
+                      </div>
+                      <div class="metric-card">
+                          <h3>Generated</h3>
+                          <div class="value" style="font-size: 16px;">TIMESTAMP</div>
+                      </div>
+                  </div>
+                  
+                  <div class="details">
+                      <h2>Test Results</h2>
+                      <p>Detailed metrics have been exported to JSON format. Download the JSON file for complete analysis.</p>
+                      <div class="json-viewer">
+                          <p><strong>📄 JSON Report:</strong> TEST_NAME-results.json</p>
+                          <p><strong>📍 Test File:</strong> tests/TEST_NAME.js</p>
+                      </div>
+                  </div>
+                  
+                  <div class="details">
+                      <h2>About This Report</h2>
+                      <p>This report was automatically generated by the GitHub Actions CI/CD pipeline.</p>
+                      <p>The K6 test execution results are stored in JSON format for detailed analysis.</p>
+                      <ul>
+                          <li>View the JSON file for complete metrics including response times, throughput, and error rates</li>
+                          <li>Check the GitHub Actions logs for detailed execution information</li>
+                          <li>Download artifacts from the workflow run for offline analysis</li>
+                      </ul>
+                  </div>
+              </div>
+          </body>
+          </html>
+          HTML_END
               
-              # Replace placeholders
               sed -i "s/TEST_NAME/$test_name/g" "reports/${test_name}-report.html"
               sed -i "s/TIMESTAMP/$(date '+%Y-%m-%d %H:%M:%S')/g" "reports/${test_name}-report.html"
               
               echo "✅ HTML report generated: reports/${test_name}-report.html"
             fi
           done
+          SCRIPT_END
+          
+          chmod +x generate-reports.sh
+          ./generate-reports.sh
 
       - name: Create index page
         if: always()
         run: |
-          cat > reports/index.html << 'EOF'
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K6 Test Reports - Index</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            padding: 30px;
-        }
-        h1 {
-            color: #667eea;
-            border-bottom: 3px solid #667eea;
-            padding-bottom: 10px;
-            margin-bottom: 30px;
-        }
-        .test-list {
-            display: grid;
-            gap: 15px;
-        }
-        .test-item {
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 20px;
-            border-left: 4px solid #667eea;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .test-item:hover {
-            transform: translateX(5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        .test-item a {
-            text-decoration: none;
-            color: #667eea;
-            font-weight: bold;
-            font-size: 18px;
-        }
-        .test-item a:hover {
-            color: #764ba2;
-        }
-        .timestamp {
-            color: #666;
-            font-size: 14px;
-            margin-top: 10px;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>📊 K6 Performance Test Reports</h1>
-        <p>Click on any test report below to view detailed results:</p>
-        
-        <div class="test-list" id="testList">
-            <!-- Test reports will be listed here -->
-        </div>
-        
-        <div class="timestamp">
-            Generated: TIMESTAMP
-        </div>
-    </div>
-    
-    <script>
-        // This will be populated by the workflow
-        const reports = REPORTS_JSON;
-        
-        const testList = document.getElementById('testList');
-        reports.forEach(report => {
-            const item = document.createElement('div');
-            item.className = 'test-item';
-            item.innerHTML = `
-                <a href="${report.file}">${report.name}</a>
-                <div class="timestamp">Test file: ${report.path}</div>
-            `;
-            testList.appendChild(item);
-        });
-    </script>
-</body>
-</html>
-EOF
+          cat > create-index.sh << 'SCRIPT_END'
+          #!/bin/bash
+          cat > reports/index.html << 'HTML_END'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>K6 Test Reports - Index</title>
+              <style>
+                  body {
+                      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                      margin: 0;
+                      padding: 20px;
+                      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                      min-height: 100vh;
+                  }
+                  .container {
+                      max-width: 1200px;
+                      margin: 0 auto;
+                      background: white;
+                      border-radius: 10px;
+                      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+                      padding: 30px;
+                  }
+                  h1 {
+                      color: #667eea;
+                      border-bottom: 3px solid #667eea;
+                      padding-bottom: 10px;
+                      margin-bottom: 30px;
+                  }
+                  .test-list {
+                      display: grid;
+                      gap: 15px;
+                  }
+                  .test-item {
+                      background: #f8f9fa;
+                      border-radius: 8px;
+                      padding: 20px;
+                      border-left: 4px solid #667eea;
+                      transition: transform 0.2s, box-shadow 0.2s;
+                  }
+                  .test-item:hover {
+                      transform: translateX(5px);
+                      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+                  }
+                  .test-item a {
+                      text-decoration: none;
+                      color: #667eea;
+                      font-weight: bold;
+                      font-size: 18px;
+                  }
+                  .test-item a:hover {
+                      color: #764ba2;
+                  }
+                  .test-path {
+                      color: #666;
+                      font-size: 14px;
+                      margin-top: 10px;
+                  }
+                  .timestamp {
+                      color: #666;
+                      font-size: 14px;
+                      margin-top: 30px;
+                      padding-top: 20px;
+                      border-top: 1px solid #dee2e6;
+                  }
+              </style>
+          </head>
+          <body>
+              <div class="container">
+                  <h1>📊 K6 Performance Test Reports</h1>
+                  <p>Click on any test report below to view detailed results:</p>
+                  
+                  <div class="test-list" id="testList"></div>
+                  
+                  <div class="timestamp">
+                      Generated: TIMESTAMP
+                  </div>
+              </div>
+              
+              <script>
+                  const reports = REPORTS_JSON;
+                  const testList = document.getElementById('testList');
+                  
+                  reports.forEach(report => {
+                      const item = document.createElement('div');
+                      item.className = 'test-item';
+                      item.innerHTML = `
+                          <a href="${report.file}">🧪 ${report.name}</a>
+                          <div class="test-path">📂 ${report.path}</div>
+                      `;
+                      testList.appendChild(item);
+                  });
+              </script>
+          </body>
+          </html>
+          HTML_END
           
-          # Generate report list JSON
-          echo -n "const reports = [" > temp_reports.js
+          echo -n "[" > temp_reports.json
           first=true
           for html_file in reports/*-report.html; do
             if [ -f "$html_file" ]; then
               test_name=$(basename "$html_file" -report.html)
               if [ "$first" = false ]; then
-                echo -n "," >> temp_reports.js
+                echo -n "," >> temp_reports.json
               fi
-              echo -n "{\"name\":\"$test_name\",\"file\":\"$(basename $html_file)\",\"path\":\"tests/$test_name.js\"}" >> temp_reports.js
+              echo -n "{\"name\":\"$test_name\",\"file\":\"$(basename $html_file)\",\"path\":\"tests/$test_name.js\"}" >> temp_reports.json
               first=false
             fi
           done
-          echo "];" >> temp_reports.js
+          echo "]" >> temp_reports.json
           
-          # Inject into index.html
-          sed -i "s|REPORTS_JSON|$(cat temp_reports.js | sed 's/const reports = //')|g" reports/index.html
+          sed -i "s|REPORTS_JSON|$(cat temp_reports.json)|g" reports/index.html
           sed -i "s/TIMESTAMP/$(date '+%Y-%m-%d %H:%M:%S')/g" reports/index.html
-          rm temp_reports.js
+          rm temp_reports.json
           
           echo "✅ Index page created: reports/index.html"
+          SCRIPT_END
+          
+          chmod +x create-index.sh
+          ./create-index.sh
 
       - name: Upload test results
         if: always()
@@ -363,7 +367,7 @@ EOF
         with:
           script: |
             const fs = require('fs');
-            const testFiles = '${{ steps.find-tests.outputs.test_files }}'.split(' ');
+            const testFiles = '${{ steps.find-tests.outputs.test_files }}'.split(' ').filter(f => f);
             
             let comment = '## 🚀 K6 Performance Test Results\n\n';
             comment += `**Total Tests:** ${testFiles.length}\n\n`;
