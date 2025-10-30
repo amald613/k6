@@ -1,11 +1,11 @@
-name: K6 All Tests
+name: K6 All Tests Fixed
 
 on:
   push:
     branches: [ main, develop ]
   pull_request:
     branches: [ main ]
-  workflow_dispatch:  # Manual trigger
+  workflow_dispatch:
 
 env:
   NODE_VERSION: '18'
@@ -33,14 +33,13 @@ jobs:
     - name: Install HTML Reporter
       run: npm install -g k6-html-reporter
 
-    - name: Discover test files
-      id: discover-tests
+    - name: List test files
+      id: list-tests
       run: |
-        cd tests
-        TEST_FILES=$(find . -name "*.js" -type f | grep -v node_modules | jq -R -s -c 'split("\n") | map(select(. != ""))')
+        echo "Test files found:"
+        find tests -name "*.js" -type f
+        TEST_FILES=$(find tests -name "*.js" -type f | jq -R -s -c 'split("\n") | map(select(. != ""))')
         echo "test_files=$TEST_FILES" >> $GITHUB_OUTPUT
-        echo "Found test files:"
-        echo "$TEST_FILES"
 
     - name: Create results directory
       run: mkdir -p test-results
@@ -48,17 +47,26 @@ jobs:
     - name: Run all K6 tests
       id: run-tests
       run: |
-        cd tests
-        for test_file in *.js; do
+        echo "🚀 Running all K6 tests from project root..."
+        
+        # Run each test file from the project root directory
+        for test_file in tests/*.js; do
           if [ -f "$test_file" ]; then
-            echo "▶Running test: $test_file"
             filename=$(basename "$test_file" .js)
-            k6 run "../$test_file" --out json="../test-results/$filename-results.json" || echo "❌ Test $test_file failed, continuing..."
+            echo "▶️ Running test: $test_file"
+            
+            # Run from project root, not from tests directory
+            k6 run "$test_file" --out json="test-results/$filename-results.json" && \
+            echo "✅ PASS: $filename" || \
+            echo "❌ FAIL: $filename"
+            
+            echo "----------------------------------------"
           fi
         done
 
     - name: Generate HTML reports for all tests
       run: |
+        echo "📊 Generating HTML reports..."
         for file in test-results/*-results.json; do
           if [ -f "$file" ]; then
             filename=$(basename "$file" -results.json)
@@ -69,45 +77,62 @@ jobs:
 
     - name: Generate Test Summary
       run: |
-        echo "##  K6 Performance Test Results" >> $GITHUB_STEP_SUMMARY
+        echo "## 🧪 K6 Performance Test Results" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "###  Tests Executed:" >> $GITHUB_STEP_SUMMARY
+        echo "### 📋 Tests Executed:" >> $GITHUB_STEP_SUMMARY
         
-        for file in test-results/*-results.json; do
-          if [ -f "$file" ]; then
-            filename=$(basename "$file" -results.json)
-            metrics=$(cat "$file" | jq -r '.metrics | keys[]' | grep -E "(http_req_duration|http_reqs|checks)" | head -3)
-            echo "- **${filename}**" >> $GITHUB_STEP_SUMMARY
+        # Count test files
+        TEST_COUNT=$(find tests -name "*.js" -type f | wc -l)
+        echo "Total test files found: $TEST_COUNT" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+        # List all test files
+        for test_file in tests/*.js; do
+          if [ -f "$test_file" ]; then
+            filename=$(basename "$test_file" .js)
+            echo "- **$filename**" >> $GITHUB_STEP_SUMMARY
           fi
         done
         
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "###  Quick Stats:" >> $GITHUB_STEP_SUMMARY
+        echo "### 📈 Results:" >> $GITHUB_STEP_SUMMARY
         
+        # Show results for each test
         for file in test-results/*-results.json; do
           if [ -f "$file" ]; then
             filename=$(basename "$file" -results.json)
-            total_requests=$(cat "$file" | jq -r '.metrics.http_reqs.values.count // 0')
-            avg_duration=$(cat "$file" | jq -r '.metrics.http_req_duration.values.avg // 0 | round')
-            success_rate=$(cat "$file" | jq -r '(.metrics.checks.values.rate // 0) * 100 | round')
-            echo "- **${filename}**: ${total_requests} reqs, ${avg_duration}ms avg, ${success_rate}% success" >> $GITHUB_STEP_SUMMARY
+            if [ -s "$file" ]; then
+              total_requests=$(cat "$file" | jq -r '.metrics.http_reqs.values.count // 0')
+              avg_duration=$(cat "$file" | jq -r '.metrics.http_req_duration.values.avg // 0 | round')
+              success_rate=$(cat "$file" | jq -r '(.metrics.checks.values.rate // 0) * 100 | round')
+              echo "- ✅ **$filename**: $total_requests reqs, ${avg_duration}ms avg, ${success_rate}% success" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "- ❌ **$filename**: Test failed or no results" >> $GITHUB_STEP_SUMMARY
+            fi
           fi
         done
         
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "###  Download Reports:" >> $GITHUB_STEP_SUMMARY
-        echo "Download the artifacts below to view detailed HTML reports with interactive charts for each test." >> $GITHUB_STEP_SUMMARY
+        echo "### 📁 Download Reports:" >> $GITHUB_STEP_SUMMARY
+        echo "Download the artifacts below to view detailed HTML reports with interactive charts." >> $GITHUB_STEP_SUMMARY
 
     - name: Upload All HTML Reports
       uses: actions/upload-artifact@v4
       with:
-        name: k6-all-html-reports
+        name: k6-html-reports
         path: test-results/*-report.html
         retention-days: 30
 
     - name: Upload All JSON Results
       uses: actions/upload-artifact@v4
       with:
-        name: k6-all-json-results
+        name: k6-json-results
         path: test-results/*-results.json
         retention-days: 30
+
+    - name: Upload Test Files for Debugging
+      uses: actions/upload-artifact@v4
+      with:
+        name: k6-test-files
+        path: tests/
+        retention-days: 7
