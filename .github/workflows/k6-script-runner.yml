@@ -1,4 +1,4 @@
-name: K6 All Tests Fixed
+name: K6 Tests with Built-in HTML Report
 
 on:
   push:
@@ -6,9 +6,6 @@ on:
   pull_request:
     branches: [ main ]
   workflow_dispatch:
-
-env:
-  NODE_VERSION: '18'
 
 jobs:
   run-all-tests:
@@ -18,11 +15,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ env.NODE_VERSION }}
-
     - name: Install K6
       run: |
         sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C5AD17C747E3415A3642D57D77C6C491D6AC1D69
@@ -30,33 +22,21 @@ jobs:
         sudo apt-get update
         sudo apt-get install k6
 
-    - name: Install HTML Reporter
-      run: npm install -g k6-html-reporter
-
-    - name: List test files
-      id: list-tests
-      run: |
-        echo "Test files found:"
-        find tests -name "*.js" -type f
-        TEST_FILES=$(find tests -name "*.js" -type f | jq -R -s -c 'split("\n") | map(select(. != ""))')
-        echo "test_files=$TEST_FILES" >> $GITHUB_OUTPUT
-
     - name: Create results directory
       run: mkdir -p test-results
 
-    - name: Run all K6 tests
+    - name: Run all K6 tests with summary
       id: run-tests
       run: |
-        echo "🚀 Running all K6 tests from project root..."
+        echo "🚀 Running all K6 tests..."
         
-        # Run each test file from the project root directory
         for test_file in tests/*.js; do
           if [ -f "$test_file" ]; then
             filename=$(basename "$test_file" .js)
-            echo "▶️ Running test: $test_file"
+            echo "▶️ Running: $filename"
             
-            # Run from project root, not from tests directory
-            k6 run "$test_file" --out json="test-results/$filename-results.json" && \
+            # Run test and capture summary
+            k6 run "$test_file" --summary-export="test-results/$filename-summary.json" && \
             echo "✅ PASS: $filename" || \
             echo "❌ FAIL: $filename"
             
@@ -64,75 +44,104 @@ jobs:
           fi
         done
 
-    - name: Generate HTML reports for all tests
+    - name: Generate simple HTML report
       run: |
-        echo "📊 Generating HTML reports..."
-        for file in test-results/*-results.json; do
+        echo "📊 Generating HTML reports from summaries..."
+        
+        # Create a simple HTML report
+        cat > test-results/index.html << 'EOF'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K6 Test Results</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test { border: 1px solid #ddd; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        .pass { background-color: #f0fff0; border-left: 5px solid #4CAF50; }
+        .fail { background-color: #fff0f0; border-left: 5px solid #f44336; }
+        .metric { margin: 5px 0; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h1>🧪 K6 Performance Test Results</h1>
+    <div id="tests"></div>
+    
+    <script>
+        const tests = [];
+        EOF
+        
+        # Add each test summary to the HTML
+        for file in test-results/*-summary.json; do
           if [ -f "$file" ]; then
-            filename=$(basename "$file" -results.json)
-            echo "Generating report for: $filename"
-            k6-html-reporter "$file" -o "test-results/$filename-report.html"
+            filename=$(basename "$file" -summary.json)
+            echo "tests.push({name: '$filename', data: $(cat "$file")});" >> test-results/index.html
           fi
         done
+        
+        # Add the JavaScript to render the report
+        cat >> test-results/index.html << 'EOF'
+        
+        tests.forEach(test => {
+            const testDiv = document.createElement('div');
+            testDiv.className = 'test ' + (test.data.state.pass ? 'pass' : 'fail');
+            
+            const metrics = test.data.metrics;
+            const httpReqs = metrics.http_reqs;
+            const httpDuration = metrics.http_req_duration;
+            const checks = metrics.checks;
+            
+            testDiv.innerHTML = `
+                <h2>${test.name} ${test.data.state.pass ? '✅' : '❌'}</h2>
+                <div class="metric"><strong>Status:</strong> ${test.data.state.pass ? 'PASS' : 'FAIL'}</div>
+                <div class="metric"><strong>Total Requests:</strong> ${httpReqs ? httpReqs.values.count : 0}</div>
+                <div class="metric"><strong>Success Rate:</strong> ${checks ? (checks.values.rate * 100).toFixed(2) + '%' : 'N/A'}</div>
+                <div class="metric"><strong>Avg Response Time:</strong> ${httpDuration ? httpDuration.values.avg.toFixed(2) + 'ms' : 'N/A'}</div>
+                <div class="metric"><strong>p(95) Response Time:</strong> ${httpDuration ? httpDuration.values['p(95)'].toFixed(2) + 'ms' : 'N/A'}</div>
+            `;
+            
+            document.getElementById('tests').appendChild(testDiv);
+        });
+    </script>
+</body>
+</html>
+EOF
 
-    - name: Generate Test Summary
+    - name: Generate detailed summary
       run: |
         echo "## 🧪 K6 Performance Test Results" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "### 📋 Tests Executed:" >> $GITHUB_STEP_SUMMARY
-        
-        # Count test files
-        TEST_COUNT=$(find tests -name "*.js" -type f | wc -l)
-        echo "Total test files found: $TEST_COUNT" >> $GITHUB_STEP_SUMMARY
+        echo "### 📋 Test Execution Summary" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         
-        # List all test files
-        for test_file in tests/*.js; do
-          if [ -f "$test_file" ]; then
-            filename=$(basename "$test_file" .js)
-            echo "- **$filename**" >> $GITHUB_STEP_SUMMARY
-          fi
-        done
-        
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "### 📈 Results:" >> $GITHUB_STEP_SUMMARY
-        
-        # Show results for each test
-        for file in test-results/*-results.json; do
+        for file in test-results/*-summary.json; do
           if [ -f "$file" ]; then
-            filename=$(basename "$file" -results.json)
-            if [ -s "$file" ]; then
-              total_requests=$(cat "$file" | jq -r '.metrics.http_reqs.values.count // 0')
-              avg_duration=$(cat "$file" | jq -r '.metrics.http_req_duration.values.avg // 0 | round')
-              success_rate=$(cat "$file" | jq -r '(.metrics.checks.values.rate // 0) * 100 | round')
-              echo "- ✅ **$filename**: $total_requests reqs, ${avg_duration}ms avg, ${success_rate}% success" >> $GITHUB_STEP_SUMMARY
+            filename=$(basename "$file" -summary.json)
+            data=$(cat "$file")
+            state=$(echo "$data" | jq -r '.state.pass')
+            http_reqs=$(echo "$data" | jq -r '.metrics.http_reqs.values.count // 0')
+            avg_duration=$(echo "$data" | jq -r '.metrics.http_req_duration.values.avg // 0 | round')
+            success_rate=$(echo "$data" | jq -r '(.metrics.checks.values.rate // 0) * 100 | round')
+            
+            if [ "$state" = "true" ]; then
+              echo "✅ **$filename**: $http_reqs requests, ${avg_duration}ms avg, ${success_rate}% success" >> $GITHUB_STEP_SUMMARY
             else
-              echo "- ❌ **$filename**: Test failed or no results" >> $GITHUB_STEP_SUMMARY
+              echo "❌ **$filename**: Test failed" >> $GITHUB_STEP_SUMMARY
             fi
           fi
         done
         
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "### 📁 Download Reports:" >> $GITHUB_STEP_SUMMARY
-        echo "Download the artifacts below to view detailed HTML reports with interactive charts." >> $GITHUB_STEP_SUMMARY
+        echo "Download the artifacts to view the HTML report with detailed metrics." >> $GITHUB_STEP_SUMMARY
 
-    - name: Upload All HTML Reports
+    - name: Upload HTML Report and Summaries
       uses: actions/upload-artifact@v4
       with:
-        name: k6-html-reports
-        path: test-results/*-report.html
+        name: k6-test-results
+        path: test-results/
         retention-days: 30
-
-    - name: Upload All JSON Results
-      uses: actions/upload-artifact@v4
-      with:
-        name: k6-json-results
-        path: test-results/*-results.json
-        retention-days: 30
-
-    - name: Upload Test Files for Debugging
-      uses: actions/upload-artifact@v4
-      with:
-        name: k6-test-files
-        path: tests/
-        retention-days: 7
