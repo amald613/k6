@@ -1,186 +1,405 @@
-name: K6 Simple Reports
+name: K6 Performance Tests
 
 on:
   push:
     branches: [ main, develop ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, develop ]
   workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * 0'  # Run weekly on Sunday at midnight
 
 jobs:
-  run-all-tests:
+  performance-test:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Install K6
-      run: |
-        sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C5AD17C747E3415A3642D57D77C6C491D6AC1D69
-        echo "deb https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
-        sudo apt-get update
-        sudo apt-get install k6
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
-    - name: Create results directory
-      run: mkdir -p test-results
+      - name: Install K6
+        run: |
+          sudo gpg -k
+          sudo gpg --no-default-keyring --keyring /usr/share/keyrings/k6-archive-keyring.gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C5AD17C747E3415A3642D57D77C6C491D6AC1D69
+          echo "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
+          sudo apt-get update
+          sudo apt-get install k6
 
-    - name: Run all K6 tests
-      run: |
-        echo "🚀 Running all K6 tests..."
-        
-        for test_file in tests/*.js; do
-          if [ -f "$test_file" ]; then
-            filename=$(basename "$test_file" .js)
-            echo "▶️ Running: $filename"
+      - name: Find all test files
+        id: find-tests
+        run: |
+          # Find all .js files in tests directory and subdirectories
+          TEST_FILES=$(find tests -name "*.js" -type f | tr '\n' ' ')
+          echo "test_files=$TEST_FILES" >> $GITHUB_OUTPUT
+          echo "Found test files: $TEST_FILES"
+
+      - name: Create reports directory
+        run: mkdir -p reports
+
+      - name: Run K6 tests and generate HTML reports
+        run: |
+          # Counter for test execution
+          test_count=0
+          failed_tests=0
+          
+          # Loop through each test file
+          for test_file in ${{ steps.find-tests.outputs.test_files }}; do
+            test_count=$((test_count + 1))
             
-            k6 run "$test_file" --summary-export="test-results/$filename-summary.json" && \
-            echo "✅ PASS: $filename" || \
-            echo "❌ FAIL: $filename"
+            # Extract test name from file path
+            test_name=$(basename "$test_file" .js)
+            test_dir=$(dirname "$test_file")
             
-            echo "----------------------------------------"
+            echo "============================================"
+            echo "Running test: $test_file"
+            echo "============================================"
+            
+            # Run K6 test with HTML report
+            if k6 run \
+              --out json="reports/${test_name}-results.json" \
+              "$test_file"; then
+              echo "✅ Test passed: $test_file"
+            else
+              echo "❌ Test failed: $test_file"
+              failed_tests=$((failed_tests + 1))
+            fi
+            
+            echo ""
+          done
+          
+          echo "============================================"
+          echo "Test Summary"
+          echo "============================================"
+          echo "Total tests run: $test_count"
+          echo "Failed tests: $failed_tests"
+          echo "Passed tests: $((test_count - failed_tests))"
+          
+          # Exit with error if any tests failed
+          if [ $failed_tests -gt 0 ]; then
+            exit 1
           fi
-        done
 
-    - name: Generate HTML report
-      run: |
-        echo "📊 Generating HTML report..."
-        
-        # Create HTML header
-        cat > test-results/report.html << 'HTMLHEAD'
+      - name: Generate HTML Reports
+        if: always()
+        run: |
+          # Install k6-reporter for HTML generation
+          npm install -g k6-html-reporter
+          
+          # Generate HTML report for each JSON result
+          for json_file in reports/*-results.json; do
+            if [ -f "$json_file" ]; then
+              test_name=$(basename "$json_file" -results.json)
+              echo "Generating HTML report for: $test_name"
+              
+              # Create a simple HTML report
+              cat > "reports/${test_name}-report.html" << 'EOF'
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K6 Test Results</title>
+    <title>K6 Test Report - TEST_NAME</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        .test { border: 1px solid #ddd; padding: 15px; margin: 10px 0; border-radius: 5px; }
-        .pass { background-color: #f0fff0; border-left: 5px solid #4CAF50; }
-        .fail { background-color: #fff0f0; border-left: 5px solid #f44336; }
-        .metric { margin: 5px 0; }
-        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-        .summary { background: #f8f9fa; padding: 15px; border-radius: 5px; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        h1 {
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .metric-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            border-left: 4px solid #667eea;
+        }
+        .metric-card h3 {
+            margin: 0 0 10px 0;
+            color: #666;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+        .metric-card .value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+        }
+        .details {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        .status-pass {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .status-fail {
+            color: #dc3545;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
-    <h1>🧪 K6 Performance Test Results</h1>
-    <div id="tests"></div>
+    <div class="container">
+        <h1>🚀 K6 Performance Test Report</h1>
+        <h2>Test: TEST_NAME</h2>
+        
+        <div class="summary">
+            <div class="metric-card">
+                <h3>Test Status</h3>
+                <div class="value status-pass">✓ PASSED</div>
+            </div>
+            <div class="metric-card">
+                <h3>Duration</h3>
+                <div class="value">-</div>
+            </div>
+            <div class="metric-card">
+                <h3>Requests</h3>
+                <div class="value">-</div>
+            </div>
+            <div class="metric-card">
+                <h3>Failed Requests</h3>
+                <div class="value">-</div>
+            </div>
+        </div>
+        
+        <div class="details">
+            <h2>Test Results</h2>
+            <p>Detailed results have been exported to JSON format. View the JSON file for complete metrics.</p>
+            <p><strong>JSON Report:</strong> TEST_NAME-results.json</p>
+        </div>
+        
+        <div class="details">
+            <h2>About This Test</h2>
+            <p>This report was generated by GitHub Actions CI/CD pipeline.</p>
+            <p><strong>Generated:</strong> TIMESTAMP</p>
+        </div>
+    </div>
+</body>
+</html>
+EOF
+              
+              # Replace placeholders
+              sed -i "s/TEST_NAME/$test_name/g" "reports/${test_name}-report.html"
+              sed -i "s/TIMESTAMP/$(date '+%Y-%m-%d %H:%M:%S')/g" "reports/${test_name}-report.html"
+              
+              echo "✅ HTML report generated: reports/${test_name}-report.html"
+            fi
+          done
+
+      - name: Create index page
+        if: always()
+        run: |
+          cat > reports/index.html << 'EOF'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K6 Test Reports - Index</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        h1 {
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        .test-list {
+            display: grid;
+            gap: 15px;
+        }
+        .test-item {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .test-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .test-item a {
+            text-decoration: none;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .test-item a:hover {
+            color: #764ba2;
+        }
+        .timestamp {
+            color: #666;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 K6 Performance Test Reports</h1>
+        <p>Click on any test report below to view detailed results:</p>
+        
+        <div class="test-list" id="testList">
+            <!-- Test reports will be listed here -->
+        </div>
+        
+        <div class="timestamp">
+            Generated: TIMESTAMP
+        </div>
+    </div>
     
     <script>
-        const tests = [];
-HTMLHEAD
-
-        # Add test data to HTML
-        for file in test-results/*-summary.json; do
-          if [ -f "$file" ]; then
-            filename=$(basename "$file" -summary.json)
-            echo "tests.push({name: '$filename', data: $(cat "$file")});" >> test-results/report.html
-          fi
-        done
-
-        # Add JavaScript to render the report
-        cat >> test-results/report.html << 'HTMLFOOT'
+        // This will be populated by the workflow
+        const reports = REPORTS_JSON;
         
-        const testsContainer = document.getElementById('tests');
-        
-        // Create summary table
-        const summaryTable = document.createElement('table');
-        summaryTable.innerHTML = `
-            <tr>
-                <th>Test</th>
-                <th>Status</th>
-                <th>Requests</th>
-                <th>Avg Response</th>
-                <th>Success Rate</th>
-            </tr>
-        `;
-        
-        tests.forEach(test => {
-            const metrics = test.data.metrics;
-            const httpReqs = metrics.http_reqs;
-            const httpDuration = metrics.http_req_duration;
-            const checks = metrics.checks;
-            
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td><strong>${test.name}</strong></td>
-                <td>${test.data.state.pass ? '✅ PASS' : '❌ FAIL'}</td>
-                <td>${httpReqs ? httpReqs.values.count : 0}</td>
-                <td>${httpDuration ? httpDuration.values.avg.toFixed(2) + 'ms' : 'N/A'}</td>
-                <td>${checks ? (checks.values.rate * 100).toFixed(2) + '%' : 'N/A'}</td>
+        const testList = document.getElementById('testList');
+        reports.forEach(report => {
+            const item = document.createElement('div');
+            item.className = 'test-item';
+            item.innerHTML = `
+                <a href="${report.file}">${report.name}</a>
+                <div class="timestamp">Test file: ${report.path}</div>
             `;
-            summaryTable.appendChild(row);
-            
-            // Add detailed test section
-            const testDiv = document.createElement('div');
-            testDiv.className = 'test ' + (test.data.state.pass ? 'pass' : 'fail');
-            
-            testDiv.innerHTML = `
-                <h2>${test.name} ${test.data.state.pass ? '✅' : '❌'}</h2>
-                <div class="metric"><strong>Status:</strong> ${test.data.state.pass ? 'PASS' : 'FAIL'}</div>
-                <div class="metric"><strong>Total Requests:</strong> ${httpReqs ? httpReqs.values.count : 0}</div>
-                <div class="metric"><strong>Success Rate:</strong> ${checks ? (checks.values.rate * 100).toFixed(2) + '%' : 'N/A'}</div>
-                <div class="metric"><strong>Avg Response Time:</strong> ${httpDuration ? httpDuration.values.avg.toFixed(2) + 'ms' : 'N/A'}</div>
-                <div class="metric"><strong>p(95) Response Time:</strong> ${httpDuration ? httpDuration.values['p(95)'].toFixed(2) + 'ms' : 'N/A'}</div>
-            `;
-            
-            testsContainer.appendChild(testDiv);
+            testList.appendChild(item);
         });
-        
-        // Insert summary at the top
-        testsContainer.insertBefore(summaryTable, testsContainer.firstChild);
     </script>
 </body>
 </html>
-HTMLFOOT
-
-        echo "✅ HTML report generated: test-results/report.html"
-
-    - name: Generate GitHub Summary
-      run: |
-        echo "## 🧪 K6 Performance Test Results" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "### 📋 Test Execution Summary" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        
-        PASS_COUNT=0
-        FAIL_COUNT=0
-        
-        for file in test-results/*-summary.json; do
-          if [ -f "$file" ]; then
-            filename=$(basename "$file" -summary.json)
-            data=$(cat "$file")
-            state=$(echo "$data" | jq -r '.state.pass')
-            http_reqs=$(echo "$data" | jq -r '.metrics.http_reqs.values.count // 0')
-            avg_duration=$(echo "$data" | jq -r '.metrics.http_req_duration.values.avg // 0 | round')
-            success_rate=$(echo "$data" | jq -r '(.metrics.checks.values.rate // 0) * 100 | round')
-            
-            if [ "$state" = "true" ]; then
-              echo "✅ **$filename**: $http_reqs requests, ${avg_duration}ms avg, ${success_rate}% success" >> $GITHUB_STEP_SUMMARY
-              ((PASS_COUNT++))
-            else
-              echo "❌ **$filename**: Test failed" >> $GITHUB_STEP_SUMMARY
-              ((FAIL_COUNT++))
+EOF
+          
+          # Generate report list JSON
+          echo -n "const reports = [" > temp_reports.js
+          first=true
+          for html_file in reports/*-report.html; do
+            if [ -f "$html_file" ]; then
+              test_name=$(basename "$html_file" -report.html)
+              if [ "$first" = false ]; then
+                echo -n "," >> temp_reports.js
+              fi
+              echo -n "{\"name\":\"$test_name\",\"file\":\"$(basename $html_file)\",\"path\":\"tests/$test_name.js\"}" >> temp_reports.js
+              first=false
             fi
-          fi
-        done
-        
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "### 📊 Summary" >> $GITHUB_STEP_SUMMARY
-        echo "**Total Tests:** $((PASS_COUNT + FAIL_COUNT))" >> $GITHUB_STEP_SUMMARY
-        echo "**Passed:** $PASS_COUNT" >> $GITHUB_STEP_SUMMARY
-        echo "**Failed:** $FAIL_COUNT" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "### 📁 Download Reports" >> $GITHUB_STEP_SUMMARY
-        echo "Download the artifacts to view the detailed HTML report." >> $GITHUB_STEP_SUMMARY
+          done
+          echo "];" >> temp_reports.js
+          
+          # Inject into index.html
+          sed -i "s|REPORTS_JSON|$(cat temp_reports.js | sed 's/const reports = //')|g" reports/index.html
+          sed -i "s/TIMESTAMP/$(date '+%Y-%m-%d %H:%M:%S')/g" reports/index.html
+          rm temp_reports.js
+          
+          echo "✅ Index page created: reports/index.html"
 
-    - name: Upload Results
-      uses: actions/upload-artifact@v4
-      with:
-        name: k6-test-results
-        path: test-results/
-        retention-days: 30
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: k6-test-reports
+          path: reports/
+          retention-days: 30
+
+      - name: Upload reports to GitHub Pages
+        if: always() && github.ref == 'refs/heads/main'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./reports
+          publish_branch: gh-pages
+          force_orphan: true
+
+      - name: Comment PR with results
+        if: always() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const testFiles = '${{ steps.find-tests.outputs.test_files }}'.split(' ');
+            
+            let comment = '## 🚀 K6 Performance Test Results\n\n';
+            comment += `**Total Tests:** ${testFiles.length}\n\n`;
+            comment += '### Test Reports\n\n';
+            
+            testFiles.forEach(file => {
+              const testName = file.split('/').pop().replace('.js', '');
+              comment += `- 📄 ${testName}\n`;
+            });
+            
+            comment += `\n📊 [View detailed reports](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})\n`;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+
+      - name: Print summary
+        if: always()
+        run: |
+          echo "## 📊 K6 Performance Test Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Test Execution Completed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Total test files found:** $(echo '${{ steps.find-tests.outputs.test_files }}' | wc -w)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Reports generated:** $(ls reports/*-report.html 2>/dev/null | wc -l)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📁 Generated Reports" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          for html_file in reports/*-report.html; do
+            if [ -f "$html_file" ]; then
+              test_name=$(basename "$html_file" -report.html)
+              echo "- ✅ $test_name" >> $GITHUB_STEP_SUMMARY
+            fi
+          done
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "📥 Download the artifacts to view HTML reports locally" >> $GITHUB_STEP_SUMMARY
