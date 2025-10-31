@@ -42,32 +42,29 @@ tests.forEach((test, index) => {
   
   const startTime = Date.now();
   const outputFile = `reports/raw-${index + 1}-${path.basename(test.file, '.js')}.json`;
+  const summaryFile = `reports/summary-${index + 1}-${path.basename(test.file, '.js')}.json`;
   
   try {
-    // Run k6 with JSON output
-    const command = `k6 run --out json=${outputFile} ${test.file}`;
+    // Run k6 with JSON output and summary export
+    const command = `k6 run --out json=${outputFile} --summary-export=${summaryFile} ${test.file}`;
     console.log(`▶️  Running: ${command}\n`);
     
-    const output = execSync(command, { 
+    execSync(command, { 
       encoding: 'utf-8',
       stdio: 'inherit'
     });
     
     const duration = ((Date.now() - startTime) / 1000).toFixed(2);
     
-    // Parse the JSON output if file exists
+    // Parse the summary JSON (more reliable than parsing streaming output)
     let metrics = null;
-    if (fs.existsSync(outputFile)) {
+    if (fs.existsSync(summaryFile)) {
       try {
-        const jsonData = fs.readFileSync(outputFile, 'utf-8')
-          .split('\n')
-          .filter(line => line.trim())
-          .map(line => JSON.parse(line));
-        
-        // Extract metrics
-        metrics = extractMetrics(jsonData);
+        const summaryData = JSON.parse(fs.readFileSync(summaryFile, 'utf-8'));
+        metrics = extractMetricsFromSummary(summaryData);
       } catch (parseError) {
-        console.log(`⚠️  Warning: Could not parse metrics from ${outputFile}`);
+        console.log(`⚠️  Warning: Could not parse summary from ${summaryFile}`);
+        console.log(`    Error: ${parseError.message}`);
       }
     }
     
@@ -109,73 +106,110 @@ generateHTMLReport(results, timestamp);
 console.log('✅ All tests completed!');
 console.log(`📄 Report saved to: reports/test-report-${timestamp}.html\n`);
 
-// Helper function to extract metrics from k6 JSON output
-function extractMetrics(jsonData) {
+// Summary to console
+const totalTests = results.length;
+const passedTests = results.filter(r => r.status === 'PASSED').length;
+const failedTests = results.filter(r => r.status === 'FAILED').length;
+
+console.log('📈 Summary:');
+console.log(`   Total Tests: ${totalTests}`);
+console.log(`   ✅ Passed: ${passedTests}`);
+console.log(`   ❌ Failed: ${failedTests}`);
+console.log(`   Success Rate: ${((passedTests / totalTests) * 100).toFixed(1)}%\n`);
+
+// Helper function to extract metrics from k6 summary JSON
+function extractMetricsFromSummary(summary) {
   const metrics = {
     http_reqs: 0,
-    http_req_duration: { avg: 0, min: 0, max: 0, p95: 0 },
+    http_req_duration: { avg: 0, min: 0, max: 0, p95: 0, med: 0 },
     http_req_failed: 0,
+    http_req_failed_rate: 0,
     iterations: 0,
-    checks: { total: 0, passed: 0, failed: 0 },
-    vus_max: 0
+    checks: { total: 0, passed: 0, failed: 0, rate: 0 },
+    vus_max: 0,
+    data_received: '0 B',
+    data_sent: '0 B'
   };
   
-  jsonData.forEach(entry => {
-    if (entry.type === 'Metric') {
-      const metricName = entry.metric;
-      const value = entry.data.value;
-      
-      if (metricName === 'http_reqs' && entry.data.type === 'counter') {
-        metrics.http_reqs++;
-      } else if (metricName === 'http_req_duration') {
-        if (!metrics.http_req_duration.values) {
-          metrics.http_req_duration.values = [];
-        }
-        metrics.http_req_duration.values.push(value);
-      } else if (metricName === 'http_req_failed' && value > 0) {
-        metrics.http_req_failed++;
-      } else if (metricName === 'iterations') {
-        metrics.iterations++;
-      } else if (metricName === 'checks' && entry.data.type === 'rate') {
-        metrics.checks.total++;
-        if (value === 1) metrics.checks.passed++;
-        else metrics.checks.failed++;
-      } else if (metricName === 'vus_max') {
-        metrics.vus_max = Math.max(metrics.vus_max, value);
-      }
+  try {
+    // Extract HTTP requests
+    if (summary.metrics.http_reqs) {
+      metrics.http_reqs = Math.round(summary.metrics.http_reqs.values.count || 0);
     }
-  });
-  
-  // Calculate duration stats
-  if (metrics.http_req_duration.values && metrics.http_req_duration.values.length > 0) {
-    const values = metrics.http_req_duration.values.sort((a, b) => a - b);
-    metrics.http_req_duration.avg = (values.reduce((a, b) => a + b, 0) / values.length).toFixed(2);
-    metrics.http_req_duration.min = values[0].toFixed(2);
-    metrics.http_req_duration.max = values[values.length - 1].toFixed(2);
-    metrics.http_req_duration.p95 = values[Math.floor(values.length * 0.95)].toFixed(2);
+    
+    // Extract HTTP duration
+    if (summary.metrics.http_req_duration) {
+      const dur = summary.metrics.http_req_duration.values;
+      metrics.http_req_duration.avg = (dur.avg || 0).toFixed(2);
+      metrics.http_req_duration.min = (dur.min || 0).toFixed(2);
+      metrics.http_req_duration.max = (dur.max || 0).toFixed(2);
+      metrics.http_req_duration.med = (dur.med || 0).toFixed(2);
+      metrics.http_req_duration.p95 = (dur['p(95)'] || 0).toFixed(2);
+    }
+    
+    // Extract HTTP failures
+    if (summary.metrics.http_req_failed) {
+      metrics.http_req_failed = Math.round(summary.metrics.http_req_failed.values.passes || 0);
+      metrics.http_req_failed_rate = ((summary.metrics.http_req_failed.values.rate || 0) * 100).toFixed(2);
+    }
+    
+    // Extract iterations
+    if (summary.metrics.iterations) {
+      metrics.iterations = Math.round(summary.metrics.iterations.values.count || 0);
+    }
+    
+    // Extract checks
+    if (summary.metrics.checks) {
+      const checksData = summary.metrics.checks.values;
+      metrics.checks.passed = Math.round(checksData.passes || 0);
+      metrics.checks.failed = Math.round(checksData.fails || 0);
+      metrics.checks.total = metrics.checks.passed + metrics.checks.failed;
+      metrics.checks.rate = ((checksData.rate || 0) * 100).toFixed(2);
+    }
+    
+    // Extract VUs
+    if (summary.metrics.vus_max) {
+      metrics.vus_max = Math.round(summary.metrics.vus_max.values.max || 0);
+    }
+    
+    // Extract data transfer
+    if (summary.metrics.data_received) {
+      metrics.data_received = formatBytes(summary.metrics.data_received.values.count || 0);
+    }
+    if (summary.metrics.data_sent) {
+      metrics.data_sent = formatBytes(summary.metrics.data_sent.values.count || 0);
+    }
+    
+  } catch (error) {
+    console.log(`⚠️  Error extracting metrics: ${error.message}`);
   }
   
   return metrics;
 }
 
+// Helper function to format bytes
+function formatBytes(bytes) {
+  if (bytes === 0) return '0 B';
+  const k = 1024;
+  const sizes = ['B', 'KB', 'MB', 'GB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+}
+
 // Generate HTML report
 function generateHTMLReport(results, timestamp) {
-  const reportDir = 'reports';
-  if (!fs.existsSync(reportDir)) {
-    fs.mkdirSync(reportDir, { recursive: true });
-  }
-  
   const totalTests = results.length;
   const passedTests = results.filter(r => r.status === 'PASSED').length;
   const failedTests = results.filter(r => r.status === 'FAILED').length;
   const totalDuration = results.reduce((sum, r) => sum + parseFloat(r.duration), 0).toFixed(2);
+  const successRate = ((passedTests / totalTests) * 100).toFixed(1);
   
   const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>k6 Test Report - ${timestamp}</title>
+    <title>k6 Test Report - ${new Date(timestamp).toLocaleString()}</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -209,7 +243,7 @@ function generateHTMLReport(results, timestamp) {
         }
         .summary {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 20px;
             padding: 40px;
             background: #f8f9fa;
@@ -306,19 +340,28 @@ function generateHTMLReport(results, timestamp) {
             font-weight: 600;
             color: #1f2937;
         }
+        .metrics-section {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 2px solid #f3f4f6;
+        }
+        .metrics-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 20px;
+        }
         .metrics-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             gap: 15px;
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid #e5e7eb;
         }
         .metric {
             text-align: center;
             padding: 15px;
             background: #f9fafb;
             border-radius: 8px;
+            border: 1px solid #e5e7eb;
         }
         .metric-value {
             font-size: 1.5em;
@@ -326,9 +369,11 @@ function generateHTMLReport(results, timestamp) {
             color: #3b82f6;
         }
         .metric-label {
-            font-size: 0.8em;
+            font-size: 0.75em;
             color: #6b7280;
             margin-top: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         .footer {
             text-align: center;
@@ -345,13 +390,21 @@ function generateHTMLReport(results, timestamp) {
             border-radius: 5px;
             color: #991b1b;
         }
+        .no-metrics {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 5px;
+            color: #92400e;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1>🚀 k6 Performance Test Report</h1>
-            <p>Generated on ${new Date(timestamp).toLocaleString()}</p>
+            <p>Generated on ${new Date().toLocaleString()}</p>
         </div>
         
         <div class="summary">
@@ -366,6 +419,10 @@ function generateHTMLReport(results, timestamp) {
             <div class="summary-card">
                 <div class="label">Failed</div>
                 <div class="value failure">${failedTests}</div>
+            </div>
+            <div class="summary-card">
+                <div class="label">Success Rate</div>
+                <div class="value ${successRate >= 90 ? 'success' : successRate >= 70 ? 'warning' : 'failure'}">${successRate}%</div>
             </div>
             <div class="summary-card">
                 <div class="label">Total Duration</div>
@@ -395,43 +452,74 @@ function generateHTMLReport(results, timestamp) {
                             <span class="meta-value">${test.duration}s</span>
                         </div>
                         <div class="meta-item">
-                            <span class="meta-label">Timestamp</span>
+                            <span class="meta-label">Completed At</span>
                             <span class="meta-value">${new Date(test.timestamp).toLocaleTimeString()}</span>
                         </div>
                     </div>
                     
                     ${test.status === 'PASSED' && test.metrics ? `
-                        <div class="metrics-grid">
-                            <div class="metric">
-                                <div class="metric-value">${test.metrics.http_reqs}</div>
-                                <div class="metric-label">HTTP Requests</div>
+                        <div class="metrics-section">
+                            <div class="metrics-title">📊 Performance Metrics</div>
+                            <div class="metrics-grid">
+                                <div class="metric">
+                                    <div class="metric-value">${test.metrics.http_reqs}</div>
+                                    <div class="metric-label">HTTP Requests</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">${test.metrics.iterations}</div>
+                                    <div class="metric-label">Iterations</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">${test.metrics.http_req_duration.avg}ms</div>
+                                    <div class="metric-label">Avg Duration</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">${test.metrics.http_req_duration.med}ms</div>
+                                    <div class="metric-label">Median Duration</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">${test.metrics.http_req_duration.p95}ms</div>
+                                    <div class="metric-label">P95 Duration</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">${test.metrics.http_req_duration.max}ms</div>
+                                    <div class="metric-label">Max Duration</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">${test.metrics.checks.rate}%</div>
+                                    <div class="metric-label">Check Pass Rate</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">${test.metrics.checks.passed}/${test.metrics.checks.total}</div>
+                                    <div class="metric-label">Checks Passed</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">${test.metrics.http_req_failed_rate}%</div>
+                                    <div class="metric-label">Request Fail Rate</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">${test.metrics.vus_max}</div>
+                                    <div class="metric-label">Max VUs</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">${test.metrics.data_received}</div>
+                                    <div class="metric-label">Data Received</div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-value">${test.metrics.data_sent}</div>
+                                    <div class="metric-label">Data Sent</div>
+                                </div>
                             </div>
-                            <div class="metric">
-                                <div class="metric-value">${test.metrics.iterations}</div>
-                                <div class="metric-label">Iterations</div>
-                            </div>
-                            <div class="metric">
-                                <div class="metric-value">${test.metrics.http_req_duration.avg}ms</div>
-                                <div class="metric-label">Avg Duration</div>
-                            </div>
-                            <div class="metric">
-                                <div class="metric-value">${test.metrics.http_req_duration.p95}ms</div>
-                                <div class="metric-label">P95 Duration</div>
-                            </div>
-                            <div class="metric">
-                                <div class="metric-value">${test.metrics.checks.passed}/${test.metrics.checks.total}</div>
-                                <div class="metric-label">Checks Passed</div>
-                            </div>
-                            <div class="metric">
-                                <div class="metric-value">${test.metrics.vus_max}</div>
-                                <div class="metric-label">Max VUs</div>
-                            </div>
+                        </div>
+                    ` : test.status === 'PASSED' ? `
+                        <div class="no-metrics">
+                            ℹ️ Metrics data not available for this test
                         </div>
                     ` : ''}
                     
                     ${test.error ? `
                         <div class="error-message">
-                            <strong>Error:</strong> ${test.error}
+                            <strong>❌ Error:</strong> ${test.error}
                         </div>
                     ` : ''}
                 </div>
@@ -440,10 +528,12 @@ function generateHTMLReport(results, timestamp) {
         
         <div class="footer">
             <p>Generated by k6 Test Runner | API Performance Testing Suite</p>
+            <p style="margin-top: 10px; font-size: 0.85em;">Report generated at ${new Date().toLocaleString()}</p>
         </div>
     </div>
 </body>
 </html>`;
   
-  fs.writeFileSync(`${reportDir}/test-report-${timestamp}.html`, html);
+  const reportFile = `${reportDir}/test-report-${timestamp}.html`;
+  fs.writeFileSync(reportFile, html);
 }
