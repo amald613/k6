@@ -1,0 +1,22 @@
+{
+    "name": "api-performance-test",
+    "version": "1.0.0",
+    "description": "k6 API Performance Testing Suite",
+    "main": "run-all-tests.js",
+    "scripts": {
+      "test": "node run-all-tests.js",
+      "test:login": "k6 run tests/login.js",
+      "test:create-user": "k6 run tests/create-user.js",
+      "test:list-users": "k6 run tests/list-users.js",
+      "clean": "node -e \"const fs = require('fs'); if (fs.existsSync('reports')) { fs.rmSync('reports', {recursive: true}); fs.mkdirSync('reports'); }\""
+    },
+    "keywords": [
+      "k6",
+      "performance",
+      "testing",
+      "api"
+    ],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {}
+  }
