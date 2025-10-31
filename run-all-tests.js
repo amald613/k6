@@ -18,6 +18,11 @@ const tests = [
     name: 'List Users Test',
     file: 'tests/list-users.js',
     description: 'Admin list users endpoint load test'
+  },
+  {
+    name: 'Ban and Unban Users Test',
+    file: 'tests/ban-unban-users.js',
+    description: 'Ban and Unban users endpoint load test'
   }
 ];
 
