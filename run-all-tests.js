@@ -62,10 +62,13 @@ tests.forEach((test, index) => {
       try {
         const summaryData = JSON.parse(fs.readFileSync(summaryFile, 'utf-8'));
         metrics = extractMetricsFromSummary(summaryData);
+        console.log(`✅ Metrics extracted successfully`);
       } catch (parseError) {
         console.log(`⚠️  Warning: Could not parse summary from ${summaryFile}`);
         console.log(`    Error: ${parseError.message}`);
       }
+    } else {
+      console.log(`⚠️  Summary file not found: ${summaryFile}`);
     }
     
     results.push({
@@ -132,13 +135,19 @@ function extractMetricsFromSummary(summary) {
   };
   
   try {
+    // Check if metrics exist
+    if (!summary || !summary.metrics) {
+      console.log(`⚠️  No metrics object found in summary`);
+      return metrics;
+    }
+    
     // Extract HTTP requests
-    if (summary.metrics.http_reqs) {
-      metrics.http_reqs = Math.round(summary.metrics.http_reqs.values.count || 0);
+    if (summary.metrics.http_reqs?.values?.count !== undefined) {
+      metrics.http_reqs = Math.round(summary.metrics.http_reqs.values.count);
     }
     
     // Extract HTTP duration
-    if (summary.metrics.http_req_duration) {
+    if (summary.metrics.http_req_duration?.values) {
       const dur = summary.metrics.http_req_duration.values;
       metrics.http_req_duration.avg = (dur.avg || 0).toFixed(2);
       metrics.http_req_duration.min = (dur.min || 0).toFixed(2);
@@ -148,18 +157,19 @@ function extractMetricsFromSummary(summary) {
     }
     
     // Extract HTTP failures
-    if (summary.metrics.http_req_failed) {
-      metrics.http_req_failed = Math.round(summary.metrics.http_req_failed.values.passes || 0);
-      metrics.http_req_failed_rate = ((summary.metrics.http_req_failed.values.rate || 0) * 100).toFixed(2);
+    if (summary.metrics.http_req_failed?.values) {
+      const failData = summary.metrics.http_req_failed.values;
+      metrics.http_req_failed = Math.round(failData.passes || 0);
+      metrics.http_req_failed_rate = ((failData.rate || 0) * 100).toFixed(2);
     }
     
     // Extract iterations
-    if (summary.metrics.iterations) {
-      metrics.iterations = Math.round(summary.metrics.iterations.values.count || 0);
+    if (summary.metrics.iterations?.values?.count !== undefined) {
+      metrics.iterations = Math.round(summary.metrics.iterations.values.count);
     }
     
     // Extract checks
-    if (summary.metrics.checks) {
+    if (summary.metrics.checks?.values) {
       const checksData = summary.metrics.checks.values;
       metrics.checks.passed = Math.round(checksData.passes || 0);
       metrics.checks.failed = Math.round(checksData.fails || 0);
@@ -168,20 +178,21 @@ function extractMetricsFromSummary(summary) {
     }
     
     // Extract VUs
-    if (summary.metrics.vus_max) {
-      metrics.vus_max = Math.round(summary.metrics.vus_max.values.max || 0);
+    if (summary.metrics.vus_max?.values?.max !== undefined) {
+      metrics.vus_max = Math.round(summary.metrics.vus_max.values.max);
     }
     
     // Extract data transfer
-    if (summary.metrics.data_received) {
-      metrics.data_received = formatBytes(summary.metrics.data_received.values.count || 0);
+    if (summary.metrics.data_received?.values?.count !== undefined) {
+      metrics.data_received = formatBytes(summary.metrics.data_received.values.count);
     }
-    if (summary.metrics.data_sent) {
-      metrics.data_sent = formatBytes(summary.metrics.data_sent.values.count || 0);
+    if (summary.metrics.data_sent?.values?.count !== undefined) {
+      metrics.data_sent = formatBytes(summary.metrics.data_sent.values.count);
     }
     
   } catch (error) {
     console.log(`⚠️  Error extracting metrics: ${error.message}`);
+    console.log(`    Available metrics: ${Object.keys(summary?.metrics || {}).join(', ')}`);
   }
   
   return metrics;
