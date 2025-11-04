@@ -28,6 +28,11 @@ const tests = [
     name: 'Set Role Test',
     file: 'tests/set-role.js',
     description: 'Set Role endpoint load test'
+  },
+  {
+    name: 'Edit Users Test',
+    file: 'tests/edit-user.js',
+    description: 'Edit users endpoint load test'
   }
 ];
 
