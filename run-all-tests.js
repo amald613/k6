@@ -40,11 +40,10 @@ const tests = [
 const results = [];
 const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
 
-// Create reports directory if it doesn't exist
+// Create reports directory
 const reportDir = 'reports';
 if (!fs.existsSync(reportDir)) {
   fs.mkdirSync(reportDir, { recursive: true });
-  console.log('📁 Created reports directory\n');
 }
 
 console.log('\n🚀 Starting k6 Test Suite...\n');
@@ -56,35 +55,23 @@ tests.forEach((test, index) => {
   console.log('─'.repeat(60));
   
   const startTime = Date.now();
-  const outputFile = `reports/raw-${index + 1}-${path.basename(test.file, '.js')}.json`;
   const summaryFile = `reports/summary-${index + 1}-${path.basename(test.file, '.js')}.json`;
   
   try {
-    // Run k6 with JSON output and summary export
-    const command = `k6 run --out json=${outputFile} --summary-export=${summaryFile} ${test.file}`;
-    console.log(`▶️  Running: ${command}\n`);
+    // Run k6 with summary export
+    const command = `k6 run --summary-export=${summaryFile} ${test.file}`;
+    console.log(`▶️  Running: ${test.file}\n`);
     
-    execSync(command, { 
+    // Capture the console output to parse metrics
+    const output = execSync(command, { 
       encoding: 'utf-8',
-      stdio: 'inherit'
+      stdio: ['pipe', 'pipe', 'inherit'] // Capture stdout, inherit stderr
     });
     
     const duration = ((Date.now() - startTime) / 1000).toFixed(2);
     
-    // Parse the summary JSON (more reliable than parsing streaming output)
-    let metrics = null;
-    if (fs.existsSync(summaryFile)) {
-      try {
-        const summaryData = JSON.parse(fs.readFileSync(summaryFile, 'utf-8'));
-        metrics = extractMetricsFromSummary(summaryData);
-        console.log(`✅ Metrics extracted successfully`);
-      } catch (parseError) {
-        console.log(`⚠️  Warning: Could not parse summary from ${summaryFile}`);
-        console.log(`    Error: ${parseError.message}`);
-      }
-    } else {
-      console.log(`⚠️  Summary file not found: ${summaryFile}`);
-    }
+    // Parse metrics from the console output
+    const metrics = parseMetricsFromOutput(output, test.name);
     
     results.push({
       name: test.name,
@@ -96,7 +83,8 @@ tests.forEach((test, index) => {
       timestamp: new Date().toISOString()
     });
     
-    console.log(`✅ ${test.name} completed in ${duration}s\n`);
+    console.log(`✅ ${test.name} completed in ${duration}s`);
+    console.log(`📊 ${metrics.http_reqs} requests | ${metrics.http_req_duration.avg}ms avg | ${metrics.checks.rate}% success`);
     
   } catch (error) {
     const duration = ((Date.now() - startTime) / 1000).toFixed(2);
@@ -111,7 +99,7 @@ tests.forEach((test, index) => {
       timestamp: new Date().toISOString()
     });
     
-    console.log(`❌ ${test.name} failed in ${duration}s\n`);
+    console.log(`❌ ${test.name} failed in ${duration}s`);
   }
 });
 
@@ -121,10 +109,13 @@ console.log('📊 Generating HTML Report...\n');
 // Generate HTML report
 generateHTMLReport(results, timestamp);
 
+// Generate CSV
+exportToCSV(results, timestamp);
+
 console.log('✅ All tests completed!');
 console.log(`📄 Report saved to: reports/test-report-${timestamp}.html\n`);
 
-// Summary to console
+// Final summary
 const totalTests = results.length;
 const passedTests = results.filter(r => r.status === 'PASSED').length;
 const failedTests = results.filter(r => r.status === 'FAILED').length;
@@ -135,8 +126,8 @@ console.log(`   ✅ Passed: ${passedTests}`);
 console.log(`   ❌ Failed: ${failedTests}`);
 console.log(`   Success Rate: ${((passedTests / totalTests) * 100).toFixed(1)}%\n`);
 
-// Helper function to extract metrics from k6 summary JSON
-function extractMetricsFromSummary(summary) {
+// Parse metrics from k6 console output
+function parseMetricsFromOutput(output, testName) {
   const metrics = {
     http_reqs: 0,
     http_req_duration: { avg: 0, min: 0, max: 0, p95: 0, med: 0 },
@@ -148,99 +139,116 @@ function extractMetricsFromSummary(summary) {
     data_received: '0 B',
     data_sent: '0 B'
   };
-  
+
   try {
-    // Check if metrics exist
-    if (!summary || !summary.metrics) {
-      console.log(`⚠️  No metrics object found in summary`);
-      return metrics;
-    }
+    const lines = output.split('\n');
     
-    // Extract HTTP requests
-    if (summary.metrics.http_reqs?.values?.count !== undefined) {
-      metrics.http_reqs = Math.round(summary.metrics.http_reqs.values.count);
-    }
+    // Parse HTTP metrics
+    const httpReqsMatch = output.match(/http_reqs[^:]*:\s*([\d,]+)/);
+    if (httpReqsMatch) metrics.http_reqs = parseInt(httpReqsMatch[1].replace(/,/g, '')) || 0;
     
-    // Extract HTTP duration
-    if (summary.metrics.http_req_duration?.values) {
-      const dur = summary.metrics.http_req_duration.values;
-      metrics.http_req_duration.avg = (dur.avg || 0).toFixed(2);
-      metrics.http_req_duration.min = (dur.min || 0).toFixed(2);
-      metrics.http_req_duration.max = (dur.max || 0).toFixed(2);
-      metrics.http_req_duration.med = (dur.med || 0).toFixed(2);
-      metrics.http_req_duration.p95 = (dur['p(95)'] || 0).toFixed(2);
-    }
+    const iterationsMatch = output.match(/iterations[^:]*:\s*([\d,]+)/);
+    if (iterationsMatch) metrics.iterations = parseInt(iterationsMatch[1].replace(/,/g, '')) || 0;
     
-    // Extract HTTP failures
-    if (summary.metrics.http_req_failed?.values) {
-      const failData = summary.metrics.http_req_failed.values;
-      metrics.http_req_failed = Math.round(failData.passes || 0);
-      metrics.http_req_failed_rate = ((failData.rate || 0) * 100).toFixed(2);
-    }
+    const checksMatch = output.match(/checks[^:]*:\s*([\d.]+)%/);
+    if (checksMatch) metrics.checks.rate = parseFloat(checksMatch[1]) || 0;
     
-    // Extract iterations
-    if (summary.metrics.iterations?.values?.count !== undefined) {
-      metrics.iterations = Math.round(summary.metrics.iterations.values.count);
-    }
+    // Parse duration metrics
+    const avgDurationMatch = output.match(/http_req_duration[^:]*:\s*avg=([\d.]+)/);
+    if (avgDurationMatch) metrics.http_req_duration.avg = parseFloat(avgDurationMatch[1]) || 0;
     
-    // Extract checks
-    if (summary.metrics.checks?.values) {
-      const checksData = summary.metrics.checks.values;
-      metrics.checks.passed = Math.round(checksData.passes || 0);
-      metrics.checks.failed = Math.round(checksData.fails || 0);
-      metrics.checks.total = metrics.checks.passed + metrics.checks.failed;
-      metrics.checks.rate = ((checksData.rate || 0) * 100).toFixed(2);
-    }
+    const minDurationMatch = output.match(/min=([\d.]+)/);
+    if (minDurationMatch) metrics.http_req_duration.min = parseFloat(minDurationMatch[1]) || 0;
     
-    // Extract VUs
-    if (summary.metrics.vus_max?.values?.max !== undefined) {
-      metrics.vus_max = Math.round(summary.metrics.vus_max.values.max);
-    }
+    const maxDurationMatch = output.match(/max=([\d.]+)/);
+    if (maxDurationMatch) metrics.http_req_duration.max = parseFloat(maxDurationMatch[1]) || 0;
     
-    // Extract data transfer
-    if (summary.metrics.data_received?.values?.count !== undefined) {
-      metrics.data_received = formatBytes(summary.metrics.data_received.values.count);
-    }
-    if (summary.metrics.data_sent?.values?.count !== undefined) {
-      metrics.data_sent = formatBytes(summary.metrics.data_sent.values.count);
+    const medDurationMatch = output.match(/med=([\d.]+)/);
+    if (medDurationMatch) metrics.http_req_duration.med = parseFloat(medDurationMatch[1]) || 0;
+    
+    const p95DurationMatch = output.match(/p\(95\)=([\d.]+)/);
+    if (p95DurationMatch) metrics.http_req_duration.p95 = parseFloat(p95DurationMatch[1]) || 0;
+    
+    // Parse failure rate
+    const failedMatch = output.match(/http_req_failed[^:]*:\s*([\d.]+)%/);
+    if (failedMatch) metrics.http_req_failed_rate = parseFloat(failedMatch[1]) || 0;
+    
+    const failedCountMatch = output.match(/http_req_failed[^:]*:\s*([\d,]+)\s*/);
+    if (failedCountMatch) metrics.http_req_failed = parseInt(failedCountMatch[1].replace(/,/g, '')) || 0;
+    
+    // Parse VUs
+    const vusMatch = output.match(/vus_max[^:]*:\s*([\d,]+)/);
+    if (vusMatch) metrics.vus_max = parseInt(vusMatch[1].replace(/,/g, '')) || 0;
+    
+    // Parse data transfer
+    const dataReceivedMatch = output.match(/data_received[^:]*:\s*([\d.]+\s*\w+)/);
+    if (dataReceivedMatch) metrics.data_received = dataReceivedMatch[1].trim();
+    
+    const dataSentMatch = output.match(/data_sent[^:]*:\s*([\d.]+\s*\w+)/);
+    if (dataSentMatch) metrics.data_sent = dataSentMatch[1].trim();
+    
+    // Parse checks counts
+    const checksPassedMatch = output.match(/checks[^:]*:\s*([\d,]+)\s*of/);
+    const checksTotalMatch = output.match(/checks[^:]*:\s*[\d,]+\s*of\s*([\d,]+)/);
+    
+    if (checksPassedMatch && checksTotalMatch) {
+      metrics.checks.passed = parseInt(checksPassedMatch[1].replace(/,/g, '')) || 0;
+      metrics.checks.total = parseInt(checksTotalMatch[1].replace(/,/g, '')) || 0;
+      metrics.checks.failed = metrics.checks.total - metrics.checks.passed;
     }
     
   } catch (error) {
-    console.log(`⚠️  Error extracting metrics: ${error.message}`);
-    console.log(`    Available metrics: ${Object.keys(summary?.metrics || {}).join(', ')}`);
+    console.log(`⚠️  Error parsing metrics for ${testName}: ${error.message}`);
   }
   
   return metrics;
 }
 
-// Helper function to format bytes
-function formatBytes(bytes) {
-  if (bytes === 0) return '0 B';
-  const k = 1024;
-  const sizes = ['B', 'KB', 'MB', 'GB'];
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+function exportToCSV(results, timestamp) {
+  const csvHeaders = 'Test Name,Status,Duration(s),Iterations,HTTP Requests,Avg Response Time(ms),P95 Response Time(ms),Success Rate(%),Fail Rate(%),Timestamp\n';
+  const csvRows = results.map(test => 
+    `"${test.name}",${test.status},${test.duration},${test.metrics.iterations},${test.metrics.http_reqs},${test.metrics.http_req_duration.avg},${test.metrics.http_req_duration.p95},${test.metrics.checks.rate},${test.metrics.http_req_failed_rate},${test.timestamp}`
+  ).join('\n');
+  
+  const csvContent = csvHeaders + csvRows;
+  fs.writeFileSync(`${reportDir}/test-results-${timestamp}.csv`, csvContent);
 }
 
-// Generate HTML report
 function generateHTMLReport(results, timestamp) {
   const totalTests = results.length;
   const passedTests = results.filter(r => r.status === 'PASSED').length;
   const failedTests = results.filter(r => r.status === 'FAILED').length;
   const totalDuration = results.reduce((sum, r) => sum + parseFloat(r.duration), 0).toFixed(2);
   const successRate = ((passedTests / totalTests) * 100).toFixed(1);
-  
+
+  // Calculate overall metrics
+  let totalRequests = 0;
+  let totalIterations = 0;
+  let avgResponseTime = 0;
+  let testCount = 0;
+
+  results.forEach(test => {
+    if (test.metrics) {
+      totalRequests += test.metrics.http_reqs;
+      totalIterations += test.metrics.iterations;
+      avgResponseTime += parseFloat(test.metrics.http_req_duration.avg);
+      testCount++;
+    }
+  });
+
+  avgResponseTime = testCount > 0 ? (avgResponseTime / testCount).toFixed(2) : 0;
+
   const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>k6 Test Report - ${new Date(timestamp).toLocaleString()}</title>
+    <title>k6 Test Report - ${timestamp}</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f6fa;
             padding: 20px;
             line-height: 1.6;
         }
@@ -248,8 +256,8 @@ function generateHTMLReport(results, timestamp) {
             max-width: 1200px;
             margin: 0 auto;
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             overflow: hidden;
         }
         .header {
@@ -261,60 +269,69 @@ function generateHTMLReport(results, timestamp) {
         .header h1 {
             font-size: 2.5em;
             margin-bottom: 10px;
-            font-weight: 700;
-        }
-        .header p {
-            font-size: 1.1em;
-            opacity: 0.9;
         }
         .summary {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
-            padding: 40px;
+            padding: 30px;
             background: #f8f9fa;
         }
         .summary-card {
             background: white;
             padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
             text-align: center;
-            transition: transform 0.2s;
-        }
-        .summary-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         .summary-card .value {
-            font-size: 2.5em;
-            font-weight: 700;
+            font-size: 2em;
+            font-weight: bold;
             margin: 10px 0;
-        }
-        .summary-card .label {
-            color: #666;
-            font-size: 0.9em;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
         .success { color: #10b981; }
         .failure { color: #ef4444; }
         .info { color: #3b82f6; }
-        .warning { color: #f59e0b; }
+        
+        .overview {
+            padding: 30px;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .overview h2 {
+            margin-bottom: 20px;
+            color: #1f2937;
+        }
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .overview-item {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .overview-item .label {
+            font-size: 0.9em;
+            color: #6b7280;
+            margin-bottom: 5px;
+        }
+        .overview-item .value {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #1f2937;
+        }
         
         .test-results {
-            padding: 40px;
+            padding: 30px;
         }
         .test-card {
             background: white;
             border: 1px solid #e5e7eb;
-            border-radius: 10px;
+            border-radius: 8px;
             padding: 25px;
             margin-bottom: 20px;
-            transition: all 0.3s;
-        }
-        .test-card:hover {
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
         }
         .test-header {
             display: flex;
@@ -325,16 +342,15 @@ function generateHTMLReport(results, timestamp) {
             border-bottom: 2px solid #f3f4f6;
         }
         .test-title {
-            font-size: 1.5em;
+            font-size: 1.3em;
             font-weight: 600;
             color: #1f2937;
         }
         .status-badge {
-            padding: 8px 16px;
+            padding: 6px 12px;
             border-radius: 20px;
             font-weight: 600;
-            font-size: 0.9em;
-            text-transform: uppercase;
+            font-size: 0.8em;
         }
         .status-passed {
             background: #d1fae5;
@@ -344,85 +360,41 @@ function generateHTMLReport(results, timestamp) {
             background: #fee2e2;
             color: #991b1b;
         }
-        .test-meta {
+        .test-metrics {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 15px;
-            margin-top: 20px;
-        }
-        .meta-item {
-            display: flex;
-            flex-direction: column;
-        }
-        .meta-label {
-            font-size: 0.85em;
-            color: #6b7280;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .meta-value {
-            font-size: 1.1em;
-            font-weight: 600;
-            color: #1f2937;
-        }
-        .metrics-section {
-            margin-top: 25px;
-            padding-top: 25px;
-            border-top: 2px solid #f3f4f6;
-        }
-        .metrics-title {
-            font-size: 1.2em;
-            font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 20px;
-        }
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 15px;
+            margin-top: 15px;
         }
         .metric {
             text-align: center;
-            padding: 15px;
+            padding: 10px;
             background: #f9fafb;
-            border-radius: 8px;
-            border: 1px solid #e5e7eb;
+            border-radius: 6px;
         }
         .metric-value {
-            font-size: 1.5em;
+            font-size: 1.4em;
             font-weight: 700;
             color: #3b82f6;
         }
         .metric-label {
-            font-size: 0.75em;
+            font-size: 0.8em;
             color: #6b7280;
             margin-top: 5px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
         .footer {
             text-align: center;
-            padding: 30px;
+            padding: 20px;
             background: #f8f9fa;
             color: #666;
-            font-size: 0.9em;
         }
-        .error-message {
+        .error {
             background: #fee2e2;
             border-left: 4px solid #ef4444;
             padding: 15px;
             margin-top: 15px;
             border-radius: 5px;
             color: #991b1b;
-        }
-        .no-metrics {
-            background: #fef3c7;
-            border-left: 4px solid #f59e0b;
-            padding: 15px;
-            margin-top: 15px;
-            border-radius: 5px;
-            color: #92400e;
         }
     </style>
 </head>
@@ -448,16 +420,34 @@ function generateHTMLReport(results, timestamp) {
             </div>
             <div class="summary-card">
                 <div class="label">Success Rate</div>
-                <div class="value ${successRate >= 90 ? 'success' : successRate >= 70 ? 'warning' : 'failure'}">${successRate}%</div>
+                <div class="value ${successRate >= 90 ? 'success' : 'failure'}">${successRate}%</div>
             </div>
-            <div class="summary-card">
-                <div class="label">Total Duration</div>
-                <div class="value warning">${totalDuration}s</div>
+        </div>
+        
+        <div class="overview">
+            <h2>📊 Overall Performance</h2>
+            <div class="overview-grid">
+                <div class="overview-item">
+                    <div class="label">Total HTTP Requests</div>
+                    <div class="value">${totalRequests}</div>
+                </div>
+                <div class="overview-item">
+                    <div class="label">Total Iterations</div>
+                    <div class="value">${totalIterations}</div>
+                </div>
+                <div class="overview-item">
+                    <div class="label">Average Response Time</div>
+                    <div class="value">${avgResponseTime}ms</div>
+                </div>
+                <div class="overview-item">
+                    <div class="label">Total Duration</div>
+                    <div class="value">${totalDuration}s</div>
+                </div>
             </div>
         </div>
         
         <div class="test-results">
-            <h2 style="margin-bottom: 30px; color: #1f2937; font-size: 2em;">Test Results</h2>
+            <h2 style="margin-bottom: 20px; color: #1f2937;">Detailed Test Results</h2>
             
             ${results.map(test => `
                 <div class="test-card">
@@ -466,85 +456,47 @@ function generateHTMLReport(results, timestamp) {
                         <div class="status-badge status-${test.status.toLowerCase()}">${test.status}</div>
                     </div>
                     
-                    <p style="color: #6b7280; margin-bottom: 15px;">${test.description}</p>
+                    <p style="color: #6b7280;">${test.description}</p>
+                    <p style="color: #6b7280; font-size: 0.9em; margin-top: 5px;">File: ${test.file} | Duration: ${test.duration}s</p>
                     
-                    <div class="test-meta">
-                        <div class="meta-item">
-                            <span class="meta-label">Test File</span>
-                            <span class="meta-value">${test.file}</span>
-                        </div>
-                        <div class="meta-item">
-                            <span class="meta-label">Duration</span>
-                            <span class="meta-value">${test.duration}s</span>
-                        </div>
-                        <div class="meta-item">
-                            <span class="meta-label">Completed At</span>
-                            <span class="meta-value">${new Date(test.timestamp).toLocaleTimeString()}</span>
-                        </div>
-                    </div>
-                    
-                    ${test.status === 'PASSED' && test.metrics ? `
-                        <div class="metrics-section">
-                            <div class="metrics-title">📊 Performance Metrics</div>
-                            <div class="metrics-grid">
-                                <div class="metric">
-                                    <div class="metric-value">${test.metrics.http_reqs}</div>
-                                    <div class="metric-label">HTTP Requests</div>
-                                </div>
-                                <div class="metric">
-                                    <div class="metric-value">${test.metrics.iterations}</div>
-                                    <div class="metric-label">Iterations</div>
-                                </div>
-                                <div class="metric">
-                                    <div class="metric-value">${test.metrics.http_req_duration.avg}ms</div>
-                                    <div class="metric-label">Avg Duration</div>
-                                </div>
-                                <div class="metric">
-                                    <div class="metric-value">${test.metrics.http_req_duration.med}ms</div>
-                                    <div class="metric-label">Median Duration</div>
-                                </div>
-                                <div class="metric">
-                                    <div class="metric-value">${test.metrics.http_req_duration.p95}ms</div>
-                                    <div class="metric-label">P95 Duration</div>
-                                </div>
-                                <div class="metric">
-                                    <div class="metric-value">${test.metrics.http_req_duration.max}ms</div>
-                                    <div class="metric-label">Max Duration</div>
-                                </div>
-                                <div class="metric">
-                                    <div class="metric-value">${test.metrics.checks.rate}%</div>
-                                    <div class="metric-label">Check Pass Rate</div>
-                                </div>
-                                <div class="metric">
-                                    <div class="metric-value">${test.metrics.checks.passed}/${test.metrics.checks.total}</div>
-                                    <div class="metric-label">Checks Passed</div>
-                                </div>
-                                <div class="metric">
-                                    <div class="metric-value">${test.metrics.http_req_failed_rate}%</div>
-                                    <div class="metric-label">Request Fail Rate</div>
-                                </div>
-                                <div class="metric">
-                                    <div class="metric-value">${test.metrics.vus_max}</div>
-                                    <div class="metric-label">Max VUs</div>
-                                </div>
-                                <div class="metric">
-                                    <div class="metric-value">${test.metrics.data_received}</div>
-                                    <div class="metric-label">Data Received</div>
-                                </div>
-                                <div class="metric">
-                                    <div class="metric-value">${test.metrics.data_sent}</div>
-                                    <div class="metric-label">Data Sent</div>
-                                </div>
+                    ${test.status === 'PASSED' ? `
+                        <div class="test-metrics">
+                            <div class="metric">
+                                <div class="metric-value">${test.metrics.iterations}</div>
+                                <div class="metric-label">Iterations</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">${test.metrics.http_reqs}</div>
+                                <div class="metric-label">HTTP Requests</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">${test.metrics.http_req_duration.avg}ms</div>
+                                <div class="metric-label">Avg Response Time</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">${test.metrics.http_req_duration.p95}ms</div>
+                                <div class="metric-label">P95 Response Time</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value" style="color: ${test.metrics.checks.rate >= 95 ? '#10b981' : '#ef4444'}">${test.metrics.checks.rate}%</div>
+                                <div class="metric-label">Success Rate</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">${test.metrics.http_req_failed_rate}%</div>
+                                <div class="metric-label">Fail Rate</div>
                             </div>
                         </div>
-                    ` : test.status === 'PASSED' ? `
-                        <div class="no-metrics">
-                            ℹ️ Metrics data not available for this test
+                        
+                        <div style="margin-top: 15px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; font-size: 0.9em; color: #6b7280;">
+                            <div><strong>Duration Details:</strong> Min: ${test.metrics.http_req_duration.min}ms, Med: ${test.metrics.http_req_duration.med}ms, Max: ${test.metrics.http_req_duration.max}ms</div>
+                            <div><strong>Data:</strong> Received: ${test.metrics.data_received}, Sent: ${test.metrics.data_sent}</div>
+                            <div><strong>VUs:</strong> Max: ${test.metrics.vus_max}</div>
+                            <div><strong>Checks:</strong> ${test.metrics.checks.passed}/${test.metrics.checks.total} passed</div>
                         </div>
                     ` : ''}
                     
                     ${test.error ? `
-                        <div class="error-message">
+                        <div class="error">
                             <strong>❌ Error:</strong> ${test.error}
                         </div>
                     ` : ''}
@@ -553,13 +505,13 @@ function generateHTMLReport(results, timestamp) {
         </div>
         
         <div class="footer">
-            <p>Generated by k6 Test Runner | API Performance Testing Suite</p>
-            <p style="margin-top: 10px; font-size: 0.85em;">Report generated at ${new Date().toLocaleString()}</p>
+            <p>Generated by k6 Test Runner | ${new Date().toLocaleString()}</p>
         </div>
     </div>
 </body>
 </html>`;
-  
+
   const reportFile = `${reportDir}/test-report-${timestamp}.html`;
   fs.writeFileSync(reportFile, html);
+  console.log(`✅ HTML report generated: ${reportFile}`);
 }
