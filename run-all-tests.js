@@ -23,6 +23,11 @@ const tests = [
     name: 'Ban and Unban Users Test',
     file: 'tests/ban-unban-users.js',
     description: 'Ban and Unban users endpoint load test'
+  },
+  {
+    name: 'Set Role Test',
+    file: 'tests/set-role.js',
+    description: 'Set Role endpoint load test'
   }
 ];
 
