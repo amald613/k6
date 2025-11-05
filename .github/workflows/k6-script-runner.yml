@@ -59,11 +59,21 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
       
-      - name: 📦 Install Dependencies
+      - name: 📦 Install Node Dependencies
         run: |
-          npm ci
+          if [ -f "package.json" ]; then
+            if [ -f "package-lock.json" ]; then
+              npm ci
+            else
+              npm install
+            fi
+          else
+            echo "ℹ️  No package.json found, skipping npm dependencies"
+          fi
+      
+      - name: 📥 Install K6
+        run: |
           # Install k6 on Ubuntu
           sudo gpg -k
           sudo gpg --no-default-keyring --keyring /usr/share/keyrings/k6-archive-keyring.gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C5AD17C747E3415A3642D57D77C6C491D6AC1D69
