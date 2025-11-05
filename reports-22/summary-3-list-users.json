@@ -1,0 +1,190 @@
+{
+    "root_group": {
+        "path": "",
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {
+            "setup": {
+                "groups": {},
+                "checks": {
+                        "✅ Login status is 200": {
+                            "name": "✅ Login status is 200",
+                            "path": "::setup::✅ Login status is 200",
+                            "id": "ef5748235dba7417d2a94f2e9e0282c6",
+                            "passes": 1,
+                            "fails": 0
+                        }
+                    },
+                "name": "setup",
+                "path": "::setup",
+                "id": "5c0f8025f7e0b6654089e5b00e950f1a"
+            }
+        },
+        "checks": {
+            "✅ Admin list-users status is 200": {
+                "passes": 59,
+                "fails": 0,
+                "name": "✅ Admin list-users status is 200",
+                "path": "::✅ Admin list-users status is 200",
+                "id": "e2a73c1a9941630a864cde41d6df9031"
+            },
+            "✅ Response has users array": {
+                "name": "✅ Response has users array",
+                "path": "::✅ Response has users array",
+                "id": "a94bc8497824a32ee1abc462a6f27a24",
+                "passes": 59,
+                "fails": 0
+            },
+            "✅ Users array is not empty": {
+                "path": "::✅ Users array is not empty",
+                "id": "bb83d36a7a4c39d1c1a3fb14203b72c7",
+                "passes": 59,
+                "fails": 0,
+                "name": "✅ Users array is not empty"
+            },
+            "✅ First user has valid data": {
+                "name": "✅ First user has valid data",
+                "path": "::✅ First user has valid data",
+                "id": "527b08868e1b83bb00b4a24cb5b08ec4",
+                "passes": 59,
+                "fails": 0
+            }
+        },
+        "name": ""
+    },
+    "metrics": {
+        "vus_max": {
+            "value": 3,
+            "min": 3,
+            "max": 3
+        },
+        "successful_requests": {
+            "passes": 59,
+            "fails": 0,
+            "thresholds": {
+                "rate>0.95": false
+            },
+            "value": 1
+        },
+        "api_failures": {
+            "rate": 0,
+            "count": 0,
+            "thresholds": {
+                "count<5": false
+            }
+        },
+        "iterations": {
+            "count": 59,
+            "rate": 1.903294997855619
+        },
+        "checks": {
+            "passes": 237,
+            "fails": 0,
+            "thresholds": {
+                "rate>0.95": false
+            },
+            "value": 1
+        },
+        "iteration_duration": {
+            "avg": 1135.8167724067794,
+            "min": 1127.012678,
+            "med": 1129.603136,
+            "max": 1254.667674,
+            "p(90)": 1133.16017,
+            "p(95)": 1147.7076853999993
+        },
+        "http_req_tls_handshaking": {
+            "max": 81.057238,
+            "p(90)": 0,
+            "p(95)": 79.6589317,
+            "avg": 5.358270066666666,
+            "min": 0,
+            "med": 0
+        },
+        "http_req_blocked": {
+            "avg": 8.484885016666665,
+            "min": 0.004358,
+            "med": 0.0061259999999999995,
+            "max": 149.437571,
+            "p(90)": 0.0086481,
+            "p(95)": 119.12275665
+        },
+        "http_req_duration{expected_response:true}": {
+            "p(95)": 132.70863505,
+            "avg": 129.88550193333333,
+            "min": 125.584296,
+            "med": 127.841822,
+            "max": 241.784884,
+            "p(90)": 130.5458252
+        },
+        "http_req_sending": {
+            "avg": 0.026103350000000004,
+            "min": 0.015289,
+            "med": 0.024826,
+            "max": 0.077918,
+            "p(90)": 0.0323502,
+            "p(95)": 0.04470474999999999
+        },
+        "http_req_receiving": {
+            "med": 38.9967535,
+            "max": 40.43773,
+            "p(90)": 39.5340289,
+            "p(95)": 39.6230146,
+            "avg": 38.5035332,
+            "min": 0.116728
+        },
+        "http_req_duration": {
+            "p(95)": 132.70863505,
+            "avg": 129.88550193333333,
+            "min": 125.584296,
+            "med": 127.841822,
+            "max": 241.784884,
+            "p(90)": 130.5458252,
+            "thresholds": {
+                "p(95)<3000": false
+            }
+        },
+        "http_reqs": {
+            "count": 60,
+            "rate": 1.9355542351074093
+        },
+        "http_req_connecting": {
+            "avg": 2.624372516666667,
+            "min": 0,
+            "med": 0,
+            "max": 39.914205,
+            "p(90)": 0,
+            "p(95)": 38.8867488
+        },
+        "http_req_waiting": {
+            "avg": 91.35586538333335,
+            "min": 86.715228,
+            "med": 88.26293799999999,
+            "max": 241.610378,
+            "p(90)": 91.1432568,
+            "p(95)": 93.1939748
+        },
+        "data_sent": {
+            "count": 21756,
+            "rate": 701.8319656499466
+        },
+        "data_received": {
+            "count": 2795034,
+            "rate": 90165.66493282004
+        },
+        "http_req_failed": {
+            "passes": 0,
+            "fails": 60,
+            "value": 0
+        },
+        "vus": {
+            "max": 3,
+            "value": 0,
+            "min": 0
+        }
+    },
+    "setup_data": {
+        "sessionCookie": "__Secure-better-auth.session_token=1OEAu3C2KLQw8W6qdweutTEErvlL11v5.oT%2FQaApfsIReErxR1fZahpK9BdiVI1IQCW8kGxxPJRE%3D",
+        "token": "1OEAu3C2KLQw8W6qdweutTEErvlL11v5",
+        "userId": "mHe2a4J4yxEBTzW2M0lhSliJzoeRclIx"
+    }
+}
