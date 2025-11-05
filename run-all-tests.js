@@ -33,6 +33,21 @@ const tests = [
     name: 'Edit Users Test',
     file: 'tests/edit-user.js',
     description: 'Edit users endpoint load test'
+  },
+  {
+    name: 'Search Email Test',
+    file: 'tests/search-email.js',
+    description: 'Search Email endpoint load test'
+  },
+  {
+    name: 'Role Filter Test',
+    file: 'tests/role-filter.js',
+    description: 'Role Filter load test'
+  },
+  {
+    name: 'Role Filter and Search Email Test',
+    file: 'tests/role-filter-search-email.js',
+    description: 'Role Filter and Search Email load test'
   }
 ];
 
