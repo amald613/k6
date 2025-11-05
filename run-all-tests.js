@@ -111,7 +111,8 @@ tests.forEach((test, index) => {
       status: 'FAILED',
       duration: duration,
       error: error.message,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
+      metrics: null // Explicitly set to null for failed tests
     });
     
     console.log(`❌ ${test.name} failed in ${duration}s`);
@@ -221,12 +222,21 @@ function parseMetricsFromOutput(output, testName) {
 
 function exportToCSV(results, timestamp) {
   const csvHeaders = 'Test Name,Status,Duration(s),Iterations,HTTP Requests,Avg Response Time(ms),P95 Response Time(ms),Success Rate(%),Fail Rate(%),Timestamp\n';
-  const csvRows = results.map(test => 
-    `"${test.name}",${test.status},${test.duration},${test.metrics.iterations},${test.metrics.http_reqs},${test.metrics.http_req_duration.avg},${test.metrics.http_req_duration.p95},${test.metrics.checks.rate},${test.metrics.http_req_failed_rate},${test.timestamp}`
-  ).join('\n');
+  const csvRows = results.map(test => {
+    // Handle tests without metrics (failed tests)
+    const iterations = test.metrics?.iterations || 0;
+    const httpReqs = test.metrics?.http_reqs || 0;
+    const avgDuration = test.metrics?.http_req_duration?.avg || 0;
+    const p95Duration = test.metrics?.http_req_duration?.p95 || 0;
+    const checksRate = test.metrics?.checks?.rate || 0;
+    const failRate = test.metrics?.http_req_failed_rate || 0;
+    
+    return `"${test.name}",${test.status},${test.duration},${iterations},${httpReqs},${avgDuration},${p95Duration},${checksRate},${failRate},${test.timestamp}`;
+  }).join('\n');
   
   const csvContent = csvHeaders + csvRows;
   fs.writeFileSync(`${reportDir}/test-results-${timestamp}.csv`, csvContent);
+  console.log(`✅ CSV report generated: ${reportDir}/test-results-${timestamp}.csv`);
 }
 
 function generateHTMLReport(results, timestamp) {
@@ -236,17 +246,17 @@ function generateHTMLReport(results, timestamp) {
   const totalDuration = results.reduce((sum, r) => sum + parseFloat(r.duration), 0).toFixed(2);
   const successRate = ((passedTests / totalTests) * 100).toFixed(1);
 
-  // Calculate overall metrics
+  // Calculate overall metrics (only from passed tests)
   let totalRequests = 0;
   let totalIterations = 0;
   let avgResponseTime = 0;
   let testCount = 0;
 
   results.forEach(test => {
-    if (test.metrics) {
-      totalRequests += test.metrics.http_reqs;
-      totalIterations += test.metrics.iterations;
-      avgResponseTime += parseFloat(test.metrics.http_req_duration.avg);
+    if (test.metrics && test.status === 'PASSED') {
+      totalRequests += test.metrics.http_reqs || 0;
+      totalIterations += test.metrics.iterations || 0;
+      avgResponseTime += parseFloat(test.metrics.http_req_duration?.avg || 0);
       testCount++;
     }
   });
@@ -474,7 +484,7 @@ function generateHTMLReport(results, timestamp) {
                     <p style="color: #6b7280;">${test.description}</p>
                     <p style="color: #6b7280; font-size: 0.9em; margin-top: 5px;">File: ${test.file} | Duration: ${test.duration}s</p>
                     
-                    ${test.status === 'PASSED' ? `
+                    ${test.status === 'PASSED' && test.metrics ? `
                         <div class="test-metrics">
                             <div class="metric">
                                 <div class="metric-value">${test.metrics.iterations}</div>

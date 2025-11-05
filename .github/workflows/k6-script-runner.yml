@@ -278,7 +278,7 @@ jobs:
     name: Deploy Reports to GitHub Pages
     needs: k6-performance-tests
     runs-on: ubuntu-latest
-    if: github.event_name == 'schedule' || github.event_name == 'push'
+    if: (github.event_name == 'schedule' || github.event_name == 'push') && github.ref == 'refs/heads/main'
     permissions:
       contents: write
       pages: write
@@ -287,9 +287,23 @@ jobs:
     steps:
       - name: 📥 Checkout Repository
         uses: actions/checkout@v4
-        with:
-          ref: gh-pages
-          fetch-depth: 0
+      
+      - name: 🌿 Setup gh-pages branch
+        run: |
+          git fetch origin gh-pages || git checkout --orphan gh-pages || true
+          git checkout gh-pages || git switch --orphan gh-pages
+          
+          # Clean up if this is a new orphan branch
+          if [ -z "$(git log -1 2>/dev/null)" ]; then
+            echo "Setting up new gh-pages branch"
+            git rm -rf . || true
+            echo "<html><body><h1>K6 Test Reports</h1></body></html>" > index.html
+            git add index.html
+            git config user.name "GitHub Actions Bot"
+            git config user.email "actions@github.com"
+            git commit -m "Initialize gh-pages" || true
+            git push -u origin gh-pages || true
+          fi
       
       - name: 📥 Download Reports
         uses: actions/download-artifact@v4
@@ -299,25 +313,55 @@ jobs:
       
       - name: 📝 Create Index Page
         run: |
-          mkdir -p reports-${{ github.run_number }}
-          cat > reports-${{ github.run_number }}/index.html << 'EOF'
+          # Find the HTML report file
+          REPORT_FILE=$(find reports-${{ github.run_number }} -name "test-report-*.html" | head -1)
+          REPORT_NAME=$(basename "$REPORT_FILE")
+          
+          cat > reports-${{ github.run_number }}/index.html << EOF
           <!DOCTYPE html>
           <html>
           <head>
-            <title>K6 Test Reports</title>
+            <title>K6 Test Reports - Run #${{ github.run_number }}</title>
             <style>
-              body { font-family: Arial, sans-serif; margin: 40px; }
+              body { 
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                margin: 40px;
+                background: #f5f6fa;
+              }
+              .container {
+                max-width: 800px;
+                margin: 0 auto;
+                background: white;
+                padding: 40px;
+                border-radius: 10px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+              }
               h1 { color: #333; }
-              .report-link { margin: 10px 0; padding: 10px; background: #f0f0f0; border-radius: 5px; }
-              a { color: #0066cc; text-decoration: none; }
+              .report-link { 
+                margin: 20px 0;
+                padding: 20px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                border-radius: 8px;
+                text-align: center;
+              }
+              a { 
+                color: white;
+                text-decoration: none;
+                font-size: 1.2em;
+                font-weight: 600;
+              }
               a:hover { text-decoration: underline; }
+              .info { color: #666; margin-top: 20px; }
             </style>
           </head>
           <body>
-            <h1>K6 Performance Test Reports</h1>
-            <p>Run #${{ github.run_number }} - $(date)</p>
-            <div class="report-link">
-              <a href="test-report-$(ls test-report-*.html | head -1 | cut -d'-' -f3-)">View HTML Report</a>
+            <div class="container">
+              <h1>🚀 K6 Performance Test Reports</h1>
+              <p class="info">Run #${{ github.run_number }} - $(date -u '+%Y-%m-%d %H:%M:%S UTC')</p>
+              <p class="info">Commit: ${{ github.sha }}</p>
+              <div class="report-link">
+                <a href="$REPORT_NAME">📊 View Full HTML Report</a>
+              </div>
             </div>
           </body>
           </html>
@@ -329,4 +373,4 @@ jobs:
           git config user.email "actions@github.com"
           git add reports-${{ github.run_number }}
           git commit -m "Add test reports for run #${{ github.run_number }}" || echo "No changes to commit"
-          git push origin gh-pages || echo "Push failed"
+          git push origin gh-pages || echo "Push completed"
