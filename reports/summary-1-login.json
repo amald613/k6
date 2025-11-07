@@ -1,138 +1,43 @@
 {
-    "root_group": {
-        "name": "",
-        "path": "",
-        "id": "d41d8cd98f00b204e9800998ecf8427e",
-        "groups": {},
-        "checks": {
-                "✅ Token is present": {
-                    "path": "::✅ Token is present",
-                    "id": "ea0637f73bc02a6521537559bf962535",
-                    "passes": 1,
-                    "fails": 0,
-                    "name": "✅ Token is present"
-                },
-                "✅ User data is present": {
-                    "name": "✅ User data is present",
-                    "path": "::✅ User data is present",
-                    "id": "828c32906626828b931e9f8c243dd059",
-                    "passes": 1,
-                    "fails": 0
-                },
-                "✅ User email matches": {
-                    "name": "✅ User email matches",
-                    "path": "::✅ User email matches",
-                    "id": "235ae969e946fa097b0106042dacf9af",
-                    "passes": 1,
-                    "fails": 0
-                }
-            }
-    },
     "metrics": {
-        "http_req_tls_handshaking": {
-            "max": 585.5676,
-            "p(90)": 585.5676,
-            "p(95)": 585.5676,
-            "avg": 585.5676,
-            "min": 585.5676,
-            "med": 585.5676
-        },
-        "vus": {
-            "value": 1,
-            "min": 0,
-            "max": 1
-        },
-        "http_req_sending": {
-            "min": 0.1939,
-            "med": 0.1939,
-            "max": 0.1939,
-            "p(90)": 0.1939,
-            "p(95)": 0.1939,
-            "avg": 0.1939
-        },
-        "http_req_waiting": {
-            "avg": 471.8658,
-            "min": 471.8658,
-            "med": 471.8658,
-            "max": 471.8658,
-            "p(90)": 471.8658,
-            "p(95)": 471.8658
-        },
-        "data_sent": {
-            "count": 673,
-            "rate": 276.5184592095623
-        },
-        "http_req_duration": {
-            "avg": 473.2169,
-            "min": 473.2169,
-            "med": 473.2169,
-            "max": 473.2169,
-            "p(90)": 473.2169,
-            "p(95)": 473.2169,
-            "thresholds": {
-                "p(95)<3000": false
-            }
-        },
-        "http_req_connecting": {
-            "p(90)": 260.0587,
-            "p(95)": 260.0587,
-            "avg": 260.0587,
-            "min": 260.0587,
-            "med": 260.0587,
-            "max": 260.0587
-        },
-        "iteration_duration": {
-            "max": 1005.3375,
-            "p(90)": 1005.3375,
-            "p(95)": 1005.3375,
-            "avg": 1005.3375,
-            "min": 1005.3375,
-            "med": 1005.3375
-        },
         "http_req_failed": {
             "passes": 0,
             "fails": 1,
             "value": 0
+        },
+        "data_sent": {
+            "count": 673,
+            "rate": 296.80934802144156
         },
         "vus_max": {
             "value": 1,
             "min": 1,
             "max": 1
         },
-        "iterations": {
-            "count": 1,
-            "rate": 0.4108743821835993
-        },
-        "checks": {
-            "passes": 3,
-            "fails": 0,
-            "thresholds": {
-                "rate>0.99": false
-            },
-            "value": 1
-        },
-        "login_failures": {
-            "count": 0,
-            "rate": 0,
-            "thresholds": {
-                "count<1": false
-            }
-        },
-        "data_received": {
-            "count": 3108,
-            "rate": 1276.9975798266264
-        },
         "http_reqs": {
             "count": 1,
-            "rate": 0.4108743821835993
+            "rate": 0.4410242912651435
+        },
+        "vus": {
+            "value": 1,
+            "min": 0,
+            "max": 1
+        },
+        "http_req_tls_handshaking": {
+            "med": 505.8978,
+            "max": 505.8978,
+            "p(90)": 505.8978,
+            "p(95)": 505.8978,
+            "avg": 505.8978,
+            "min": 505.8978
         },
         "http_req_duration{expected_response:true}": {
-            "avg": 473.2169,
-            "min": 473.2169,
-            "med": 473.2169,
-            "max": 473.2169,
-            "p(90)": 473.2169,
-            "p(95)": 473.2169
+            "p(95)": 460.0068,
+            "avg": 460.0068,
+            "min": 460.0068,
+            "med": 460.0068,
+            "max": 460.0068,
+            "p(90)": 460.0068
         },
         "successful_logins": {
             "passes": 0,
@@ -143,32 +48,127 @@
             "value": 0
         },
         "http_req_blocked": {
-            "p(90)": 940.6935,
-            "p(95)": 940.6935,
-            "avg": 940.6935,
-            "min": 940.6935,
-            "med": 940.6935,
-            "max": 940.6935
+            "avg": 796.5275,
+            "min": 796.5275,
+            "med": 796.5275,
+            "max": 796.5275,
+            "p(90)": 796.5275,
+            "p(95)": 796.5275
+        },
+        "data_received": {
+            "count": 3106,
+            "rate": 1369.8214486695356
         },
         "http_req_receiving": {
-            "med": 1.1572,
-            "max": 1.1572,
-            "p(90)": 1.1572,
-            "p(95)": 1.1572,
-            "avg": 1.1572,
-            "min": 1.1572
+            "p(95)": 0.2596,
+            "avg": 0.2596,
+            "min": 0.2596,
+            "med": 0.2596,
+            "max": 0.2596,
+            "p(90)": 0.2596
+        },
+        "http_req_duration": {
+            "avg": 460.0068,
+            "min": 460.0068,
+            "med": 460.0068,
+            "max": 460.0068,
+            "p(90)": 460.0068,
+            "p(95)": 460.0068,
+            "thresholds": {
+                "p(95)<3000": false
+            }
+        },
+        "login_failures": {
+            "count": 0,
+            "rate": 0,
+            "thresholds": {
+                "count<1": false
+            }
+        },
+        "http_req_sending": {
+            "min": 1.3457,
+            "med": 1.3457,
+            "max": 1.3457,
+            "p(90)": 1.3457,
+            "p(95)": 1.3457,
+            "avg": 1.3457
+        },
+        "iterations": {
+            "count": 1,
+            "rate": 0.4410242912651435
+        },
+        "checks": {
+            "fails": 0,
+            "passes": 3,
+            "thresholds": {
+                "rate>0.99": false
+            },
+            "value": 1
+        },
+        "http_req_connecting": {
+            "p(95)": 249.8701,
+            "avg": 249.8701,
+            "min": 249.8701,
+            "med": 249.8701,
+            "max": 249.8701,
+            "p(90)": 249.8701
+        },
+        "http_req_waiting": {
+            "avg": 458.4015,
+            "min": 458.4015,
+            "med": 458.4015,
+            "max": 458.4015,
+            "p(90)": 458.4015,
+            "p(95)": 458.4015
+        },
+        "iteration_duration": {
+            "p(90)": 1002.8645,
+            "p(95)": 1002.8645,
+            "avg": 1002.8645,
+            "min": 1002.8645,
+            "med": 1002.8645,
+            "max": 1002.8645
         }
     },
     "setup_data": {
-        "token": "MrNzO9egePYkvd1HT8eAMHoGIMQISQMW",
+        "token": "WRYfMDIP8kVbUOjyLQRhPCYr2PfHNY7x",
         "user": {
-            "createdAt": "2025-07-14T17:29:47.569Z",
-            "email": "deepeshm@pennhealthinfo.com",
             "emailVerified": true,
             "id": "mHe2a4J4yxEBTzW2M0lhSliJzoeRclIx",
             "image": null,
             "name": "Deepesh M S",
-            "updatedAt": "2025-07-14T17:29:47.569Z"
+            "updatedAt": "2025-07-14T17:29:47.569Z",
+            "createdAt": "2025-07-14T17:29:47.569Z",
+            "email": "deepeshm@pennhealthinfo.com"
         }
+    },
+    "root_group": {
+        "checks": {
+            "✅ Token is present": {
+                "fails": 0,
+                "name": "✅ Token is present",
+                "path": "::✅ Token is present",
+                "id": "ea0637f73bc02a6521537559bf962535",
+                "passes": 1
+            },
+            "✅ User data is present": {
+                "id": "828c32906626828b931e9f8c243dd059",
+                "passes": 1,
+                "fails": 0,
+                "name": "✅ User data is present",
+                "path": "::✅ User data is present"
+            },
+            "✅ User email matches": {
+                "path": "::✅ User email matches",
+                "id": "235ae969e946fa097b0106042dacf9af",
+                "passes": 1,
+                "fails": 0,
+                "name": "✅ User email matches"
+            }
+        },
+        "name": "",
+        "path": "",
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {}
     }
 }
