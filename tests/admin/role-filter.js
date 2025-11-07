@@ -1,12 +1,12 @@
 import http from "k6/http";
 import { check, sleep } from "k6";
 import { Rate, Counter } from 'k6/metrics';
-import { CONFIG } from "../config/config.js";
+import { CONFIG } from "../../config/config.js";
 
 // Custom metrics
 const apiFailures = new Counter('api_failures');
 const successRate = new Rate('successful_requests');
-const searchOperations = new Counter('search_operations');
+const roleFilterOperations = new Counter('role_filter_operations');
 
 // Available roles for testing
 const ROLES = ["scribe", "scribeAdmin", "provider", "demo", "admin"];
@@ -14,7 +14,7 @@ const ROLES = ["scribe", "scribeAdmin", "provider", "demo", "admin"];
 // K6 load test options
 export const options = {
   scenarios: {
-    admin_role_filter_search: {
+    admin_role_filter: {
       executor: "ramping-vus",
       startVUs: 1,
       stages: [
@@ -28,7 +28,7 @@ export const options = {
   thresholds: {
     'api_failures': ['count<5'],
     'successful_requests': ['rate>0.95'],
-    'search_operations': ['count>0'],
+    'role_filter_operations': ['count>0'],
     http_req_duration: ["p(95)<3000"],
     checks: ["rate>0.95"],
   },
@@ -82,61 +82,45 @@ export function setup() {
 export default function (data) {
   const { token, sessionCookie, userId } = data;
   
-  // Search scenarios with role and email combinations
-  const searchScenarios = [
+  // Role filter scenarios - only testing role parameter
+  const roleScenarios = [
     {
       role: "admin",
-      email: "test",
-      description: "Search admin users with 'test' email"
+      description: "Filter users with admin role"
     },
     {
       role: "scribe", 
-      email: "user",
-      description: "Search scribe users with 'user' email"
+      description: "Filter users with scribe role"
     },
     {
       role: "scribeAdmin",
-      email: "example",
-      description: "Search scribeAdmin users with 'example' domain"
+      description: "Filter users with scribeAdmin role"
     },
     {
       role: "provider",
-      email: "176",
-      description: "Search provider users with numeric ID"
+      description: "Filter users with provider role"
     },
     {
       role: "demo",
-      email: "",
-      description: "Search demo users with empty email"
+      description: "Filter users with demo role"
     },
     {
       role: "",
-      email: "test",
-      description: "Search all roles with 'test' email"
-    },
-    {
-      role: "admin",
-      email: "",
-      description: "Search all admin users"
+      description: "No role filter (all users)"
     }
   ];
   
-  // Select a random search scenario for each iteration
-  const scenario = searchScenarios[Math.floor(Math.random() * searchScenarios.length)];
+  // Select a random role scenario for each iteration
+  const scenario = roleScenarios[Math.floor(Math.random() * roleScenarios.length)];
   const page = Math.floor(Math.random() * 5) + 1; // Random page between 1-5
   const limit = 10;
   
-  // Build the search URL with role and email parameters
+  // Build the search URL with only role parameter
   let searchUrl = `https://appv2.ezyscribe.com/api/admin/users?page=${page}&limit=${limit}`;
   
   // Add role parameter if specified
   if (scenario.role) {
     searchUrl += `&role=${scenario.role}`;
-  }
-  
-  // Add email parameter if specified
-  if (scenario.email) {
-    searchUrl += `&email=${scenario.email}`;
   }
   
   // Build headers dynamically
@@ -150,7 +134,7 @@ export default function (data) {
     "sec-fetch-mode": "cors",
     "sec-fetch-site": "same-origin",
     "sec-gpc": "1",
-    "referer": "https://appv2.ezyscribe.com/admin/dashboard/users/view?email=test&page=1&limit=10",
+    "referer": "https://appv2.ezyscribe.com/admin/dashboard/users/view?page=1&limit=10",
   };
   
   // Add authentication
@@ -165,38 +149,38 @@ export default function (data) {
 
   // Log request details for first iteration
   if (__VU === 1 && __ITER === 0) {
-    console.log("🔍 Making ROLE FILTER SEARCH request to:", searchUrl);
-    console.log("🎭 Role filter:", scenario.role || "ALL ROLES");
-    console.log("📧 Email search:", scenario.email || "ALL EMAILS");
+    console.log("🎭 Making ROLE FILTER request to:", searchUrl);
+    console.log("🔍 Role filter:", scenario.role || "ALL ROLES");
     console.log("📄 Page:", page);
     console.log("📝 Scenario:", scenario.description);
   }
 
-  // GET request to search users with role filter
+  // GET request to filter users by role
   const res = http.get(searchUrl, { 
     headers: headers
   });
 
   // Log sample response for first iteration of first VU
   if (__VU === 1 && __ITER === 0) {
-    console.log("📋 Role Filter Search Response Status:", res.status);
+    console.log("📋 Role Filter Response Status:", res.status);
     
     if (res.status === 200) {
       try {
         const responseData = res.json();
-        console.log("✅ ROLE FILTER SEARCH SUCCESS!");
+        console.log("✅ ROLE FILTER SUCCESS!");
         console.log("📋 Total users found:", responseData.users?.length);
         
         if (responseData.users && responseData.users.length > 0) {
           const sampleUser = responseData.users[0];
           console.log("📋 Sample user email:", sampleUser.email);
           console.log("📋 Sample user role:", sampleUser.role);
-          console.log("📋 User name:", sampleUser.name?.substring(0, 50) + "...");
           
           // Validate role filtering
           if (scenario.role) {
             const allMatchRole = responseData.users.every(user => user.role === scenario.role);
             console.log(`🎯 All users match role '${scenario.role}':`, allMatchRole);
+          } else {
+            console.log("🎯 No role filter applied - mixed roles returned");
           }
         }
       } catch (e) {
@@ -213,11 +197,11 @@ export default function (data) {
     successRate.add(0);
     
     if (__VU === 1 && __ITER === 0) {
-      console.error(`❌ Role filter search API call failed: ${res.status} - ${res.body}`);
+      console.error(`❌ Role filter API call failed: ${res.status} - ${res.body}`);
     }
     
     check(res, {
-      "❌ Admin role-filter-search failed": (r) => false,
+      "❌ Admin role-filter failed": (r) => false,
     });
     sleep(1);
     return;
@@ -225,7 +209,7 @@ export default function (data) {
 
   // SUCCESS CASE - Status 200
   successRate.add(1);
-  searchOperations.add(1);
+  roleFilterOperations.add(1);
   
   let responseBody;
   try {
@@ -240,7 +224,7 @@ export default function (data) {
 
   // Comprehensive validation checks
   check(res, {
-    "✅ Admin role-filter-search status is 200": (r) => r.status === 200,
+    "✅ Admin role-filter status is 200": (r) => r.status === 200,
     "✅ Response has users array": (r) => 
       Array.isArray(responseBody.users),
     "✅ Search response structure is valid": (r) => 
@@ -255,17 +239,6 @@ export default function (data) {
     });
   }
 
-  // Email search validation when email filter is applied
-  if (scenario.email && responseBody.users && responseBody.users.length > 0) {
-    check(res, {
-      "✅ Users match email search criteria": (r) => 
-        responseBody.users.some(user => 
-          user.email.includes(scenario.email) || 
-          (user.name && user.name.includes(scenario.email))
-        ),
-    });
-  }
-
   // Additional validation for user object structure
   if (responseBody.users && responseBody.users.length > 0) {
     const sampleUser = responseBody.users[0];
@@ -277,16 +250,15 @@ export default function (data) {
     });
   }
 
-  // Log search performance for first VU
+  // Log role filter performance for first VU
   if (__VU === 1 && __ITER % 10 === 0) {
     const roleDisplay = scenario.role || "ALL";
-    const emailDisplay = scenario.email || "ALL";
-    console.log(`🔍 Role filter search: role=${roleDisplay}, email=${emailDisplay} → ${responseBody.users?.length || 0} users`);
+    console.log(`🎯 Role filter: ${roleDisplay} → ${responseBody.users?.length || 0} users`);
   }
 
   sleep(1);
 }
 
 export function teardown() {
-  console.log(`\n📊 ADMIN ROLE FILTER SEARCH TEST COMPLETE`);
+  console.log(`\n📊 ADMIN ROLE FILTER TEST COMPLETE`);
 }

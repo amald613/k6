@@ -6,47 +6,47 @@ const path = require('path');
 const tests = [
   {
     name: 'Login Test',
-    file: 'tests/login.js',
+    file: 'tests/admin/login.js',
     description: 'Single user login authentication test'
   },
   {
     name: 'Create User Test',
-    file: 'tests/create-user.js',
+    file: 'tests/admin/create-user.js',
     description: 'User creation endpoint load test'
   },
   {
     name: 'List Users Test',
-    file: 'tests/list-users.js',
+    file: 'tests/admin/list-users.js',
     description: 'Admin list users endpoint load test'
   },
   {
     name: 'Ban and Unban Users Test',
-    file: 'tests/ban-unban-users.js',
+    file: 'tests/admin/ban-unban-users.js',
     description: 'Ban and Unban users endpoint load test'
   },
   {
     name: 'Set Role Test',
-    file: 'tests/set-role.js',
+    file: 'tests/admin/set-role.js',
     description: 'Set Role endpoint load test'
   },
   {
     name: 'Edit Users Test',
-    file: 'tests/edit-user.js',
+    file: 'tests/admin/edit-user.js',
     description: 'Edit users endpoint load test'
   },
   {
     name: 'Search Email Test',
-    file: 'tests/search-email.js',
+    file: 'tests/admin/search-email.js',
     description: 'Search Email endpoint load test'
   },
   {
     name: 'Role Filter Test',
-    file: 'tests/role-filter.js',
+    file: 'tests/admin/role-filter.js',
     description: 'Role Filter load test'
   },
   {
     name: 'Role Filter and Search Email Test',
-    file: 'tests/role-filter-search-email.js',
+    file: 'tests/admin/role-filter-search-email.js',
     description: 'Role Filter and Search Email load test'
   }
 ];

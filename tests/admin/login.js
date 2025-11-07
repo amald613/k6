@@ -1,7 +1,7 @@
 import http from "k6/http";
 import { check, sleep } from "k6";
 import { Rate, Counter } from 'k6/metrics';
-import { CONFIG } from "../config/config.js";
+import { CONFIG } from "../../config/config.js";
 
 // Custom metrics
 const loginFailures = new Counter('login_failures');

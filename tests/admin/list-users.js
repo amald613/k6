@@ -1,7 +1,7 @@
 import http from "k6/http";
 import { check, sleep } from "k6";
 import { Rate, Counter } from 'k6/metrics';
-import { CONFIG } from "../config/config.js";
+import { CONFIG } from "../../config/config.js";
 
 // Custom metrics
 const apiFailures = new Counter('api_failures');
@@ -10,7 +10,7 @@ const successRate = new Rate('successful_requests');
 // K6 load test options
 export const options = {
   scenarios: {
-    create_user: {
+    admin_users: {
       executor: "ramping-vus",
       startVUs: 1,
       stages: [
@@ -29,7 +29,7 @@ export const options = {
   },
 };
 
-// Setup: Login once and share token
+// Setup: Login and get both token and cookies
 export function setup() {
   const loginUrl = `${CONFIG.baseUrl}/sign-in/email`;
   const credentials = {
@@ -73,30 +73,16 @@ export function setup() {
   };
 }
 
-// Generate unique email for each request to avoid duplicates
-function generateUniqueEmail() {
-  const timestamp = Date.now();
-  const randomSuffix = Math.floor(Math.random() * 10000);
-  return `testuser${timestamp}${randomSuffix}@example.com`;
-}
-
-// Generate unique name for each request
-function generateUniqueName() {
-  const timestamp = Date.now();
-  const randomSuffix = Math.floor(Math.random() * 1000);
-  return `Test User ${timestamp}_${randomSuffix}`;
-}
-
 // Default function executed by each VU
 export default function (data) {
   const { token, sessionCookie, userId } = data;
   
-  const url = `https://appv2.ezyscribe.com/api/auth/admin/create-user`;
+  // Exact endpoint from Postman
+  const url = `https://appv2.ezyscribe.com/api/auth/admin/list-users`;
   
-  // Build headers with both token and cookie
+  // Build headers dynamically
   const headers = {
     "Accept": "application/json",
-    "Content-Type": "application/json",
     "Authorization": `Bearer ${token}`,
   };
   
@@ -105,23 +91,15 @@ export default function (data) {
     headers["Cookie"] = sessionCookie;
   }
 
-  // Generate unique payload for each request to avoid duplicate errors
-  const payload = {
-    name: generateUniqueName(),
-    email: generateUniqueEmail(),
-    password: "12345678",
-    role: "admin",
-    data: {}
-  };
-
   // Log request details for first iteration
   if (__VU === 1 && __ITER === 0) {
     console.log("🔍 Making request to:", url);
-    console.log("📋 Request Payload:", JSON.stringify(payload, null, 2));
+    console.log("🔑 Token:", token.substring(0, 20) + "...");
+    console.log("🍪 Cookie present:", !!sessionCookie);
   }
 
-  // POST request to create user
-  const res = http.post(url, JSON.stringify(payload), { 
+  // GET request to list users
+  const res = http.get(url, { 
     headers: headers
   });
 
@@ -132,8 +110,8 @@ export default function (data) {
     if (res.status === 200) {
       try {
         const responseData = res.json();
-        console.log("✅ SUCCESS! User created:", responseData.user?.email);
-        console.log("📋 Sample Response:", JSON.stringify(responseData, null, 2));
+        console.log("✅ SUCCESS! Total users:", responseData.users?.length);
+        console.log("📋 Sample user:", responseData.users?.[0]?.name);
       } catch (e) {
         console.log("📋 Response Body:", res.body);
       }
@@ -142,20 +120,7 @@ export default function (data) {
     }
   }
 
-  // Handle duplicate email errors - NOT considered real failures
-  if (res.status === 500 && res.body?.includes("already exists")) {
-    apiFailures.add(1);
-    successRate.add(1); // Count as success for performance perspective
-    console.warn(`⚠️ Duplicate email - VU ${__VU}, Iter ${__ITER}: User already exists`);
-    
-    check(res, {
-      "✅ Duplicate email handled": (r) => true,
-    });
-    sleep(1);
-    return;
-  }
-
-  // Handle other error statuses
+  // Handle error statuses
   if (res.status >= 400) {
     apiFailures.add(1);
     successRate.add(0);
@@ -165,7 +130,7 @@ export default function (data) {
     }
     
     check(res, {
-      "❌ Create user failed": (r) => false,
+      "❌ Admin list-users failed": (r) => false,
     });
     sleep(1);
     return;
@@ -185,48 +150,25 @@ export default function (data) {
     return;
   }
 
-  // Comprehensive validation checks for successful response
+  // Comprehensive validation checks
   check(res, {
-    "✅ Create User status is 200": (r) => r.status === 200,
-    "✅ Response has user object": (r) => 
-      responseBody.user !== undefined,
-    "✅ User has ID field": (r) => 
-      responseBody.user.id && responseBody.user.id.length > 0,
-    "✅ User email matches request": (r) => 
-      responseBody.user.email === payload.email,
-    "✅ User name matches request": (r) => 
-      responseBody.user.name === payload.name,
-    "✅ User role is set correctly": (r) => 
-      responseBody.user.role === payload.role,
+    "✅ Admin list-users status is 200": (r) => r.status === 200,
+    "✅ Response has users array": (r) => 
+      Array.isArray(responseBody.users),
+    "✅ Users array is not empty": (r) => 
+      responseBody.users && responseBody.users.length > 0,
   });
 
-  // Additional validation for user data structure
-  if (res.status === 200 && responseBody.user) {
-    const createdUser = responseBody.user;
-    
+  if (res.status === 200 && responseBody.users && responseBody.users.length > 0) {
     check(res, {
-      "✅ User ID format is valid": () => 
-        typeof createdUser.id === 'string' && createdUser.id.length > 0,
-      "✅ User email format is valid": () => 
-        createdUser.email.includes('@'),
-      "✅ User has timestamps": () => 
-        createdUser.createdAt && createdUser.updatedAt,
-      "✅ User role is valid": () => 
-        ['admin', 'scribe', 'user'].includes(createdUser.role),
+      "✅ First user has valid data": () => 
+        responseBody.users[0].id && responseBody.users[0].email,
     });
-
-    // Log successful details for first VU
-    if (__VU === 1 && __ITER === 0) {
-      console.log("✅ Create User successful!");
-      console.log(`👤 User created: ${createdUser.name} (${createdUser.email})`);
-      console.log(`🆔 User ID: ${createdUser.id}`);
-      console.log(`🎭 User Role: ${createdUser.role}`);
-    }
   }
 
   sleep(1);
 }
 
 export function teardown() {
-  console.log(`\n📊 CREATE USER TEST COMPLETE`);
+  console.log(`\n📊 ADMIN LIST-USERS TEST COMPLETE`);
 }

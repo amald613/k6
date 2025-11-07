@@ -1,16 +1,17 @@
 import http from "k6/http";
 import { check, sleep } from "k6";
 import { Rate, Counter } from 'k6/metrics';
-import { CONFIG } from "../config/config.js";
+import { CONFIG } from "../../config/config.js";
 
 // Custom metrics
 const apiFailures = new Counter('api_failures');
 const successRate = new Rate('successful_requests');
+const searchOperations = new Counter('search_operations');
 
 // K6 load test options
 export const options = {
   scenarios: {
-    admin_users: {
+    admin_search_users: {
       executor: "ramping-vus",
       startVUs: 1,
       stages: [
@@ -24,6 +25,7 @@ export const options = {
   thresholds: {
     'api_failures': ['count<5'],
     'successful_requests': ['rate>0.95'],
+    'search_operations': ['count>0'],
     http_req_duration: ["p(95)<3000"],
     checks: ["rate>0.95"],
   },
@@ -77,14 +79,43 @@ export function setup() {
 export default function (data) {
   const { token, sessionCookie, userId } = data;
   
-  // Exact endpoint from Postman
-  const url = `https://appv2.ezyscribe.com/api/auth/admin/list-users`;
+  // Search terms to test different scenarios
+  const searchTerms = [
+    "test",           // Generic search
+    "example",        // Domain search
+    "user",           // Common prefix
+    "176",            // Numeric ID search
+    "admin",          // Role-based search
+    "scribe",         // Specific role
+    "",               // Empty search (should return all users)
+  ];
+  
+  // Select a random search term for each iteration
+  const searchTerm = searchTerms[Math.floor(Math.random() * searchTerms.length)];
+  const page = Math.floor(Math.random() * 5) + 1; // Random page between 1-5
+  const limit = 10;
+  
+  // Build the search URL with parameters
+  const searchUrl = `https://appv2.ezyscribe.com/api/admin/users?email=${searchTerm}&page=${page}&limit=${limit}`;
   
   // Build headers dynamically
   const headers = {
-    "Accept": "application/json",
-    "Authorization": `Bearer ${token}`,
+    "accept": "*/*",
+    "accept-language": "en-US,en;q=0.8",
+    "sec-ch-ua": "\"Chromium\";v=\"142\", \"Brave\";v=\"142\", \"Not_A Brand\";v=\"99\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "same-origin",
+    "sec-gpc": "1",
+    "referer": "https://appv2.ezyscribe.com/admin/dashboard/users/view?page=295&limit=10",
   };
+  
+  // Add authentication
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
   
   // Add cookie only if we have it
   if (sessionCookie) {
@@ -93,25 +124,31 @@ export default function (data) {
 
   // Log request details for first iteration
   if (__VU === 1 && __ITER === 0) {
-    console.log("🔍 Making request to:", url);
-    console.log("🔑 Token:", token.substring(0, 20) + "...");
+    console.log("🔍 Making SEARCH request to:", searchUrl);
+    console.log("📋 Search term:", searchTerm);
+    console.log("📄 Page:", page);
+    console.log("🔑 Token present:", !!token);
     console.log("🍪 Cookie present:", !!sessionCookie);
   }
 
-  // GET request to list users
-  const res = http.get(url, { 
+  // GET request to search users by email
+  const res = http.get(searchUrl, { 
     headers: headers
   });
 
   // Log sample response for first iteration of first VU
   if (__VU === 1 && __ITER === 0) {
-    console.log("📋 Response Status:", res.status);
+    console.log("📋 Search Response Status:", res.status);
     
     if (res.status === 200) {
       try {
         const responseData = res.json();
-        console.log("✅ SUCCESS! Total users:", responseData.users?.length);
-        console.log("📋 Sample user:", responseData.users?.[0]?.name);
+        console.log("✅ SEARCH SUCCESS!");
+        console.log("📋 Total users found:", responseData.users?.length);
+        if (responseData.users && responseData.users.length > 0) {
+          console.log("📋 Sample user:", responseData.users[0].email);
+          console.log("📋 User name:", responseData.users[0].name?.substring(0, 50) + "...");
+        }
       } catch (e) {
         console.log("📋 Response Body:", res.body);
       }
@@ -126,11 +163,11 @@ export default function (data) {
     successRate.add(0);
     
     if (__VU === 1 && __ITER === 0) {
-      console.error(`❌ API call failed: ${res.status} - ${res.body}`);
+      console.error(`❌ Search API call failed: ${res.status} - ${res.body}`);
     }
     
     check(res, {
-      "❌ Admin list-users failed": (r) => false,
+      "❌ Admin search-users failed": (r) => false,
     });
     sleep(1);
     return;
@@ -138,6 +175,7 @@ export default function (data) {
 
   // SUCCESS CASE - Status 200
   successRate.add(1);
+  searchOperations.add(1);
   
   let responseBody;
   try {
@@ -152,23 +190,32 @@ export default function (data) {
 
   // Comprehensive validation checks
   check(res, {
-    "✅ Admin list-users status is 200": (r) => r.status === 200,
+    "✅ Admin search-users status is 200": (r) => r.status === 200,
     "✅ Response has users array": (r) => 
       Array.isArray(responseBody.users),
-    "✅ Users array is not empty": (r) => 
-      responseBody.users && responseBody.users.length > 0,
+    "✅ Search response structure is valid": (r) => 
+      responseBody.users !== undefined,
   });
 
-  if (res.status === 200 && responseBody.users && responseBody.users.length > 0) {
+  // Additional checks for non-empty searches
+  if (searchTerm && responseBody.users && responseBody.users.length > 0) {
     check(res, {
-      "✅ First user has valid data": () => 
-        responseBody.users[0].id && responseBody.users[0].email,
+      "✅ Users match search criteria": (r) => 
+        responseBody.users.some(user => 
+          user.email.includes(searchTerm) || 
+          (user.name && user.name.includes(searchTerm))
+        ),
     });
+  }
+
+  // Log search performance for first VU
+  if (__VU === 1 && __ITER % 10 === 0) {
+    console.log(`🔍 Search completed: "${searchTerm}" → ${responseBody.users?.length || 0} users found`);
   }
 
   sleep(1);
 }
 
 export function teardown() {
-  console.log(`\n📊 ADMIN LIST-USERS TEST COMPLETE`);
+  console.log(`\n📊 ADMIN SEARCH USERS TEST COMPLETE`);
 }
