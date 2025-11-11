@@ -1,0 +1,197 @@
+{
+    "metrics": {
+        "http_req_duration": {
+            "min": 38.38514,
+            "med": 48.2624095,
+            "max": 300.446961,
+            "p(90)": 71.7889449,
+            "p(95)": 77.79432509999998,
+            "avg": 55.490061734375004,
+            "thresholds": {
+                "p(95)<3000": false
+            }
+        },
+        "http_req_receiving": {
+            "avg": 0.06250403125000001,
+            "min": 0.039363,
+            "med": 0.059741,
+            "max": 0.147114,
+            "p(90)": 0.07989410000000001,
+            "p(95)": 0.09677784999999996
+        },
+        "data_sent": {
+            "count": 48575,
+            "rate": 1563.9056675208842
+        },
+        "http_req_blocked": {
+            "p(95)": 71.94895639999952,
+            "avg": 6.333242546874998,
+            "min": 0.003426,
+            "med": 0.005095000000000001,
+            "max": 121.127024,
+            "p(90)": 0.007968000000000001
+        },
+        "http_req_failed": {
+            "passes": 0,
+            "fails": 64,
+            "value": 0
+        },
+        "http_reqs": {
+            "count": 64,
+            "rate": 2.060524193954433
+        },
+        "data_received": {
+            "count": 342823,
+            "rate": 11037.423214750635
+        },
+        "api_failures": {
+            "rate": 0,
+            "count": 0,
+            "thresholds": {
+                "count<5": false
+            }
+        },
+        "http_req_waiting": {
+            "avg": 55.40097782812499,
+            "min": 38.306162,
+            "med": 48.1835835,
+            "max": 300.284909,
+            "p(90)": 71.6962765,
+            "p(95)": 77.63712759999999
+        },
+        "iteration_duration": {
+            "p(90)": 1075.1281572,
+            "p(95)": 1084.2237974,
+            "avg": 1057.0939246031746,
+            "min": 1039.769759,
+            "med": 1049.402793,
+            "max": 1160.451995
+        },
+        "iterations": {
+            "count": 63,
+            "rate": 2.028328503423895
+        },
+        "search_operations": {
+            "count": 63,
+            "rate": 2.028328503423895,
+            "thresholds": {
+                "count>0": false
+            }
+        },
+        "vus_max": {
+            "value": 3,
+            "min": 3,
+            "max": 3
+        },
+        "http_req_sending": {
+            "med": 0.0247105,
+            "max": 0.063408,
+            "p(90)": 0.0345047,
+            "p(95)": 0.04707009999999992,
+            "avg": 0.026579875000000003,
+            "min": 0.013455
+        },
+        "http_req_duration{expected_response:true}": {
+            "p(90)": 71.7889449,
+            "p(95)": 77.79432509999998,
+            "avg": 55.490061734375004,
+            "min": 38.38514,
+            "med": 48.2624095,
+            "max": 300.446961
+        },
+        "vus": {
+            "value": 1,
+            "min": 1,
+            "max": 3
+        },
+        "http_req_tls_handshaking": {
+            "med": 0,
+            "max": 71.48026,
+            "p(90)": 0,
+            "p(95)": 48.330859749999675,
+            "avg": 3.929821078125,
+            "min": 0
+        },
+        "successful_requests": {
+            "passes": 63,
+            "fails": 0,
+            "thresholds": {
+                "rate>0.95": false
+            },
+            "value": 1
+        },
+        "http_req_connecting": {
+            "p(90)": 0,
+            "p(95)": 23.455783999999845,
+            "avg": 1.886959375,
+            "min": 0,
+            "med": 0,
+            "max": 35.345626
+        },
+        "checks": {
+            "passes": 223,
+            "fails": 0,
+            "thresholds": {
+                "rate>0.95": false
+            },
+            "value": 1
+        }
+    },
+    "setup_data": {
+        "sessionCookie": "__Secure-better-auth.session_token=T3dEhrxR9jSnU4bpLLHIaauNZG1JgCep.FohbASGGdawI4G6yvBhUy2rfZJKuXitWoT6Q6zSslvc%3D",
+        "token": "T3dEhrxR9jSnU4bpLLHIaauNZG1JgCep",
+        "userId": "mHe2a4J4yxEBTzW2M0lhSliJzoeRclIx"
+    },
+    "root_group": {
+        "name": "",
+        "path": "",
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {
+            "setup": {
+                "name": "setup",
+                "path": "::setup",
+                "id": "5c0f8025f7e0b6654089e5b00e950f1a",
+                "groups": {},
+                "checks": {
+                        "✅ Login status is 200": {
+                            "passes": 1,
+                            "fails": 0,
+                            "name": "✅ Login status is 200",
+                            "path": "::setup::✅ Login status is 200",
+                            "id": "ef5748235dba7417d2a94f2e9e0282c6"
+                        }
+                    }
+            }
+        },
+        "checks": {
+            "✅ Admin search-users status is 200": {
+                "name": "✅ Admin search-users status is 200",
+                "path": "::✅ Admin search-users status is 200",
+                "id": "5cad04a758b9628592a252489c58a90a",
+                "passes": 63,
+                "fails": 0
+            },
+            "✅ Response has users array": {
+                "name": "✅ Response has users array",
+                "path": "::✅ Response has users array",
+                "id": "a94bc8497824a32ee1abc462a6f27a24",
+                "passes": 63,
+                "fails": 0
+            },
+            "✅ Search response structure is valid": {
+                "id": "e197bc1ef037b593ef164d0c9ab09bad",
+                "passes": 63,
+                "fails": 0,
+                "name": "✅ Search response structure is valid",
+                "path": "::✅ Search response structure is valid"
+            },
+            "✅ Users match search criteria": {
+                "name": "✅ Users match search criteria",
+                "path": "::✅ Users match search criteria",
+                "id": "4b454d58c2203e39e4e806a489d160d8",
+                "passes": 33,
+                "fails": 0
+            }
+        }
+    }
+}
