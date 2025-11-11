@@ -10,44 +10,54 @@ const tests = [
     description: 'Single user login authentication test'
   },
   {
-    name: 'Create User Test',
+    name: 'Admin Create User Test',
     file: 'tests/admin/create-user.js',
     description: 'User creation endpoint load test'
   },
   {
-    name: 'List Users Test',
+    name: 'Admin List Users Test',
     file: 'tests/admin/list-users.js',
     description: 'Admin list users endpoint load test'
   },
   {
-    name: 'Ban and Unban Users Test',
+    name: 'Admin Ban and Unban Users Test',
     file: 'tests/admin/ban-unban-users.js',
     description: 'Ban and Unban users endpoint load test'
   },
   {
-    name: 'Set Role Test',
+    name: 'Admin Set Role Test',
     file: 'tests/admin/set-role.js',
     description: 'Set Role endpoint load test'
   },
   {
-    name: 'Edit Users Test',
+    name: 'Admin Edit Users Test',
     file: 'tests/admin/edit-user.js',
     description: 'Edit users endpoint load test'
   },
   {
-    name: 'Search Email Test',
+    name: 'Admin Search Email Test',
     file: 'tests/admin/search-email.js',
     description: 'Search Email endpoint load test'
   },
   {
-    name: 'Role Filter Test',
+    name: 'Admin Role Filter Test',
     file: 'tests/admin/role-filter.js',
     description: 'Role Filter load test'
   },
   {
-    name: 'Role Filter and Search Email Test',
+    name: 'Admin Role Filter and Search Email Test',
     file: 'tests/admin/role-filter-search-email.js',
     description: 'Role Filter and Search Email load test'
+  },
+  {
+    name: 'Provider List Users Test',
+    file: 'tests/provider/list-users.js',
+    description: 'Provider list users endpoint load test'
+  },
+  {
+    name: 'Provider status filter test',
+    file: 'tests/provider/status-filter.js',
+    description: 'Provider status filter load test'
   }
 ];
 
