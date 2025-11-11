@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>k6 Test Report - 2025-11-11T17-52-51-069Z</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f6fa;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 30px;
+            background: #f8f9fa;
+        }
+        .summary-card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .summary-card .value {
+            font-size: 2em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .success { color: #10b981; }
+        .failure { color: #ef4444; }
+        .info { color: #3b82f6; }
+        
+        .overview {
+            padding: 30px;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .overview h2 {
+            margin-bottom: 20px;
+            color: #1f2937;
+        }
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .overview-item {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .overview-item .label {
+            font-size: 0.9em;
+            color: #6b7280;
+            margin-bottom: 5px;
+        }
+        .overview-item .value {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #1f2937;
+        }
+        
+        .test-results {
+            padding: 30px;
+        }
+        .test-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        .test-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f3f4f6;
+        }
+        .test-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #1f2937;
+        }
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.8em;
+        }
+        .status-passed {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .status-failed {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .test-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .metric {
+            text-align: center;
+            padding: 10px;
+            background: #f9fafb;
+            border-radius: 6px;
+        }
+        .metric-value {
+            font-size: 1.4em;
+            font-weight: 700;
+            color: #3b82f6;
+        }
+        .metric-label {
+            font-size: 0.8em;
+            color: #6b7280;
+            margin-top: 5px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            color: #666;
+        }
+        .error {
+            background: #fee2e2;
+            border-left: 4px solid #ef4444;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 5px;
+            color: #991b1b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 k6 Performance Test Report</h1>
+            <p>Generated on 11/11/2025, 5:58:03 PM</p>
+        </div>
+        
+        <div class="summary">
+            <div class="summary-card">
+                <div class="label">Total Tests</div>
+                <div class="value info">11</div>
+            </div>
+            <div class="summary-card">
+                <div class="label">Passed</div>
+                <div class="value success">11</div>
+            </div>
+            <div class="summary-card">
+                <div class="label">Failed</div>
+                <div class="value failure">0</div>
+            </div>
+            <div class="summary-card">
+                <div class="label">Success Rate</div>
+                <div class="value success">100.0%</div>
+            </div>
+        </div>
+        
+        <div class="overview">
+            <h2>📊 Overall Performance</h2>
+            <div class="overview-grid">
+                <div class="overview-item">
+                    <div class="label">Total HTTP Requests</div>
+                    <div class="value">680</div>
+                </div>
+                <div class="overview-item">
+                    <div class="label">Total Iterations</div>
+                    <div class="value">3329</div>
+                </div>
+                <div class="overview-item">
+                    <div class="label">Average Response Time</div>
+                    <div class="value">106.62ms</div>
+                </div>
+                <div class="overview-item">
+                    <div class="label">Total Duration</div>
+                    <div class="value">312.80s</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="test-results">
+            <h2 style="margin-bottom: 20px; color: #1f2937;">Detailed Test Results</h2>
+            
+            
+                <div class="test-card">
+                    <div class="test-header">
+                        <div class="test-title">Login Test</div>
+                        <div class="status-badge status-passed">PASSED</div>
+                    </div>
+                    
+                    <p style="color: #6b7280;">Single user login authentication test</p>
+                    <p style="color: #6b7280; font-size: 0.9em; margin-top: 5px;">File: tests/admin/login.js | Duration: 1.51s</p>
+                    
+                    
+                        <div class="test-metrics">
+                            <div class="metric">
+                                <div class="metric-value">30</div>
+                                <div class="metric-label">Iterations</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">1</div>
+                                <div class="metric-label">HTTP Requests</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">268.45ms</div>
+                                <div class="metric-label">Avg Response Time</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">268.45ms</div>
+                                <div class="metric-label">P95 Response Time</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value" style="color: #10b981">100%</div>
+                                <div class="metric-label">Success Rate</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">0%</div>
+                                <div class="metric-label">Fail Rate</div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 15px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; font-size: 0.9em; color: #6b7280;">
+                            <div><strong>Duration Details:</strong> Min: 268.45ms, Med: 268.45ms, Max: 268.45ms</div>
+                            <div><strong>Data:</strong> Received: 3.1 kB, Sent: 1.9 kB</div>
+                            <div><strong>VUs:</strong> Max: 1</div>
+                            <div><strong>Checks:</strong> 0/0 passed</div>
+                        </div>
+                    
+                    
+                    
+                </div>
+            
+                <div class="test-card">
+                    <div class="test-header">
+                        <div class="test-title">Admin Create User Test</div>
+                        <div class="status-badge status-passed">PASSED</div>
+                    </div>
+                    
+                    <p style="color: #6b7280;">User creation endpoint load test</p>
+                    <p style="color: #6b7280; font-size: 0.9em; margin-top: 5px;">File: tests/admin/create-user.js | Duration: 30.73s</p>
+                    
+                    
+                        <div class="test-metrics">
+                            <div class="metric">
+                                <div class="metric-value">521</div>
+                                <div class="metric-label">Iterations</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">53</div>
+                                <div class="metric-label">HTTP Requests</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">257.28ms</div>
+                                <div class="metric-label">Avg Response Time</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">331.21ms</div>
+                                <div class="metric-label">P95 Response Time</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value" style="color: #10b981">100%</div>
+                                <div class="metric-label">Success Rate</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">0%</div>
+                                <div class="metric-label">Fail Rate</div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 15px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; font-size: 0.9em; color: #6b7280;">
+                            <div><strong>Duration Details:</strong> Min: 221.61ms, Med: 243.07ms, Max: 459.43ms</div>
+                            <div><strong>Data:</strong> Received: 45 kB, Sent: 34 kB</div>
+                            <div><strong>VUs:</strong> Max: 3</div>
+                            <div><strong>Checks:</strong> 0/0 passed</div>
+                        </div>
+                    
+                    
+                    
+                </div>
+            
+                <div class="test-card">
+                    <div class="test-header">
+                        <div class="test-title">Admin List Users Test</div>
+                        <div class="status-badge status-passed">PASSED</div>
+                    </div>
+                    
+                    <p style="color: #6b7280;">Admin list users endpoint load test</p>
+                    <p style="color: #6b7280; font-size: 0.9em; margin-top: 5px;">File: tests/admin/list-users.js | Duration: 31.38s</p>
+                    
+                    
+                        <div class="test-metrics">
+                            <div class="metric">
+                                <div class="metric-value">245</div>
+                                <div class="metric-label">Iterations</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">62</div>
+                                <div class="metric-label">HTTP Requests</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">109.33ms</div>
+                                <div class="metric-label">Avg Response Time</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">122.14ms</div>
+                                <div class="metric-label">P95 Response Time</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value" style="color: #10b981">100%</div>
+                                <div class="metric-label">Success Rate</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">0%</div>
+                                <div class="metric-label">Fail Rate</div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 15px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; font-size: 0.9em; color: #6b7280;">
+                            <div><strong>Duration Details:</strong> Min: 98.24ms, Med: 101.32ms, Max: 232.03ms</div>
+                            <div><strong>Data:</strong> Received: 3.2 MB, Sent: 27 kB</div>
+                            <div><strong>VUs:</strong> Max: 3</div>
+                            <div><strong>Checks:</strong> 0/0 passed</div>
+                        </div>
+                    
+                    
+                    
+                </div>
+            
+                <div class="test-card">
+                    <div class="test-header">
+                        <div class="test-title">Admin Ban and Unban Users Test</div>
+                        <div class="status-badge status-passed">PASSED</div>
+                    </div>
+                    
+                    <p style="color: #6b7280;">Ban and Unban users endpoint load test</p>
+                    <p style="color: #6b7280; font-size: 0.9em; margin-top: 5px;">File: tests/admin/ban-unban-users.js | Duration: 31.86s</p>
+                    
+                    
+                        <div class="test-metrics">
+                            <div class="metric">
+                                <div class="metric-value">134</div>
+                                <div class="metric-label">Iterations</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">68</div>
+                                <div class="metric-label">HTTP Requests</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">46.68ms</div>
+                                <div class="metric-label">Avg Response Time</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">57.63ms</div>
+                                <div class="metric-label">P95 Response Time</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value" style="color: #10b981">100%</div>
+                                <div class="metric-label">Success Rate</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">0%</div>
+                                <div class="metric-label">Fail Rate</div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 15px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; font-size: 0.9em; color: #6b7280;">
+                            <div><strong>Duration Details:</strong> Min: 37.79ms, Med: 41.01ms, Max: 240.6ms</div>
+                            <div><strong>Data:</strong> Received: 196 kB, Sent: 37 kB</div>
+                            <div><strong>VUs:</strong> Max: 3</div>
+                            <div><strong>Checks:</strong> 0/0 passed</div>
+                        </div>
+                    
+                    
+                    
+                </div>
+            
+                <div class="test-card">
+                    <div class="test-header">
+                        <div class="test-title">Admin Set Role Test</div>
+                        <div class="status-badge status-passed">PASSED</div>
+                    </div>
+                    
+                    <p style="color: #6b7280;">Set Role endpoint load test</p>
+                    <p style="color: #6b7280; font-size: 0.9em; margin-top: 5px;">File: tests/admin/set-role.js | Duration: 30.98s</p>
+                    
+                    
+                        <div class="test-metrics">
+                            <div class="metric">
+                                <div class="metric-value">127</div>
+                                <div class="metric-label">Iterations</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">65</div>
+                                <div class="metric-label">HTTP Requests</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">49.15ms</div>
+                                <div class="metric-label">Avg Response Time</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">60.08ms</div>
+                                <div class="metric-label">P95 Response Time</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value" style="color: #10b981">100%</div>
+                                <div class="metric-label">Success Rate</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">0%</div>
+                                <div class="metric-label">Fail Rate</div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 15px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; font-size: 0.9em; color: #6b7280;">
+                            <div><strong>Duration Details:</strong> Min: 37.95ms, Med: 40.37ms, Max: 269.54ms</div>
+                            <div><strong>Data:</strong> Received: 149 kB, Sent: 36 kB</div>
+                            <div><strong>VUs:</strong> Max: 3</div>
+                            <div><strong>Checks:</strong> 0/0 passed</div>
+                        </div>
+                    
+                    
+                    
+                </div>
+            
+                <div class="test-card">
+                    <div class="test-header">
+                        <div class="test-title">Admin Edit Users Test</div>
+                        <div class="status-badge status-passed">PASSED</div>
+                    </div>
+                    
+                    <p style="color: #6b7280;">Edit users endpoint load test</p>
+                    <p style="color: #6b7280; font-size: 0.9em; margin-top: 5px;">File: tests/admin/edit-user.js | Duration: 30.95s</p>
+                    
+                    
+                        <div class="test-metrics">
+                            <div class="metric">
+                                <div class="metric-value">115</div>
+                                <div class="metric-label">Iterations</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">115</div>
+                                <div class="metric-label">HTTP Requests</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">85.65ms</div>
+                                <div class="metric-label">Avg Response Time</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">122.43ms</div>
+                                <div class="metric-label">P95 Response Time</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value" style="color: #10b981">100%</div>
+                                <div class="metric-label">Success Rate</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">0%</div>
+                                <div class="metric-label">Fail Rate</div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 15px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; font-size: 0.9em; color: #6b7280;">
+                            <div><strong>Duration Details:</strong> Min: 46.45ms, Med: 98.77ms, Max: 242.43ms</div>
+                            <div><strong>Data:</strong> Received: 3.8 MB, Sent: 798 kB</div>
+                            <div><strong>VUs:</strong> Max: 3</div>
+                            <div><strong>Checks:</strong> 0/0 passed</div>
+                        </div>
+                    
+                    
+                    
+                </div>
+            
+                <div class="test-card">
+                    <div class="test-header">
+                        <div class="test-title">Admin Search Email Test</div>
+                        <div class="status-badge status-passed">PASSED</div>
+                    </div>
+                    
+                    <p style="color: #6b7280;">Search Email endpoint load test</p>
+                    <p style="color: #6b7280; font-size: 0.9em; margin-top: 5px;">File: tests/admin/search-email.js | Duration: 30.94s</p>
+                    
+                    
+                        <div class="test-metrics">
+                            <div class="metric">
+                                <div class="metric-value">230</div>
+                                <div class="metric-label">Iterations</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">64</div>
+                                <div class="metric-label">HTTP Requests</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">55.31ms</div>
+                                <div class="metric-label">Avg Response Time</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">87.93ms</div>
+                                <div class="metric-label">P95 Response Time</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value" style="color: #10b981">100%</div>
+                                <div class="metric-label">Success Rate</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">0%</div>
+                                <div class="metric-label">Fail Rate</div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 15px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; font-size: 0.9em; color: #6b7280;">
+                            <div><strong>Duration Details:</strong> Min: 40.59ms, Med: 47.11ms, Max: 269.08ms</div>
+                            <div><strong>Data:</strong> Received: 310 kB, Sent: 49 kB</div>
+                            <div><strong>VUs:</strong> Max: 3</div>
+                            <div><strong>Checks:</strong> 0/0 passed</div>
+                        </div>
+                    
+                    
+                    
+                </div>
+            
+                <div class="test-card">
+                    <div class="test-header">
+                        <div class="test-title">Admin Role Filter Test</div>
+                        <div class="status-badge status-passed">PASSED</div>
+                    </div>
+                    
+                    <p style="color: #6b7280;">Role Filter load test</p>
+                    <p style="color: #6b7280; font-size: 0.9em; margin-top: 5px;">File: tests/admin/role-filter.js | Duration: 31.04s</p>
+                    
+                    
+                        <div class="test-metrics">
+                            <div class="metric">
+                                <div class="metric-value">343</div>
+                                <div class="metric-label">Iterations</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">64</div>
+                                <div class="metric-label">HTTP Requests</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">55.42ms</div>
+                                <div class="metric-label">Avg Response Time</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">79.52ms</div>
+                                <div class="metric-label">P95 Response Time</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value" style="color: #10b981">100%</div>
+                                <div class="metric-label">Success Rate</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">0%</div>
+                                <div class="metric-label">Fail Rate</div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 15px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; font-size: 0.9em; color: #6b7280;">
+                            <div><strong>Duration Details:</strong> Min: 41.73ms, Med: 49.77ms, Max: 259.98ms</div>
+                            <div><strong>Data:</strong> Received: 246 kB, Sent: 49 kB</div>
+                            <div><strong>VUs:</strong> Max: 3</div>
+                            <div><strong>Checks:</strong> 0/0 passed</div>
+                        </div>
+                    
+                    
+                    
+                </div>
+            
+                <div class="test-card">
+                    <div class="test-header">
+                        <div class="test-title">Admin Role Filter and Search Email Test</div>
+                        <div class="status-badge status-passed">PASSED</div>
+                    </div>
+                    
+                    <p style="color: #6b7280;">Role Filter and Search Email load test</p>
+                    <p style="color: #6b7280; font-size: 0.9em; margin-top: 5px;">File: tests/admin/role-filter-search-email.js | Duration: 30.89s</p>
+                    
+                    
+                        <div class="test-metrics">
+                            <div class="metric">
+                                <div class="metric-value">362</div>
+                                <div class="metric-label">Iterations</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">64</div>
+                                <div class="metric-label">HTTP Requests</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">55.73ms</div>
+                                <div class="metric-label">Avg Response Time</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">87.79ms</div>
+                                <div class="metric-label">P95 Response Time</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value" style="color: #10b981">100%</div>
+                                <div class="metric-label">Success Rate</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">0%</div>
+                                <div class="metric-label">Fail Rate</div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 15px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; font-size: 0.9em; color: #6b7280;">
+                            <div><strong>Duration Details:</strong> Min: 41.54ms, Med: 47.13ms, Max: 258.38ms</div>
+                            <div><strong>Data:</strong> Received: 307 kB, Sent: 50 kB</div>
+                            <div><strong>VUs:</strong> Max: 3</div>
+                            <div><strong>Checks:</strong> 0/0 passed</div>
+                        </div>
+                    
+                    
+                    
+                </div>
+            
+                <div class="test-card">
+                    <div class="test-header">
+                        <div class="test-title">Provider List Users Test</div>
+                        <div class="status-badge status-passed">PASSED</div>
+                    </div>
+                    
+                    <p style="color: #6b7280;">Provider list users endpoint load test</p>
+                    <p style="color: #6b7280; font-size: 0.9em; margin-top: 5px;">File: tests/provider/list-users.js | Duration: 31.07s</p>
+                    
+                    
+                        <div class="test-metrics">
+                            <div class="metric">
+                                <div class="metric-value">550</div>
+                                <div class="metric-label">Iterations</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">62</div>
+                                <div class="metric-label">HTTP Requests</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">92ms</div>
+                                <div class="metric-label">Avg Response Time</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">103.51ms</div>
+                                <div class="metric-label">P95 Response Time</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value" style="color: #10b981">100%</div>
+                                <div class="metric-label">Success Rate</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">0%</div>
+                                <div class="metric-label">Fail Rate</div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 15px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; font-size: 0.9em; color: #6b7280;">
+                            <div><strong>Duration Details:</strong> Min: 76.67ms, Med: 87.51ms, Max: 250.68ms</div>
+                            <div><strong>Data:</strong> Received: 2.1 MB, Sent: 54 kB</div>
+                            <div><strong>VUs:</strong> Max: 3</div>
+                            <div><strong>Checks:</strong> 0/0 passed</div>
+                        </div>
+                    
+                    
+                    
+                </div>
+            
+                <div class="test-card">
+                    <div class="test-header">
+                        <div class="test-title">Provider status filter test</div>
+                        <div class="status-badge status-passed">PASSED</div>
+                    </div>
+                    
+                    <p style="color: #6b7280;">Provider status filter load test</p>
+                    <p style="color: #6b7280; font-size: 0.9em; margin-top: 5px;">File: tests/provider/status-filter.js | Duration: 31.45s</p>
+                    
+                    
+                        <div class="test-metrics">
+                            <div class="metric">
+                                <div class="metric-value">672</div>
+                                <div class="metric-label">Iterations</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">62</div>
+                                <div class="metric-label">HTTP Requests</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">97.85ms</div>
+                                <div class="metric-label">Avg Response Time</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">98.82ms</div>
+                                <div class="metric-label">P95 Response Time</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value" style="color: #10b981">100%</div>
+                                <div class="metric-label">Success Rate</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">0%</div>
+                                <div class="metric-label">Fail Rate</div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 15px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; font-size: 0.9em; color: #6b7280;">
+                            <div><strong>Duration Details:</strong> Min: 76.58ms, Med: 80.8ms, Max: 679.67ms</div>
+                            <div><strong>Data:</strong> Received: 2.1 MB, Sent: 53 kB</div>
+                            <div><strong>VUs:</strong> Max: 3</div>
+                            <div><strong>Checks:</strong> 0/0 passed</div>
+                        </div>
+                    
+                    
+                    
+                </div>
+            
+        </div>
+        
+        <div class="footer">
+            <p>Generated by k6 Test Runner | 11/11/2025, 5:58:04 PM</p>
+        </div>
+    </div>
+</body>
+</html>
