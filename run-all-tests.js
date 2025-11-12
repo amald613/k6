@@ -58,6 +58,21 @@ const tests = [
     name: 'Provider status filter test',
     file: 'tests/provider/status-filter.js',
     description: 'Provider status filter load test'
+  },
+  {
+    name: 'Provider priority filter test',
+    file: 'tests/provider/priority-filter.js',
+    description: 'Provider priority filter load test'
+  },
+  {
+    name: 'Provider sort test',
+    file: 'tests/provider/sort.js',
+    description: 'Provider sort load test'
+  },
+  {
+    name: 'Provider task detail test',
+    file: 'tests/provider/task-detail.js',
+    description: 'Provider task detail load test'
   }
 ];
 
