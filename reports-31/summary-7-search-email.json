@@ -1,0 +1,197 @@
+{
+    "root_group": {
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {
+            "setup": {
+                "name": "setup",
+                "path": "::setup",
+                "id": "5c0f8025f7e0b6654089e5b00e950f1a",
+                "groups": {},
+                "checks": {
+                        "✅ Login status is 200": {
+                            "name": "✅ Login status is 200",
+                            "path": "::setup::✅ Login status is 200",
+                            "id": "ef5748235dba7417d2a94f2e9e0282c6",
+                            "passes": 1,
+                            "fails": 0
+                        }
+                    }
+            }
+        },
+        "checks": {
+            "✅ Admin search-users status is 200": {
+                "fails": 0,
+                "name": "✅ Admin search-users status is 200",
+                "path": "::✅ Admin search-users status is 200",
+                "id": "5cad04a758b9628592a252489c58a90a",
+                "passes": 63
+            },
+            "✅ Response has users array": {
+                "path": "::✅ Response has users array",
+                "id": "a94bc8497824a32ee1abc462a6f27a24",
+                "passes": 63,
+                "fails": 0,
+                "name": "✅ Response has users array"
+            },
+            "✅ Search response structure is valid": {
+                "fails": 0,
+                "name": "✅ Search response structure is valid",
+                "path": "::✅ Search response structure is valid",
+                "id": "e197bc1ef037b593ef164d0c9ab09bad",
+                "passes": 63
+            },
+            "✅ Users match search criteria": {
+                "name": "✅ Users match search criteria",
+                "path": "::✅ Users match search criteria",
+                "id": "4b454d58c2203e39e4e806a489d160d8",
+                "passes": 37,
+                "fails": 0
+            }
+        },
+        "name": "",
+        "path": ""
+    },
+    "metrics": {
+        "http_req_receiving": {
+            "avg": 0.09109221874999997,
+            "min": 0.047728,
+            "med": 0.0886635,
+            "max": 0.18882,
+            "p(90)": 0.11636800000000003,
+            "p(95)": 0.12851679999999996
+        },
+        "vus_max": {
+            "value": 3,
+            "min": 3,
+            "max": 3
+        },
+        "data_received": {
+            "count": 391210,
+            "rate": 12627.954860456846
+        },
+        "http_req_duration": {
+            "p(90)": 83.1626548,
+            "p(95)": 84.67856675,
+            "avg": 56.46897962500002,
+            "min": 38.1709,
+            "med": 48.766605,
+            "max": 258.247539,
+            "thresholds": {
+                "p(95)<3000": false
+            }
+        },
+        "http_reqs": {
+            "count": 64,
+            "rate": 2.065870277010399
+        },
+        "search_operations": {
+            "rate": 2.033591053932111,
+            "count": 63,
+            "thresholds": {
+                "count>0": false
+            }
+        },
+        "http_req_duration{expected_response:true}": {
+            "avg": 56.46897962500002,
+            "min": 38.1709,
+            "med": 48.766605,
+            "max": 258.247539,
+            "p(90)": 83.1626548,
+            "p(95)": 84.67856675
+        },
+        "http_req_tls_handshaking": {
+            "max": 97.722189,
+            "p(90)": 0,
+            "p(95)": 48.58673524999968,
+            "avg": 4.633057578124999,
+            "min": 0,
+            "med": 0
+        },
+        "vus": {
+            "max": 3,
+            "value": 1,
+            "min": 1
+        },
+        "iteration_duration": {
+            "p(90)": 1084.6360482,
+            "p(95)": 1088.8012019,
+            "avg": 1059.0175558095239,
+            "min": 1038.640587,
+            "med": 1049.462909,
+            "max": 1189.883757
+        },
+        "http_req_blocked": {
+            "avg": 7.300324140625002,
+            "min": 0.003166,
+            "med": 0.005581,
+            "max": 170.141212,
+            "p(90)": 0.009014000000000001,
+            "p(95)": 72.45053819999951
+        },
+        "http_req_failed": {
+            "passes": 0,
+            "fails": 64,
+            "value": 0
+        },
+        "api_failures": {
+            "count": 0,
+            "rate": 0,
+            "thresholds": {
+                "count<5": false
+            }
+        },
+        "http_req_sending": {
+            "avg": 0.03280434375,
+            "min": 0.011872,
+            "med": 0.029845,
+            "max": 0.10104,
+            "p(90)": 0.04723700000000003,
+            "p(95)": 0.05637239999999999
+        },
+        "checks": {
+            "passes": 227,
+            "fails": 0,
+            "thresholds": {
+                "rate>0.95": false
+            },
+            "value": 1
+        },
+        "http_req_connecting": {
+            "avg": 2.262286984375,
+            "min": 0,
+            "med": 0,
+            "max": 47.131968,
+            "p(90)": 0,
+            "p(95)": 23.78989349999984
+        },
+        "data_sent": {
+            "count": 48838,
+            "rate": 1576.452696697404
+        },
+        "iterations": {
+            "count": 63,
+            "rate": 2.033591053932111
+        },
+        "successful_requests": {
+            "passes": 63,
+            "fails": 0,
+            "thresholds": {
+                "rate>0.95": false
+            },
+            "value": 1
+        },
+        "http_req_waiting": {
+            "p(95)": 84.55142535,
+            "avg": 56.345083062499974,
+            "min": 38.086613,
+            "med": 48.626870499999995,
+            "max": 258.040585,
+            "p(90)": 83.0058941
+        }
+    },
+    "setup_data": {
+        "sessionCookie": "__Secure-better-auth.session_token=uht9nfeEMx9UcAq2qB0P5chURlKqYu1c.%2Fnofh8qcV7pUdQ6VzoCajbFC0%2FZp0z4mATxR76mDhuE%3D",
+        "token": "uht9nfeEMx9UcAq2qB0P5chURlKqYu1c",
+        "userId": "mHe2a4J4yxEBTzW2M0lhSliJzoeRclIx"
+    }
+}
