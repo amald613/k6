@@ -1,0 +1,249 @@
+{
+    "setup_data": {
+        "userEmail": "testprovider@gmail.com",
+        "userId": "yEkCmDnrgxxxwwqAtqQe9pIXWoF8QgT8",
+        "userRole": null,
+        "sessionCookie": "__Secure-better-auth.session_token=V4TkoHhOsOyQkKK1ty9JWoLVllHeMDoW.w3WKdFZztfWy30%2BAWT8nf5tCxrQdn9g9X9sFZPlriFg%3D",
+        "token": "V4TkoHhOsOyQkKK1ty9JWoLVllHeMDoW"
+    },
+    "root_group": {
+        "name": "",
+        "path": "",
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {
+            "setup": {
+                "name": "setup",
+                "path": "::setup",
+                "id": "5c0f8025f7e0b6654089e5b00e950f1a",
+                "groups": {},
+                "checks": {
+                        "✅ Provider Login status is 200": {
+                            "name": "✅ Provider Login status is 200",
+                            "path": "::setup::✅ Provider Login status is 200",
+                            "id": "f25c9fe94ac5469c04c6fa8b42466767",
+                            "passes": 1,
+                            "fails": 0
+                        }
+                    }
+            }
+        },
+        "checks": {
+            "✅ Filtered RSC status is 200": {
+                "name": "✅ Filtered RSC status is 200",
+                "path": "::✅ Filtered RSC status is 200",
+                "id": "77099928e506e9901afa1b05bd981397",
+                "passes": 60,
+                "fails": 0
+            },
+            "✅ Response contains RSC format": {
+                "fails": 0,
+                "name": "✅ Response contains RSC format",
+                "path": "::✅ Response contains RSC format",
+                "id": "230a898fa9dfa0dbed1233df591ab3bd",
+                "passes": 60
+            },
+            "✅ Response includes status filter": {
+                "fails": 0,
+                "name": "✅ Response includes status filter",
+                "path": "::✅ Response includes status filter",
+                "id": "edceea1ca6a59c96ebe34e25a86ac66b",
+                "passes": 60
+            },
+            "✅ Response has AI Draft tasks": {
+                "fails": 0,
+                "name": "✅ Response has AI Draft tasks",
+                "path": "::✅ Response has AI Draft tasks",
+                "id": "4b89c06e5f2cdbd7ab4bf7c3ee0fe05f",
+                "passes": 60
+            },
+            "✅ Response includes task data": {
+                "name": "✅ Response includes task data",
+                "path": "::✅ Response includes task data",
+                "id": "cfb7f1abc645032f78620942be4508ad",
+                "passes": 60,
+                "fails": 0
+            },
+            "✅ Response time under 3s": {
+                "path": "::✅ Response time under 3s",
+                "id": "19037091d6024770979a95a8e1d7234c",
+                "passes": 60,
+                "fails": 0,
+                "name": "✅ Response time under 3s"
+            },
+            "✅ Contains loading skeleton": {
+                "fails": 0,
+                "name": "✅ Contains loading skeleton",
+                "path": "::✅ Contains loading skeleton",
+                "id": "32a24c641c24883a917a6b14bf6637a8",
+                "passes": 60
+            },
+            "✅ Contains filtered task data": {
+                "name": "✅ Contains filtered task data",
+                "path": "::✅ Contains filtered task data",
+                "id": "8c8afd6fb901a354a0c398df083e46d7",
+                "passes": 60,
+                "fails": 0
+            },
+            "✅ Contains provider data": {
+                "path": "::✅ Contains provider data",
+                "id": "a0f7a10f6f324a2087f9d8769b2d1250",
+                "passes": 60,
+                "fails": 0,
+                "name": "✅ Contains provider data"
+            },
+            "✅ Has correct filter arguments": {
+                "fails": 0,
+                "name": "✅ Has correct filter arguments",
+                "path": "::✅ Has correct filter arguments",
+                "id": "87fd6e4c459b6e328d1f12f47c13548c",
+                "passes": 60
+            },
+            "✅ Proper RSC content type": {
+                "fails": 0,
+                "name": "✅ Proper RSC content type",
+                "path": "::✅ Proper RSC content type",
+                "id": "9bcaab0858bd88d1284a44cd4826b85e",
+                "passes": 60
+            }
+        }
+    },
+    "metrics": {
+        "http_req_sending": {
+            "min": 0.013255,
+            "med": 0.030086,
+            "max": 0.120315,
+            "p(90)": 0.056044,
+            "p(95)": 0.063859,
+            "avg": 0.034711803278688516
+        },
+        "http_req_waiting": {
+            "avg": 103.57475272131148,
+            "min": 85.201148,
+            "med": 97.55072,
+            "max": 286.778763,
+            "p(90)": 108.562671,
+            "p(95)": 147.477865
+        },
+        "http_req_duration": {
+            "avg": 103.86483167213117,
+            "min": 85.687764,
+            "med": 97.778613,
+            "max": 286.977414,
+            "p(90)": 108.756322,
+            "p(95)": 147.72262,
+            "thresholds": {
+                "p(95)<3000": false
+            }
+        },
+        "successful_requests": {
+            "fails": 0,
+            "passes": 60,
+            "thresholds": {
+                "rate>0.95": false
+            },
+            "value": 1
+        },
+        "iteration_duration": {
+            "p(90)": 1114.6748694,
+            "p(95)": 1166.7929091499998,
+            "avg": 1108.5346956,
+            "min": 1086.784397,
+            "med": 1098.6604505,
+            "max": 1394.275434
+        },
+        "iterations": {
+            "count": 60,
+            "rate": 1.9166137340917402
+        },
+        "http_req_blocked": {
+            "med": 0.00538,
+            "max": 124.74263,
+            "p(90)": 0.006302,
+            "p(95)": 105.407623,
+            "avg": 7.841852049180329,
+            "min": 0.003717
+        },
+        "http_req_receiving": {
+            "avg": 0.2553671475409836,
+            "min": 0.084798,
+            "med": 0.171072,
+            "max": 1.14817,
+            "p(90)": 0.530373,
+            "p(95)": 0.841593
+        },
+        "data_sent": {
+            "count": 51929,
+            "rate": 1658.7972432941663
+        },
+        "vus": {
+            "value": 1,
+            "min": 1,
+            "max": 3
+        },
+        "data_received": {
+            "count": 2002588,
+            "rate": 63969.7944087885
+        },
+        "http_req_failed": {
+            "passes": 0,
+            "fails": 61,
+            "value": 0
+        },
+        "rsc_response_time": {
+            "count": 6445,
+            "rate": 205.87625860368775
+        },
+        "http_req_connecting": {
+            "max": 41.729756,
+            "p(90)": 0,
+            "p(95)": 34.487755,
+            "avg": 2.4711488360655736,
+            "min": 0,
+            "med": 0
+        },
+        "api_failures": {
+            "count": 0,
+            "rate": 0,
+            "thresholds": {
+                "count<5": false
+            }
+        },
+        "http_req_duration{expected_response:true}": {
+            "p(95)": 147.72262,
+            "avg": 103.86483167213117,
+            "min": 85.687764,
+            "med": 97.778613,
+            "max": 286.977414,
+            "p(90)": 108.756322
+        },
+        "vus_max": {
+            "max": 3,
+            "value": 3,
+            "min": 3
+        },
+        "http_req_tls_handshaking": {
+            "avg": 5.058766360655738,
+            "min": 0,
+            "med": 0,
+            "max": 83.275071,
+            "p(90)": 0,
+            "p(95)": 70.566145
+        },
+        "checks": {
+            "passes": 661,
+            "fails": 0,
+            "thresholds": {
+                "rate>0.95": false
+            },
+            "value": 1
+        },
+        "filtered_tasks_count": {
+            "count": 120,
+            "rate": 3.8332274681834804
+        },
+        "http_reqs": {
+            "count": 61,
+            "rate": 1.9485572963266025
+        }
+    }
+}
