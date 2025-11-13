@@ -1,0 +1,249 @@
+{
+    "root_group": {
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {
+            "setup": {
+                "id": "5c0f8025f7e0b6654089e5b00e950f1a",
+                "groups": {},
+                "checks": {
+                        "✅ Provider Login status is 200": {
+                            "id": "f25c9fe94ac5469c04c6fa8b42466767",
+                            "passes": 1,
+                            "fails": 0,
+                            "name": "✅ Provider Login status is 200",
+                            "path": "::setup::✅ Provider Login status is 200"
+                        }
+                    },
+                "name": "setup",
+                "path": "::setup"
+            }
+        },
+        "checks": {
+            "✅ Filtered RSC status is 200": {
+                "id": "77099928e506e9901afa1b05bd981397",
+                "passes": 60,
+                "fails": 0,
+                "name": "✅ Filtered RSC status is 200",
+                "path": "::✅ Filtered RSC status is 200"
+            },
+            "✅ Response contains RSC format": {
+                "fails": 0,
+                "name": "✅ Response contains RSC format",
+                "path": "::✅ Response contains RSC format",
+                "id": "230a898fa9dfa0dbed1233df591ab3bd",
+                "passes": 60
+            },
+            "✅ Response includes status filter": {
+                "path": "::✅ Response includes status filter",
+                "id": "edceea1ca6a59c96ebe34e25a86ac66b",
+                "passes": 60,
+                "fails": 0,
+                "name": "✅ Response includes status filter"
+            },
+            "✅ Response has AI Draft tasks": {
+                "path": "::✅ Response has AI Draft tasks",
+                "id": "4b89c06e5f2cdbd7ab4bf7c3ee0fe05f",
+                "passes": 60,
+                "fails": 0,
+                "name": "✅ Response has AI Draft tasks"
+            },
+            "✅ Response includes task data": {
+                "path": "::✅ Response includes task data",
+                "id": "cfb7f1abc645032f78620942be4508ad",
+                "passes": 60,
+                "fails": 0,
+                "name": "✅ Response includes task data"
+            },
+            "✅ Response time under 3s": {
+                "fails": 0,
+                "name": "✅ Response time under 3s",
+                "path": "::✅ Response time under 3s",
+                "id": "19037091d6024770979a95a8e1d7234c",
+                "passes": 60
+            },
+            "✅ Contains loading skeleton": {
+                "fails": 0,
+                "name": "✅ Contains loading skeleton",
+                "path": "::✅ Contains loading skeleton",
+                "id": "32a24c641c24883a917a6b14bf6637a8",
+                "passes": 60
+            },
+            "✅ Contains filtered task data": {
+                "path": "::✅ Contains filtered task data",
+                "id": "8c8afd6fb901a354a0c398df083e46d7",
+                "passes": 60,
+                "fails": 0,
+                "name": "✅ Contains filtered task data"
+            },
+            "✅ Contains provider data": {
+                "name": "✅ Contains provider data",
+                "path": "::✅ Contains provider data",
+                "id": "a0f7a10f6f324a2087f9d8769b2d1250",
+                "passes": 60,
+                "fails": 0
+            },
+            "✅ Has correct filter arguments": {
+                "path": "::✅ Has correct filter arguments",
+                "id": "87fd6e4c459b6e328d1f12f47c13548c",
+                "passes": 60,
+                "fails": 0,
+                "name": "✅ Has correct filter arguments"
+            },
+            "✅ Proper RSC content type": {
+                "path": "::✅ Proper RSC content type",
+                "id": "9bcaab0858bd88d1284a44cd4826b85e",
+                "passes": 60,
+                "fails": 0,
+                "name": "✅ Proper RSC content type"
+            }
+        },
+        "name": "",
+        "path": ""
+    },
+    "metrics": {
+        "http_req_sending": {
+            "avg": 0.023085852459016388,
+            "min": 0.01097,
+            "med": 0.020729,
+            "max": 0.068287,
+            "p(90)": 0.031548,
+            "p(95)": 0.038211
+        },
+        "data_received": {
+            "count": 2002613,
+            "rate": 64668.44006498331
+        },
+        "http_req_blocked": {
+            "max": 125.082927,
+            "p(90)": 0.006312,
+            "p(95)": 94.184201,
+            "avg": 7.399718213114753,
+            "min": 0.002415,
+            "med": 0.003747
+        },
+        "vus": {
+            "value": 1,
+            "min": 1,
+            "max": 3
+        },
+        "successful_requests": {
+            "passes": 60,
+            "fails": 0,
+            "thresholds": {
+                "rate>0.95": false
+            },
+            "value": 1
+        },
+        "http_req_failed": {
+            "passes": 0,
+            "fails": 61,
+            "value": 0
+        },
+        "http_req_duration": {
+            "avg": 97.84837483606557,
+            "min": 77.496068,
+            "med": 97.927928,
+            "max": 282.56415,
+            "p(90)": 102.918703,
+            "p(95)": 111.896061,
+            "thresholds": {
+                "p(95)<3000": false
+            }
+        },
+        "http_req_duration{expected_response:true}": {
+            "avg": 97.84837483606557,
+            "min": 77.496068,
+            "med": 97.927928,
+            "max": 282.56415,
+            "p(90)": 102.918703,
+            "p(95)": 111.896061
+        },
+        "http_req_waiting": {
+            "avg": 97.47590024590164,
+            "min": 77.283182,
+            "med": 97.745586,
+            "max": 282.346958,
+            "p(90)": 102.735973,
+            "p(95)": 110.789701
+        },
+        "http_req_receiving": {
+            "min": 0.055413,
+            "med": 0.178481,
+            "max": 4.835205,
+            "p(90)": 0.63572,
+            "p(95)": 1.088366,
+            "avg": 0.349388737704918
+        },
+        "rsc_response_time": {
+            "count": 6062,
+            "rate": 195.75428885857067
+        },
+        "data_sent": {
+            "count": 51929,
+            "rate": 1676.8928515567004
+        },
+        "http_req_connecting": {
+            "avg": 2.4224568524590158,
+            "min": 0,
+            "med": 0,
+            "max": 41.173637,
+            "p(90)": 0,
+            "p(95)": 31.434523
+        },
+        "vus_max": {
+            "value": 3,
+            "min": 3,
+            "max": 3
+        },
+        "iterations": {
+            "count": 60,
+            "rate": 1.9375218296790235
+        },
+        "http_req_tls_handshaking": {
+            "min": 0,
+            "med": 0,
+            "max": 83.846774,
+            "p(90)": 0,
+            "p(95)": 62.688113,
+            "avg": 4.939713393442623
+        },
+        "filtered_tasks_count": {
+            "count": 120,
+            "rate": 3.875043659358047
+        },
+        "checks": {
+            "passes": 661,
+            "fails": 0,
+            "thresholds": {
+                "rate>0.95": false
+            },
+            "value": 1
+        },
+        "iteration_duration": {
+            "avg": 1102.0565502999998,
+            "min": 1078.796399,
+            "med": 1098.8393765,
+            "max": 1378.023631,
+            "p(90)": 1106.1196506,
+            "p(95)": 1131.8546248999999
+        },
+        "api_failures": {
+            "count": 0,
+            "rate": 0,
+            "thresholds": {
+                "count<5": false
+            }
+        },
+        "http_reqs": {
+            "count": 61,
+            "rate": 1.969813860173674
+        }
+    },
+    "setup_data": {
+        "userRole": null,
+        "sessionCookie": "__Secure-better-auth.session_token=qgKAP4TzZ9FdvyxZCUYSraRrAoMmZgOR.XUUhkTkb%2F9doez1uj4xm7QSEJYOzMKULd3vfEKSrNWg%3D",
+        "token": "qgKAP4TzZ9FdvyxZCUYSraRrAoMmZgOR",
+        "userEmail": "testprovider@gmail.com",
+        "userId": "yEkCmDnrgxxxwwqAtqQe9pIXWoF8QgT8"
+    }
+}
