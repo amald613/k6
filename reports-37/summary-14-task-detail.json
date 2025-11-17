@@ -1,0 +1,261 @@
+{
+    "root_group": {
+        "name": "",
+        "path": "",
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {
+            "setup": {
+                "name": "setup",
+                "path": "::setup",
+                "id": "5c0f8025f7e0b6654089e5b00e950f1a",
+                "groups": {},
+                "checks": {
+                        "✅ Provider Login status is 200": {
+                            "passes": 1,
+                            "fails": 0,
+                            "name": "✅ Provider Login status is 200",
+                            "path": "::setup::✅ Provider Login status is 200",
+                            "id": "f25c9fe94ac5469c04c6fa8b42466767"
+                        }
+                    }
+            }
+        },
+        "checks": {
+            "✅ Task Detail RSC status is 200": {
+                "path": "::✅ Task Detail RSC status is 200",
+                "id": "f83510807dcab0804dc0cc2267c7951d",
+                "passes": 63,
+                "fails": 0,
+                "name": "✅ Task Detail RSC status is 200"
+            },
+            "✅ Response contains RSC format": {
+                "name": "✅ Response contains RSC format",
+                "path": "::✅ Response contains RSC format",
+                "id": "230a898fa9dfa0dbed1233df591ab3bd",
+                "passes": 63,
+                "fails": 0
+            },
+            "✅ Response includes task ID": {
+                "name": "✅ Response includes task ID",
+                "path": "::✅ Response includes task ID",
+                "id": "fbfb70dd802fba25ac616ce640c10c57",
+                "passes": 63,
+                "fails": 0
+            },
+            "✅ Response has loading state": {
+                "fails": 0,
+                "name": "✅ Response has loading state",
+                "path": "::✅ Response has loading state",
+                "id": "3b1df386081b2701e3031640b2ca9d0a",
+                "passes": 63
+            },
+            "✅ Response includes metadata": {
+                "name": "✅ Response includes metadata",
+                "path": "::✅ Response includes metadata",
+                "id": "1e0a05ae2ec00a8f6fddd64f550d6c8a",
+                "passes": 63,
+                "fails": 0
+            },
+            "✅ Response has task detail component": {
+                "name": "✅ Response has task detail component",
+                "path": "::✅ Response has task detail component",
+                "id": "80be37495745ef53403c7949e2e5feb1",
+                "passes": 63,
+                "fails": 0
+            },
+            "✅ Response time under 3s": {
+                "name": "✅ Response time under 3s",
+                "path": "::✅ Response time under 3s",
+                "id": "19037091d6024770979a95a8e1d7234c",
+                "passes": 63,
+                "fails": 0
+            },
+            "✅ Contains task ID in response": {
+                "name": "✅ Contains task ID in response",
+                "path": "::✅ Contains task ID in response",
+                "id": "1adff50440f5f5b842d57be871d05ea3",
+                "passes": 63,
+                "fails": 0
+            },
+            "✅ Has task detail component structure": {
+                "id": "87b3d7dbfbb6757f5246c3ce13a88a95",
+                "passes": 63,
+                "fails": 0,
+                "name": "✅ Has task detail component structure",
+                "path": "::✅ Has task detail component structure"
+            },
+            "✅ Has suspense boundary": {
+                "name": "✅ Has suspense boundary",
+                "path": "::✅ Has suspense boundary",
+                "id": "97ab9fb7ecdb73e4ec3c332112ac320d",
+                "passes": 63,
+                "fails": 0
+            },
+            "✅ Has metadata components": {
+                "name": "✅ Has metadata components",
+                "path": "::✅ Has metadata components",
+                "id": "300dca736968c1f1d80f2085c3b255ea",
+                "passes": 63,
+                "fails": 0
+            },
+            "✅ Proper RSC content type": {
+                "passes": 63,
+                "fails": 0,
+                "name": "✅ Proper RSC content type",
+                "path": "::✅ Proper RSC content type",
+                "id": "9bcaab0858bd88d1284a44cd4826b85e"
+            }
+        }
+    },
+    "metrics": {
+        "successful_requests": {
+            "passes": 63,
+            "fails": 0,
+            "thresholds": {
+                "rate>0.95": false
+            },
+            "value": 1
+        },
+        "http_req_duration{expected_response:true}": {
+            "min": 40.232173,
+            "med": 43.0360985,
+            "max": 324.169502,
+            "p(90)": 50.3909069,
+            "p(95)": 53.481385849999995,
+            "avg": 49.423359015624975
+        },
+        "http_req_connecting": {
+            "avg": 2.177741578125,
+            "min": 0,
+            "med": 0,
+            "max": 39.485879,
+            "p(90)": 0,
+            "p(95)": 26.248198899999824
+        },
+        "http_req_tls_handshaking": {
+            "avg": 4.47699759375,
+            "min": 0,
+            "med": 0,
+            "max": 81.876067,
+            "p(90)": 0,
+            "p(95)": 53.79654164999965
+        },
+        "checks": {
+            "passes": 757,
+            "fails": 0,
+            "thresholds": {
+                "rate>0.95": false
+            },
+            "value": 1
+        },
+        "http_req_duration": {
+            "avg": 49.423359015624975,
+            "min": 40.232173,
+            "med": 43.0360985,
+            "max": 324.169502,
+            "p(90)": 50.3909069,
+            "p(95)": 53.481385849999995,
+            "thresholds": {
+                "p(95)<3000": false
+            }
+        },
+        "http_req_waiting": {
+            "min": 40.141764,
+            "med": 42.880677500000004,
+            "max": 323.923577,
+            "p(90)": 50.2634625,
+            "p(95)": 53.27732305,
+            "avg": 49.27500664062501
+        },
+        "vus_max": {
+            "max": 3,
+            "value": 3,
+            "min": 3
+        },
+        "rsc_response_time": {
+            "count": 3152,
+            "rate": 102.25587875978945
+        },
+        "http_req_sending": {
+            "max": 0.122434,
+            "p(90)": 0.042114,
+            "p(95)": 0.08867554999999992,
+            "avg": 0.038594750000000004,
+            "min": 0.023565,
+            "med": 0.034329
+        },
+        "vus": {
+            "value": 1,
+            "min": 1,
+            "max": 3
+        },
+        "data_received": {
+            "count": 166071,
+            "rate": 5387.606612156407
+        },
+        "http_req_receiving": {
+            "med": 0.097793,
+            "max": 0.741337,
+            "p(90)": 0.1304863,
+            "p(95)": 0.13941629999999997,
+            "avg": 0.10975762500000003,
+            "min": 0.05872
+        },
+        "iterations": {
+            "count": 63,
+            "rate": 2.0438199117597513
+        },
+        "http_reqs": {
+            "count": 64,
+            "rate": 2.0762614976606995
+        },
+        "data_sent": {
+            "count": 52613,
+            "rate": 1706.8491590065998
+        },
+        "http_req_failed": {
+            "passes": 0,
+            "fails": 64,
+            "value": 0
+        },
+        "task_detail_requests": {
+            "count": 63,
+            "rate": 2.0438199117597513
+        },
+        "iteration_duration": {
+            "avg": 1051.0145376825392,
+            "min": 1040.723174,
+            "med": 1044.146506,
+            "max": 1172.753347,
+            "p(90)": 1052.949507,
+            "p(95)": 1057.2420280000001
+        },
+        "http_req_blocked": {
+            "p(95)": 80.13669574999946,
+            "avg": 6.767750656250002,
+            "min": 0.00535,
+            "med": 0.006738,
+            "max": 127.803508,
+            "p(90)": 0.014702800000000007
+        },
+        "api_failures": {
+            "count": 0,
+            "rate": 0,
+            "thresholds": {
+                "count<5": false
+            }
+        }
+    },
+    "setup_data": {
+        "userId": "yEkCmDnrgxxxwwqAtqQe9pIXWoF8QgT8",
+        "userRole": null,
+        "sessionCookie": "__Secure-better-auth.session_token=DDMzah5kTKQPCa1nCdsARdQyL1s3FU2U.OPpx3TFNOarVu3h6Meuv7DQ9aYoYL%2BwDZlc4FhoWmKY%3D",
+        "taskIds": [
+            "jh7bcj36tx9sexa68sh6yaca397v59s1",
+            "jh76vbcg78q2eg65v2dejhsnf57s2m6t",
+            "jh70pfdnsftebg49xdf4985fg97s22ns"
+        ],
+        "token": "DDMzah5kTKQPCa1nCdsARdQyL1s3FU2U",
+        "userEmail": "testprovider@gmail.com"
+    }
+}
