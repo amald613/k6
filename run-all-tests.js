@@ -129,18 +129,32 @@ tests.forEach((test, index) => {
   } catch (error) {
     const duration = ((Date.now() - startTime) / 1000).toFixed(2);
     
+    // Capture full error details
+    const errorDetails = {
+      message: error.message || 'Unknown error',
+      stdout: error.stdout ? error.stdout.toString() : '',
+      stderr: error.stderr ? error.stderr.toString() : '',
+      code: error.code || null,
+      signal: error.signal || null
+    };
+    
     results.push({
       name: test.name,
       file: test.file,
       description: test.description,
       status: 'FAILED',
       duration: duration,
-      error: error.message,
+      error: errorDetails.message,
+      errorDetails: errorDetails,
       timestamp: new Date().toISOString(),
       metrics: null // Explicitly set to null for failed tests
     });
     
     console.log(`❌ ${test.name} failed in ${duration}s`);
+    console.log(`   Error: ${errorDetails.message}`);
+    if (errorDetails.stderr) {
+      console.log(`   stderr: ${errorDetails.stderr.substring(0, 200)}...`);
+    }
   }
 });
 
@@ -287,6 +301,18 @@ function generateHTMLReport(results, timestamp) {
   });
 
   avgResponseTime = testCount > 0 ? (avgResponseTime / testCount).toFixed(2) : 0;
+
+  // Helper function to escape HTML
+  function escapeHtml(text) {
+    const map = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#039;'
+    };
+    return text.replace(/[&<>"']/g, m => map[m]);
+  }
 
   const html = `<!DOCTYPE html>
 <html lang="en">
@@ -446,6 +472,23 @@ function generateHTMLReport(results, timestamp) {
             border-radius: 5px;
             color: #991b1b;
         }
+        details {
+            margin: 10px 0;
+        }
+        details summary {
+            cursor: pointer;
+            font-weight: 600;
+            padding: 5px;
+            user-select: none;
+        }
+        details summary:hover {
+            background: #f3f4f6;
+            border-radius: 4px;
+        }
+        pre {
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+        }
     </style>
 </head>
 <body>
@@ -548,6 +591,29 @@ function generateHTMLReport(results, timestamp) {
                     ${test.error ? `
                         <div class="error">
                             <strong>❌ Error:</strong> ${test.error}
+                            ${test.errorDetails ? `
+                                <details style="margin-top: 10px;">
+                                    <summary style="cursor: pointer; font-weight: 600; color: #991b1b;">
+                                        🔍 View Error Details
+                                    </summary>
+                                    <div style="margin-top: 10px; padding: 10px; background: #fef2f2; border-radius: 5px; font-family: monospace; font-size: 0.85em;">
+                                        ${test.errorDetails.code ? `<p><strong>Exit Code:</strong> ${test.errorDetails.code}</p>` : ''}
+                                        ${test.errorDetails.signal ? `<p><strong>Signal:</strong> ${test.errorDetails.signal}</p>` : ''}
+                                        ${test.errorDetails.stdout ? `
+                                            <details style="margin-top: 10px;">
+                                                <summary style="cursor: pointer; font-weight: 600;">Console Output (stdout)</summary>
+                                                <pre style="margin-top: 5px; padding: 10px; background: white; border: 1px solid #fecaca; border-radius: 4px; overflow-x: auto; max-height: 300px; overflow-y: auto; white-space: pre-wrap; word-wrap: break-word;">${escapeHtml(test.errorDetails.stdout)}</pre>
+                                            </details>
+                                        ` : ''}
+                                        ${test.errorDetails.stderr ? `
+                                            <details style="margin-top: 10px;">
+                                                <summary style="cursor: pointer; font-weight: 600;">Error Output (stderr)</summary>
+                                                <pre style="margin-top: 5px; padding: 10px; background: white; border: 1px solid #fecaca; border-radius: 4px; overflow-x: auto; max-height: 300px; overflow-y: auto; white-space: pre-wrap; word-wrap: break-word;">${escapeHtml(test.errorDetails.stderr)}</pre>
+                                            </details>
+                                        ` : ''}
+                                    </div>
+                                </details>
+                            ` : ''}
                         </div>
                     ` : ''}
                 </div>
