@@ -1,0 +1,197 @@
+{
+    "root_group": {
+        "name": "",
+        "path": "",
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {
+            "setup": {
+                "groups": {},
+                "checks": {
+                        "✅ Login status is 200": {
+                            "fails": 0,
+                            "name": "✅ Login status is 200",
+                            "path": "::setup::✅ Login status is 200",
+                            "id": "ef5748235dba7417d2a94f2e9e0282c6",
+                            "passes": 1
+                        }
+                    },
+                "name": "setup",
+                "path": "::setup",
+                "id": "5c0f8025f7e0b6654089e5b00e950f1a"
+            }
+        },
+        "checks": {
+            "✅ Admin search-users status is 200": {
+                "id": "5cad04a758b9628592a252489c58a90a",
+                "passes": 63,
+                "fails": 0,
+                "name": "✅ Admin search-users status is 200",
+                "path": "::✅ Admin search-users status is 200"
+            },
+            "✅ Response has users array": {
+                "passes": 63,
+                "fails": 0,
+                "name": "✅ Response has users array",
+                "path": "::✅ Response has users array",
+                "id": "a94bc8497824a32ee1abc462a6f27a24"
+            },
+            "✅ Search response structure is valid": {
+                "path": "::✅ Search response structure is valid",
+                "id": "e197bc1ef037b593ef164d0c9ab09bad",
+                "passes": 63,
+                "fails": 0,
+                "name": "✅ Search response structure is valid"
+            },
+            "✅ Users match search criteria": {
+                "name": "✅ Users match search criteria",
+                "path": "::✅ Users match search criteria",
+                "id": "4b454d58c2203e39e4e806a489d160d8",
+                "passes": 38,
+                "fails": 0
+            }
+        }
+    },
+    "metrics": {
+        "successful_requests": {
+            "fails": 0,
+            "passes": 63,
+            "thresholds": {
+                "rate>0.95": false
+            },
+            "value": 1
+        },
+        "http_req_duration": {
+            "avg": 53.47281653125001,
+            "min": 48.103756,
+            "med": 49.6226755,
+            "max": 234.76885,
+            "p(90)": 54.6210125,
+            "p(95)": 58.395998549999995,
+            "thresholds": {
+                "p(95)<3000": false
+            }
+        },
+        "iteration_duration": {
+            "avg": 1057.2228035555554,
+            "min": 1048.734689,
+            "med": 1050.802255,
+            "max": 1178.067545,
+            "p(90)": 1056.1937772,
+            "p(95)": 1072.7583968000001
+        },
+        "http_req_sending": {
+            "max": 0.130444,
+            "p(90)": 0.043213400000000006,
+            "p(95)": 0.05451549999999997,
+            "avg": 0.032787531249999995,
+            "min": 0.013285,
+            "med": 0.030442
+        },
+        "search_operations": {
+            "count": 63,
+            "rate": 2.0340726281625505,
+            "thresholds": {
+                "count>0": false
+            }
+        },
+        "http_req_blocked": {
+            "avg": 7.466920703125002,
+            "min": 0.003887,
+            "med": 0.0056255,
+            "max": 122.094978,
+            "p(90)": 0.0074997000000000015,
+            "p(95)": 100.25824024999933
+        },
+        "data_sent": {
+            "count": 47825,
+            "rate": 1544.1194197122854
+        },
+        "http_req_failed": {
+            "passes": 0,
+            "fails": 64,
+            "value": 0
+        },
+        "api_failures": {
+            "rate": 0,
+            "count": 0,
+            "thresholds": {
+                "count<5": false
+            }
+        },
+        "http_req_waiting": {
+            "min": 47.953584,
+            "med": 49.5439935,
+            "max": 234.633536,
+            "p(90)": 54.507746600000004,
+            "p(95)": 58.288166999999994,
+            "avg": 53.372464875
+        },
+        "vus": {
+            "value": 1,
+            "min": 1,
+            "max": 3
+        },
+        "http_reqs": {
+            "count": 64,
+            "rate": 2.066359495276242
+        },
+        "http_req_tls_handshaking": {
+            "p(90)": 0,
+            "p(95)": 67.17669339999955,
+            "avg": 4.997434484375,
+            "min": 0,
+            "med": 0,
+            "max": 81.488543
+        },
+        "vus_max": {
+            "value": 3,
+            "min": 3,
+            "max": 3
+        },
+        "http_req_receiving": {
+            "avg": 0.067564125,
+            "min": 0.044714,
+            "med": 0.0635895,
+            "max": 0.120205,
+            "p(90)": 0.090577,
+            "p(95)": 0.09341935
+        },
+        "checks": {
+            "passes": 228,
+            "fails": 0,
+            "thresholds": {
+                "rate>0.95": false
+            },
+            "value": 1
+        },
+        "data_received": {
+            "count": 196446,
+            "rate": 6342.625897016197
+        },
+        "iterations": {
+            "rate": 2.0340726281625505,
+            "count": 63
+        },
+        "http_req_duration{expected_response:true}": {
+            "min": 48.103756,
+            "med": 49.6226755,
+            "max": 234.76885,
+            "p(90)": 54.6210125,
+            "p(95)": 58.395998549999995,
+            "avg": 53.47281653125001
+        },
+        "http_req_connecting": {
+            "p(95)": 32.95493774999978,
+            "avg": 2.4308643125000002,
+            "min": 0,
+            "med": 0,
+            "max": 39.086547,
+            "p(90)": 0
+        }
+    },
+    "setup_data": {
+        "sessionCookie": "__Secure-better-auth.session_token=C8uPbQwmRHY0fuVBQhYLVGQU1CkIwQfn.BXk7ohZYWz3cVsTQZaGOrToggMhUgspOYuotnFz%2FBOc%3D",
+        "token": "C8uPbQwmRHY0fuVBQhYLVGQU1CkIwQfn",
+        "userId": "mHe2a4J4yxEBTzW2M0lhSliJzoeRclIx"
+    }
+}
