@@ -80,7 +80,7 @@ export default function (data) {
   const { token, sessionCookie, userId } = data;
   
   // First, get a list of users to find one to edit
-  const listUrl = `https://appv2.ezyscribe.com/api/auth/admin/list-users`;
+  const listUrl = `${CONFIG.baseUrl}/admin/list-users`;
   
   const listHeaders = {
     "Accept": "application/json",
@@ -124,7 +124,7 @@ export default function (data) {
   }
 
   // Use the exact Next.js Server Action endpoint from your original fetch
-  const editUrl = `https://appv2.ezyscribe.com/admin/dashboard/users/view?page=289&limit=10`;
+  const editUrl = `${CONFIG.Url}/admin/dashboard/users/view?page=289&limit=10`;
   
   // Prepare the exact payload format from your original fetch
   const editPayload = JSON.stringify([{
@@ -148,7 +148,7 @@ export default function (data) {
     "sec-fetch-mode": "cors",
     "sec-fetch-site": "same-origin",
     "sec-gpc": "1",
-    "referer": "https://appv2.ezyscribe.com/admin/dashboard/users/view?page=289&limit=10",
+    "referer": "${CONFIG.Url}/admin/dashboard/users/view?page=289&limit=10",
   };
 
   // Add authentication headers

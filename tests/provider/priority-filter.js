@@ -175,7 +175,7 @@ export default function (data) {
   
   // RSC endpoint for priority filtered tasks (Medium priority)
   const priorityFilter = "Medium";
-  const url = `https://appv2.ezyscribe.com/tasks?priority=${encodeURIComponent(priorityFilter)}&_rsc=${Date.now()}`;
+  const url = `${CONFIG.Url}/tasks?priority=${encodeURIComponent(priorityFilter)}&_rsc=${Date.now()}`;
   
   // Generate dynamic RSC headers with priority filter
   const headers = generateRSCHeaders(sessionCookie, priorityFilter);

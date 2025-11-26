@@ -96,7 +96,7 @@ export default function (data) {
   const limit = 10;
   
   // Build the search URL with parameters
-  const searchUrl = `https://appv2.ezyscribe.com/api/admin/users?email=${searchTerm}&page=${page}&limit=${limit}`;
+  const searchUrl = `${CONFIG.Url}/api/admin/users?email=${searchTerm}&page=${page}&limit=${limit}`;
   
   // Build headers dynamically
   const headers = {
@@ -109,7 +109,7 @@ export default function (data) {
     "sec-fetch-mode": "cors",
     "sec-fetch-site": "same-origin",
     "sec-gpc": "1",
-    "referer": "https://appv2.ezyscribe.com/admin/dashboard/users/view?page=295&limit=10",
+    "referer": "${CONFIG.Url}/admin/dashboard/users/view?page=295&limit=10",
   };
   
   // Add authentication

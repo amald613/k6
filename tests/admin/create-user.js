@@ -91,7 +91,7 @@ function generateUniqueName() {
 export default function (data) {
   const { token, sessionCookie, userId } = data;
   
-  const url = `https://appv2.ezyscribe.com/api/auth/admin/create-user`;
+  const url = `${CONFIG.baseUrl}/admin/create-user`;
   
   // Build headers with both token and cookie
   const headers = {

@@ -65,7 +65,7 @@ export function setup() {
   }
   
   // Get list of users to modify
-  const listUsersUrl = `https://appv2.ezyscribe.com/api/auth/admin/list-users`;
+  const listUsersUrl = `${CONFIG.baseUrl}/admin/list-users`;
   const headers = {
     "Accept": "application/json",
     "Authorization": `Bearer ${token}`,
@@ -116,7 +116,7 @@ function getRole(iteration) {
 export default function (data) {
   const { token, sessionCookie, userId, usersToModify } = data;
   
-  const url = `https://appv2.ezyscribe.com/api/auth/admin/set-role`;
+  const url = `${CONFIG.baseUrl}/admin/set-role`;
   
   // Build headers with both token and cookie
   const headers = {

@@ -175,7 +175,7 @@ export default function (data) {
   const taskId = taskIds[Math.floor(Math.random() * taskIds.length)];
   
   // RSC endpoint for single task detail
-  const url = `https://appv2.ezyscribe.com/tasks/${taskId}?_rsc=${Date.now()}`;
+  const url = `${CONFIG.Url}/tasks/${taskId}?_rsc=${Date.now()}`;
   
   // Generate dynamic RSC headers for task detail
   const headers = generateTaskDetailRSCHeaders(sessionCookie, taskId);

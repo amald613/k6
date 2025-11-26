@@ -78,7 +78,7 @@ export default function (data) {
   const { token, sessionCookie, userId } = data;
   
   // Exact endpoint from Postman
-  const url = `https://appv2.ezyscribe.com/api/auth/admin/list-users`;
+  const url = `${CONFIG.baseUrl}/admin/list-users`;
   
   // Build headers dynamically
   const headers = {

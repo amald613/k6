@@ -184,7 +184,7 @@ export default function (data) {
   const sortQuery = encodeURIComponent(JSON.stringify([sortConfig]));
   
   // RSC endpoint for sorted tasks
-  const url = `https://appv2.ezyscribe.com/tasks?sort=${sortQuery}&_rsc=${Date.now()}`;
+  const url = `${CONFIG.Url}/tasks?sort=${sortQuery}&_rsc=${Date.now()}`;
   
   // Generate dynamic RSC headers with sort configuration
   const headers = generateSortedRSCHeaders(sessionCookie, sortConfig);

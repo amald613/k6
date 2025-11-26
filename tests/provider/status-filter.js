@@ -170,7 +170,7 @@ export default function (data) {
   
   // RSC endpoint for filtered tasks (AI Draft status)
   const statusFilter = "AI Draft";
-  const url = `https://appv2.ezyscribe.com/tasks?status=${encodeURIComponent(statusFilter)}&_rsc=${Date.now()}`;
+  const url = `${CONFIG.Url}/tasks?status=${encodeURIComponent(statusFilter)}&_rsc=${Date.now()}`;
   
   // Generate dynamic RSC headers with status filter
   const headers = generateRSCHeaders(sessionCookie, statusFilter);

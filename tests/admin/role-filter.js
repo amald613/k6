@@ -116,7 +116,7 @@ export default function (data) {
   const limit = 10;
   
   // Build the search URL with only role parameter
-  let searchUrl = `https://appv2.ezyscribe.com/api/admin/users?page=${page}&limit=${limit}`;
+  let searchUrl = `${CONFIG.Url}/api/admin/users?page=${page}&limit=${limit}`;
   
   // Add role parameter if specified
   if (scenario.role) {
@@ -134,7 +134,7 @@ export default function (data) {
     "sec-fetch-mode": "cors",
     "sec-fetch-site": "same-origin",
     "sec-gpc": "1",
-    "referer": "https://appv2.ezyscribe.com/admin/dashboard/users/view?page=1&limit=10",
+    "referer": "${CONFIG.Url}/admin/dashboard/users/view?page=1&limit=10",
   };
   
   // Add authentication

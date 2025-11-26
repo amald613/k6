@@ -137,7 +137,7 @@ export default function (data) {
   const { token, sessionCookie, userId, userEmail, userRole } = data;
   
   // RSC endpoint for tasks
-  const url = `https://appv2.ezyscribe.com/tasks?_rsc=${Date.now()}`;
+  const url = `${CONFIG.Url}/tasks?_rsc=${Date.now()}`;
   
   // Generate dynamic RSC headers
   const headers = generateRSCHeaders(sessionCookie);
