@@ -1,0 +1,197 @@
+{
+    "metrics": {
+        "http_req_failed": {
+            "passes": 0,
+            "fails": 67,
+            "value": 0
+        },
+        "iteration_duration": {
+            "p(90)": 1031.0508315000002,
+            "p(95)": 1036.54019,
+            "avg": 1025.4780338939393,
+            "min": 1018.62933,
+            "med": 1023.794523,
+            "max": 1071.078105
+        },
+        "http_reqs": {
+            "count": 67,
+            "rate": 2.1512424276221194
+        },
+        "http_req_blocked": {
+            "p(90)": 0.0050100000000000006,
+            "p(95)": 19.389453999999883,
+            "avg": 2.0980212537313427,
+            "min": 0.002124,
+            "med": 0.003266,
+            "max": 43.838932
+        },
+        "iterations": {
+            "count": 66,
+            "rate": 2.119134331687461
+        },
+        "api_failures": {
+            "count": 0,
+            "rate": 0,
+            "thresholds": {
+                "count<5": false
+            }
+        },
+        "http_req_sending": {
+            "avg": 0.015829776119402984,
+            "min": 0.009418,
+            "med": 0.013796,
+            "max": 0.052118,
+            "p(90)": 0.022158999999999995,
+            "p(95)": 0.030488499999999988
+        },
+        "http_req_receiving": {
+            "p(95)": 0.07162079999999998,
+            "avg": 0.05189776119402986,
+            "min": 0.026399,
+            "med": 0.047148,
+            "max": 0.270387,
+            "p(90)": 0.06771479999999999
+        },
+        "vus": {
+            "value": 1,
+            "min": 1,
+            "max": 3
+        },
+        "http_req_duration": {
+            "min": 17.606651,
+            "med": 22.986541,
+            "max": 236.431436,
+            "p(90)": 28.291188,
+            "p(95)": 31.170760099999995,
+            "avg": 26.293401731343277,
+            "thresholds": {
+                "p(95)<3000": false
+            }
+        },
+        "http_req_connecting": {
+            "p(95)": 6.132896699999963,
+            "avg": 0.6479638059701491,
+            "min": 0,
+            "med": 0,
+            "max": 14.292815,
+            "p(90)": 0
+        },
+        "data_sent": {
+            "rate": 1595.1944222257036,
+            "count": 49682
+        },
+        "search_operations": {
+            "count": 66,
+            "rate": 2.119134331687461,
+            "thresholds": {
+                "count>0": false
+            }
+        },
+        "http_req_waiting": {
+            "avg": 26.225674194029853,
+            "min": 17.556327,
+            "med": 22.930703,
+            "max": 236.308806,
+            "p(90)": 28.244685399999998,
+            "p(95)": 31.108633599999994
+        },
+        "http_req_tls_handshaking": {
+            "min": 0,
+            "med": 0,
+            "max": 29.500181,
+            "p(90)": 0,
+            "p(95)": 13.157092899999919,
+            "avg": 1.4095526119402984
+        },
+        "data_received": {
+            "count": 216750,
+            "rate": 6959.42979383723
+        },
+        "successful_requests": {
+            "fails": 0,
+            "passes": 66,
+            "thresholds": {
+                "rate>0.95": false
+            },
+            "value": 1
+        },
+        "http_req_duration{expected_response:true}": {
+            "min": 17.606651,
+            "med": 22.986541,
+            "max": 236.431436,
+            "p(90)": 28.291188,
+            "p(95)": 31.170760099999995,
+            "avg": 26.293401731343277
+        },
+        "vus_max": {
+            "max": 3,
+            "value": 3,
+            "min": 3
+        },
+        "checks": {
+            "passes": 234,
+            "fails": 0,
+            "thresholds": {
+                "rate>0.95": false
+            },
+            "value": 1
+        }
+    },
+    "setup_data": {
+        "userId": "mHe2a4J4yxEBTzW2M0lhSliJzoeRclIx",
+        "sessionCookie": "__Secure-better-auth.session_token=qWQNHZ1EB8zTAH6cXMzePNGSv3ox5Pqr.m8resgYIrqKj9Esvd1Qq7oq6AepUcRHlhvnYjvQosQM%3D",
+        "token": "qWQNHZ1EB8zTAH6cXMzePNGSv3ox5Pqr"
+    },
+    "root_group": {
+        "name": "",
+        "path": "",
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {
+            "setup": {
+                "name": "setup",
+                "path": "::setup",
+                "id": "5c0f8025f7e0b6654089e5b00e950f1a",
+                "groups": {},
+                "checks": {
+                        "✅ Login status is 200": {
+                            "path": "::setup::✅ Login status is 200",
+                            "id": "ef5748235dba7417d2a94f2e9e0282c6",
+                            "passes": 1,
+                            "fails": 0,
+                            "name": "✅ Login status is 200"
+                        }
+                    }
+            }
+        },
+        "checks": {
+            "✅ Admin search-users status is 200": {
+                "name": "✅ Admin search-users status is 200",
+                "path": "::✅ Admin search-users status is 200",
+                "id": "5cad04a758b9628592a252489c58a90a",
+                "passes": 66,
+                "fails": 0
+            },
+            "✅ Response has users array": {
+                "name": "✅ Response has users array",
+                "path": "::✅ Response has users array",
+                "id": "a94bc8497824a32ee1abc462a6f27a24",
+                "passes": 66,
+                "fails": 0
+            },
+            "✅ Search response structure is valid": {
+                "path": "::✅ Search response structure is valid",
+                "id": "e197bc1ef037b593ef164d0c9ab09bad",
+                "passes": 66,
+                "fails": 0,
+                "name": "✅ Search response structure is valid"
+            },
+            "✅ Users match search criteria": {
+                "path": "::✅ Users match search criteria",
+                "id": "4b454d58c2203e39e4e806a489d160d8",
+                "passes": 35,
+                "fails": 0,
+                "name": "✅ Users match search criteria"
+            }
+        }
+    }
+}
