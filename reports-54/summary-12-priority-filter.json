@@ -1,0 +1,267 @@
+{
+    "metrics": {
+        "http_req_receiving": {
+            "max": 1.147714,
+            "p(90)": 0.5315603999999999,
+            "p(95)": 0.7059617499999995,
+            "avg": 0.24300974193548383,
+            "min": 0.066444,
+            "med": 0.16104249999999998
+        },
+        "rsc_response_time": {
+            "count": 6423,
+            "rate": 204.4020133170732
+        },
+        "iterations": {
+            "count": 61,
+            "rate": 1.9412303927045718
+        },
+        "data_sent": {
+            "count": 52072,
+            "rate": 1657.1106394903682
+        },
+        "checks": {
+            "passes": 794,
+            "fails": 0,
+            "thresholds": {
+                "rate>0.95": false
+            },
+            "value": 1
+        },
+        "http_req_tls_handshaking": {
+            "max": 87.454687,
+            "p(90)": 0,
+            "p(95)": 74.96535404999966,
+            "avg": 5.23946885483871,
+            "min": 0,
+            "med": 0
+        },
+        "http_req_waiting": {
+            "med": 95.31577200000001,
+            "max": 280.650128,
+            "p(90)": 100.909012,
+            "p(95)": 112.10209789999998,
+            "avg": 101.44155120967741,
+            "min": 92.620604
+        },
+        "http_req_duration": {
+            "med": 95.51094800000001,
+            "max": 280.844797,
+            "p(90)": 101.9924817,
+            "p(95)": 112.37134329999998,
+            "avg": 101.71370867741936,
+            "min": 92.784976,
+            "thresholds": {
+                "p(95)<3000": false
+            }
+        },
+        "vus_max": {
+            "value": 3,
+            "min": 3,
+            "max": 3
+        },
+        "api_failures": {
+            "count": 0,
+            "rate": 0,
+            "thresholds": {
+                "count<5": false
+            }
+        },
+        "http_req_failed": {
+            "passes": 0,
+            "fails": 62,
+            "value": 0
+        },
+        "successful_requests": {
+            "passes": 61,
+            "fails": 0,
+            "thresholds": {
+                "rate>0.95": false
+            },
+            "value": 1
+        },
+        "http_req_duration{expected_response:true}": {
+            "min": 92.784976,
+            "med": 95.51094800000001,
+            "max": 280.844797,
+            "p(90)": 101.9924817,
+            "p(95)": 112.37134329999998,
+            "avg": 101.71370867741936
+        },
+        "http_req_blocked": {
+            "avg": 7.791345499999999,
+            "min": 0.003246,
+            "med": 0.0051595,
+            "max": 128.44901,
+            "p(90)": 0.007133899999999999,
+            "p(95)": 111.79412394999949
+        },
+        "http_req_sending": {
+            "min": 0.014867,
+            "med": 0.0277765,
+            "max": 0.066303,
+            "p(90)": 0.038110899999999996,
+            "p(95)": 0.04901684999999998,
+            "avg": 0.029147725806451613
+        },
+        "priority_tasks_count": {
+            "count": 61,
+            "rate": 1.9412303927045718
+        },
+        "http_reqs": {
+            "count": 62,
+            "rate": 1.9730538417653025
+        },
+        "vus": {
+            "value": 1,
+            "min": 1,
+            "max": 3
+        },
+        "iteration_duration": {
+            "max": 1401.344858,
+            "p(90)": 1104.052811,
+            "p(95)": 1114.097607,
+            "avg": 1106.5562407704913,
+            "min": 1093.65261,
+            "med": 1096.583094
+        },
+        "http_req_connecting": {
+            "avg": 2.509048548387097,
+            "min": 0,
+            "med": 0,
+            "max": 39.190163,
+            "p(90)": 0,
+            "p(95)": 36.727341049999836
+        },
+        "data_received": {
+            "count": 1984621,
+            "rate": 63157.48529835639
+        },
+        "filtered_tasks_count": {
+            "count": 61,
+            "rate": 1.9412303927045718
+        }
+    },
+    "setup_data": {
+        "sessionCookie": "__Secure-better-auth.session_token=Z1QHYvCWy2ZZoc7x5lL47nLIFG8JXaXz.FFG8KTL739RjV2LMYGeyI6fHxFkDvSyz00KWOucUkBc%3D",
+        "token": "Z1QHYvCWy2ZZoc7x5lL47nLIFG8JXaXz",
+        "userEmail": "testprovider@gmail.com",
+        "userId": "yEkCmDnrgxxxwwqAtqQe9pIXWoF8QgT8",
+        "userRole": null
+    },
+    "root_group": {
+        "name": "",
+        "path": "",
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {
+            "setup": {
+                "id": "5c0f8025f7e0b6654089e5b00e950f1a",
+                "groups": {},
+                "checks": {
+                        "✅ Provider Login status is 200": {
+                            "path": "::setup::✅ Provider Login status is 200",
+                            "id": "f25c9fe94ac5469c04c6fa8b42466767",
+                            "passes": 1,
+                            "fails": 0,
+                            "name": "✅ Provider Login status is 200"
+                        }
+                    },
+                "name": "setup",
+                "path": "::setup"
+            }
+        },
+        "checks": {
+            "✅ Priority-Filtered RSC status is 200": {
+                "name": "✅ Priority-Filtered RSC status is 200",
+                "path": "::✅ Priority-Filtered RSC status is 200",
+                "id": "604291d2b1adbcae6dd72902ff6cd3da",
+                "passes": 61,
+                "fails": 0
+            },
+            "✅ Response contains RSC format": {
+                "name": "✅ Response contains RSC format",
+                "path": "::✅ Response contains RSC format",
+                "id": "230a898fa9dfa0dbed1233df591ab3bd",
+                "passes": 61,
+                "fails": 0
+            },
+            "✅ Response includes priority filter": {
+                "name": "✅ Response includes priority filter",
+                "path": "::✅ Response includes priority filter",
+                "id": "db875bec7ed5f55406d35498c9252670",
+                "passes": 61,
+                "fails": 0
+            },
+            "✅ Response has Medium priority tasks": {
+                "name": "✅ Response has Medium priority tasks",
+                "path": "::✅ Response has Medium priority tasks",
+                "id": "eeeb091d9a584bf608f59c4c46aeffbc",
+                "passes": 61,
+                "fails": 0
+            },
+            "✅ Response includes task data": {
+                "fails": 0,
+                "name": "✅ Response includes task data",
+                "path": "::✅ Response includes task data",
+                "id": "cfb7f1abc645032f78620942be4508ad",
+                "passes": 61
+            },
+            "✅ Response has priority counts": {
+                "passes": 61,
+                "fails": 0,
+                "name": "✅ Response has priority counts",
+                "path": "::✅ Response has priority counts",
+                "id": "9eb9a2ad258f8d55ee40f689a03c55a0"
+            },
+            "✅ Response time under 3s": {
+                "id": "19037091d6024770979a95a8e1d7234c",
+                "passes": 61,
+                "fails": 0,
+                "name": "✅ Response time under 3s",
+                "path": "::✅ Response time under 3s"
+            },
+            "✅ Contains loading skeleton": {
+                "passes": 61,
+                "fails": 0,
+                "name": "✅ Contains loading skeleton",
+                "path": "::✅ Contains loading skeleton",
+                "id": "32a24c641c24883a917a6b14bf6637a8"
+            },
+            "✅ Contains priority-filtered task data": {
+                "name": "✅ Contains priority-filtered task data",
+                "path": "::✅ Contains priority-filtered task data",
+                "id": "1bea9149c427b3e3307ebe994c90c4b4",
+                "passes": 61,
+                "fails": 0
+            },
+            "✅ Contains provider data": {
+                "name": "✅ Contains provider data",
+                "path": "::✅ Contains provider data",
+                "id": "a0f7a10f6f324a2087f9d8769b2d1250",
+                "passes": 61,
+                "fails": 0
+            },
+            "✅ Has correct priority filter arguments": {
+                "fails": 0,
+                "name": "✅ Has correct priority filter arguments",
+                "path": "::✅ Has correct priority filter arguments",
+                "id": "54e4b8280f9d09d0615584eee8581fc3",
+                "passes": 61
+            },
+            "✅ All tasks have Medium priority": {
+                "id": "e66429985702c34a5959319cf606cee3",
+                "passes": 61,
+                "fails": 0,
+                "name": "✅ All tasks have Medium priority",
+                "path": "::✅ All tasks have Medium priority"
+            },
+            "✅ Proper RSC content type": {
+                "fails": 0,
+                "name": "✅ Proper RSC content type",
+                "path": "::✅ Proper RSC content type",
+                "id": "9bcaab0858bd88d1284a44cd4826b85e",
+                "passes": 61
+            }
+        }
+    }
+}
