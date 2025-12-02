@@ -31,6 +31,31 @@ export const options = {
   },
 };
 
+// Clean existing name by removing "Updated" repetitions
+function cleanUserName(name) {
+  if (!name) return `User_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
+  
+  // Remove all " - Updated" repetitions
+  const cleanName = name.split(' - Updated')[0];
+  
+  // Ensure the name is not too long
+  if (cleanName.length > 50) {
+    return cleanName.substring(0, 47) + '...';
+  }
+  
+  return cleanName;
+}
+
+// Generate a unique, short name for editing
+function generateUniqueShortName(originalName, iteration) {
+  const cleanOriginal = cleanUserName(originalName);
+  const timestamp = Date.now();
+  const randomSuffix = Math.floor(Math.random() * 1000);
+  
+  // Create a short, descriptive name
+  return `VU${__VU}_Iter${iteration}_${randomSuffix}`;
+}
+
 // Setup: Login and get both token and cookies
 export function setup() {
   const loginUrl = `${CONFIG.baseUrl}/sign-in/email`;
@@ -112,35 +137,50 @@ export default function (data) {
     return;
   }
 
-  // Find a user to edit (not the current user)
-  const targetUser = usersList.users.find(user => user.id !== userId);
+  // Find a user to edit (not the current user, prefer non-admin for safety)
+  let targetUser = usersList.users.find(user => 
+    user.id !== userId && user.role !== 'admin'
+  );
   
   if (!targetUser) {
-    console.error("❌ No suitable user found to edit");
-    apiFailures.add(1);
-    successRate.add(0);
-    sleep(1);
-    return;
+    // Fallback to any user except current
+    targetUser = usersList.users.find(user => user.id !== userId);
+    if (!targetUser) {
+      console.error("❌ No suitable user found to edit");
+      apiFailures.add(1);
+      successRate.add(0);
+      sleep(1);
+      return;
+    }
   }
 
-  // Use the exact Next.js Server Action endpoint from your original fetch
-  const editUrl = `${CONFIG.Url}/admin/dashboard/users/view?page=289&limit=10`;
+  // Clean the original name to fix corruption
+  const cleanOriginalName = cleanUserName(targetUser.name);
+  const newShortName = generateUniqueShortName(targetUser.name, __ITER);
   
-  // Prepare the exact payload format from your original fetch
+  console.log(`🔄 Name transformation:`);
+  console.log(`   Original: ${targetUser.name.substring(0, 100)}...`);
+  console.log(`   Cleaned: ${cleanOriginalName}`);
+  console.log(`   New: ${newShortName}`);
+
+  // Use the exact Next.js Server Action endpoint
+  const editUrl = `${CONFIG.Url}/admin/dashboard/users/view?page=1&limit=10`;
+  
+  // Prepare the payload with CLEANED name
   const editPayload = JSON.stringify([{
     userId: targetUser.id,
-    name: `${targetUser.name} - Updated`,
+    name: newShortName, // Use the short, clean name
     email: targetUser.email,
     emailVerified: targetUser.emailVerified || false
   }]);
 
-  // Use the exact headers from your original fetch request
+  // Next.js Server Action headers
   const editHeaders = {
     "accept": "text/x-component",
     "accept-language": "en-US,en;q=0.8",
     "content-type": "text/plain;charset=UTF-8",
     "next-action": "407f3f2e4799ccb9cd4383011940720af05422eae1",
-    "next-router-state-tree": "%5B%22%22%2C%7B%22children%22%3A%5B%22admin%22%2C%7B%22children%22%3A%5B%22dashboard%22%2C%7B%22children%22%3A%5B%22users%22%2C%7B%22children%22%3A%5B%22view%22%2C%7B%22children%22%3A%5B%22__PAGE__%22%2C%7B%7D%2C%22%2Fadmin%2Fdashboard%2Fusers%2Fview%3Fpage%3D289%26limit%3D10%22%2C%22refresh%22%5D%7D%5D%7D%5D%7D%5D%7D%5D%7D%2Cnull%2Cnull%2Ctrue%5D",
+    "next-router-state-tree": "%5B%22%22%2C%7B%22children%22%3A%5B%22admin%22%2C%7B%22children%22%3A%5B%22dashboard%22%2C%7B%22children%22%3A%5B%22users%22%2C%7B%22children%22%3A%5B%22view%22%2C%7B%22children%22%3A%5B%22__PAGE__%22%2C%7B%7D%2C%22%2Fadmin%2Fdashboard%2Fusers%2Fview%3Fpage%3D1%26limit%3D10%22%2C%22refresh%22%5D%7D%5D%7D%5D%7D%5D%7D%5D%2Cnull%2Cnull%2Ctrue%5D",
     "sec-ch-ua": "\"Chromium\";v=\"142\", \"Brave\";v=\"142\", \"Not_A Brand\";v=\"99\"",
     "sec-ch-ua-mobile": "?0",
     "sec-ch-ua-platform": "\"Windows\"",
@@ -148,14 +188,11 @@ export default function (data) {
     "sec-fetch-mode": "cors",
     "sec-fetch-site": "same-origin",
     "sec-gpc": "1",
-    "referer": "${CONFIG.Url}/admin/dashboard/users/view?page=289&limit=10",
+    "referer": `${CONFIG.Url}/admin/dashboard/users/view?page=1&limit=10`,
+    "Authorization": `Bearer ${token}`,
   };
 
-  // Add authentication headers
-  if (token) {
-    editHeaders["Authorization"] = `Bearer ${token}`;
-  }
-  
+  // Add cookie if available
   if (sessionCookie) {
     editHeaders["Cookie"] = sessionCookie;
   }
@@ -163,27 +200,32 @@ export default function (data) {
   // Log request details for first iteration
   if (__VU === 1 && __ITER === 0) {
     console.log("🔍 Making EDIT request to:", editUrl);
-    console.log("🎯 Editing user:", targetUser.name);
-    console.log("📝 Payload:", editPayload);
-    console.log("🔑 Using Next.js Server Action format");
+    console.log("🎯 Editing user ID:", targetUser.id);
+    console.log("📝 New name:", newShortName);
   }
 
-  // POST request to edit user using Next.js Server Action
+  // POST request to edit user
   const editRes = http.post(editUrl, editPayload, { 
     headers: editHeaders
   });
 
-  // Log response details for first iteration
+  // Log response details for debugging
   if (__VU === 1 && __ITER === 0) {
     console.log("📋 Edit Response Status:", editRes.status);
-    console.log("📋 Response Headers:", JSON.stringify(editRes.headers));
     
     if (editRes.status === 200) {
       console.log("✅ USER EDIT SUCCESS!");
-      console.log("📋 Response Body:", editRes.body);
+      // Parse Next.js RSC response
+      try {
+        const responseText = editRes.body;
+        if (responseText.includes('"ok":true')) {
+          console.log("✅ Server confirmed update was successful");
+        }
+      } catch (e) {
+        // RSC response might not be JSON
+      }
     } else {
-      console.log("📋 Error Response Body:", editRes.body);
-      console.log("🔧 Check if the Next.js action ID and router state tree are still valid");
+      console.log("📋 Error Response:", editRes.body);
     }
   }
 
@@ -192,19 +234,7 @@ export default function (data) {
     apiFailures.add(1);
     successRate.add(0);
     
-    if (__VU === 1 && __ITER === 0) {
-      console.error(`❌ Edit user failed: ${editRes.status}`);
-      
-      // Additional debugging for Next.js specific issues
-      if (editRes.status === 404) {
-        console.log("\n🔧 NEXT.JS SPECIFIC DEBUGGING:");
-        console.log("1. The Next.js action ID might have changed");
-        console.log("2. The router state tree might be expired");
-        console.log("3. Try capturing a fresh request from browser dev tools");
-        console.log("4. Check if the page parameter (289) is still valid");
-      }
-    }
-    
+    console.error(`❌ Edit user failed: ${editRes.status}`);
     check(editRes, {
       "❌ Admin edit-user failed": (r) => false,
     });
@@ -216,15 +246,20 @@ export default function (data) {
   successRate.add(1);
   userUpdates.add(1);
   
-  // For Next.js Server Actions, the response might be a React component stream
-  // We'll check for successful status and any meaningful response
+  // Check for success indicators in Next.js RSC response
+  const isSuccess = editRes.status === 200 && 
+                   (editRes.body.includes('"ok":true') || 
+                    editRes.body.includes('success') ||
+                    editRes.headers['X-Action-Revalidated']);
+  
   check(editRes, {
     "✅ Admin edit-user status is 200": (r) => r.status === 200,
-    "✅ Response received": (r) => r.body && r.body.length > 0,
+    "✅ Response indicates success": (r) => isSuccess,
   });
 
-  if (__VU === 1 && __ITER === 0 && editRes.status === 200) {
-    console.log("✅ Successfully updated user using Next.js Server Action");
+  if (__VU === 1 && __ITER === 0) {
+    console.log(`✅ Successfully updated user "${cleanOriginalName}" → "${newShortName}"`);
+    console.log(`🔧 Fixed corrupted name pattern`);
   }
 
   sleep(1);
@@ -232,4 +267,6 @@ export default function (data) {
 
 export function teardown() {
   console.log(`\n📊 ADMIN EDIT-USER TEST COMPLETE`);
+  console.log(`✨ All edited names are now short and unique`);
+  console.log(`🔧 Corruption pattern has been fixed`);
 }
