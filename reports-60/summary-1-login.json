@@ -1,0 +1,174 @@
+{
+    "root_group": {
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {},
+        "checks": {
+                "✅ Token is present": {
+                    "id": "ea0637f73bc02a6521537559bf962535",
+                    "passes": 1,
+                    "fails": 0,
+                    "name": "✅ Token is present",
+                    "path": "::✅ Token is present"
+                },
+                "✅ User data is present": {
+                    "name": "✅ User data is present",
+                    "path": "::✅ User data is present",
+                    "id": "828c32906626828b931e9f8c243dd059",
+                    "passes": 1,
+                    "fails": 0
+                },
+                "✅ User email matches": {
+                    "passes": 1,
+                    "fails": 0,
+                    "name": "✅ User email matches",
+                    "path": "::✅ User email matches",
+                    "id": "235ae969e946fa097b0106042dacf9af"
+                }
+            },
+        "name": "",
+        "path": ""
+    },
+    "metrics": {
+        "http_req_connecting": {
+            "avg": 8.839691,
+            "min": 8.839691,
+            "med": 8.839691,
+            "max": 8.839691,
+            "p(90)": 8.839691,
+            "p(95)": 8.839691
+        },
+        "iterations": {
+            "rate": 0.5833127742315586,
+            "count": 1
+        },
+        "http_req_receiving": {
+            "p(95)": 0.123339,
+            "avg": 0.123339,
+            "min": 0.123339,
+            "med": 0.123339,
+            "max": 0.123339,
+            "p(90)": 0.123339
+        },
+        "http_req_waiting": {
+            "p(90)": 625.922826,
+            "p(95)": 625.922826,
+            "avg": 625.922826,
+            "min": 625.922826,
+            "med": 625.922826,
+            "max": 625.922826
+        },
+        "http_req_failed": {
+            "passes": 0,
+            "fails": 1,
+            "value": 0
+        },
+        "login_failures": {
+            "count": 0,
+            "rate": 0,
+            "thresholds": {
+                "count<1": false
+            }
+        },
+        "checks": {
+            "passes": 3,
+            "fails": 0,
+            "thresholds": {
+                "rate>0.99": false
+            },
+            "value": 1
+        },
+        "http_req_sending": {
+            "max": 0.103027,
+            "p(90)": 0.103027,
+            "p(95)": 0.103027,
+            "avg": 0.103027,
+            "min": 0.103027,
+            "med": 0.103027
+        },
+        "http_req_blocked": {
+            "med": 85.718118,
+            "max": 85.718118,
+            "p(90)": 85.718118,
+            "p(95)": 85.718118,
+            "avg": 85.718118,
+            "min": 85.718118
+        },
+        "data_received": {
+            "rate": 1813.5194150859156,
+            "count": 3109
+        },
+        "vus": {
+            "value": 1,
+            "min": 1,
+            "max": 1
+        },
+        "http_req_tls_handshaking": {
+            "med": 20.8789,
+            "max": 20.8789,
+            "p(90)": 20.8789,
+            "p(95)": 20.8789,
+            "avg": 20.8789,
+            "min": 20.8789
+        },
+        "data_sent": {
+            "count": 1895,
+            "rate": 1105.3777071688035
+        },
+        "http_req_duration": {
+            "avg": 626.149192,
+            "min": 626.149192,
+            "med": 626.149192,
+            "max": 626.149192,
+            "p(90)": 626.149192,
+            "p(95)": 626.149192,
+            "thresholds": {
+                "p(95)<3000": false
+            }
+        },
+        "successful_logins": {
+            "passes": 0,
+            "fails": 0,
+            "thresholds": {
+                "rate>0.99": false
+            },
+            "value": 0
+        },
+        "http_reqs": {
+            "count": 1,
+            "rate": 0.5833127742315586
+        },
+        "vus_max": {
+            "min": 1,
+            "max": 1,
+            "value": 1
+        },
+        "iteration_duration": {
+            "avg": 1000.853671,
+            "min": 1000.853671,
+            "med": 1000.853671,
+            "max": 1000.853671,
+            "p(90)": 1000.853671,
+            "p(95)": 1000.853671
+        },
+        "http_req_duration{expected_response:true}": {
+            "avg": 626.149192,
+            "min": 626.149192,
+            "med": 626.149192,
+            "max": 626.149192,
+            "p(90)": 626.149192,
+            "p(95)": 626.149192
+        }
+    },
+    "setup_data": {
+        "token": "QTCe90Es1m00p62JG7V87AggwP4baezX",
+        "user": {
+            "image": null,
+            "name": "Deepesh M S",
+            "updatedAt": "2025-07-14T17:29:47.569Z",
+            "createdAt": "2025-07-14T17:29:47.569Z",
+            "email": "deepeshm@pennhealthinfo.com",
+            "emailVerified": true,
+            "id": "mHe2a4J4yxEBTzW2M0lhSliJzoeRclIx"
+        }
+    }
+}
