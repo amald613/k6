@@ -93,10 +93,6 @@ jobs:
           echo "Tests completed!"
         env:
           NODE_ENV: production
-          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
-          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
-          PROVIDER_EMAIL: ${{ secrets.PROVIDER_EMAIL }}
-          PROVIDER_PASSWORD: ${{ secrets.PROVIDER_PASSWORD }}
       
       - name: 📊 Generate Test Summary
         if: always()
