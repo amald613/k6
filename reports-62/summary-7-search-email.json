@@ -1,0 +1,197 @@
+{
+    "metrics": {
+        "http_req_tls_handshaking": {
+            "avg": 3.718335984375,
+            "min": 0,
+            "med": 0,
+            "max": 77.652002,
+            "p(90)": 0,
+            "p(95)": 41.41626104999972
+        },
+        "vus_max": {
+            "value": 3,
+            "min": 3,
+            "max": 3
+        },
+        "http_req_duration": {
+            "min": 32.925039,
+            "med": 39.2041625,
+            "max": 234.235153,
+            "p(90)": 49.134605400000005,
+            "p(95)": 53.162591999999975,
+            "avg": 45.81572954687498,
+            "thresholds": {
+                "p(95)<3000": false
+            }
+        },
+        "http_reqs": {
+            "count": 64,
+            "rate": 2.0868982008283368
+        },
+        "http_req_duration{expected_response:true}": {
+            "avg": 45.81572954687498,
+            "min": 32.925039,
+            "med": 39.2041625,
+            "max": 234.235153,
+            "p(90)": 49.134605400000005,
+            "p(95)": 53.162591999999975
+        },
+        "checks": {
+            "passes": 229,
+            "fails": 0,
+            "thresholds": {
+                "rate>0.95": false
+            },
+            "value": 1
+        },
+        "http_req_sending": {
+            "avg": 0.030842312500000007,
+            "min": 0.01092,
+            "med": 0.0277525,
+            "max": 0.180044,
+            "p(90)": 0.037137800000000006,
+            "p(95)": 0.04357454999999999
+        },
+        "http_req_failed": {
+            "passes": 0,
+            "fails": 64,
+            "value": 0
+        },
+        "api_failures": {
+            "count": 0,
+            "rate": 0,
+            "thresholds": {
+                "count<5": false
+            }
+        },
+        "http_req_blocked": {
+            "min": 0.002395,
+            "med": 0.0058405,
+            "max": 196.308991,
+            "p(90)": 0.0071807,
+            "p(95)": 61.64860199999959,
+            "avg": 6.8003480312499995
+        },
+        "http_req_connecting": {
+            "avg": 1.8003181406250002,
+            "min": 0,
+            "med": 0,
+            "max": 37.337863,
+            "p(90)": 0,
+            "p(95)": 20.160156349999866
+        },
+        "http_req_receiving": {
+            "avg": 0.06661428124999998,
+            "min": 0.034275,
+            "med": 0.0636395,
+            "max": 0.170409,
+            "p(90)": 0.0966057,
+            "p(95)": 0.10633924999999998
+        },
+        "data_received": {
+            "rate": 5524.019537592607,
+            "count": 169408
+        },
+        "search_operations": {
+            "rate": 2.0542904164403937,
+            "count": 63,
+            "thresholds": {
+                "count>0": false
+            }
+        },
+        "vus": {
+            "value": 1,
+            "min": 1,
+            "max": 3
+        },
+        "iteration_duration": {
+            "avg": 1047.6055526190473,
+            "min": 1033.691489,
+            "med": 1040.71779,
+            "max": 1214.469928,
+            "p(90)": 1050.7519484,
+            "p(95)": 1104.7028159
+        },
+        "http_req_waiting": {
+            "avg": 45.71827295312503,
+            "min": 32.812358,
+            "med": 39.12355650000001,
+            "max": 234.044859,
+            "p(90)": 49.02181,
+            "p(95)": 53.091529099999974
+        },
+        "iterations": {
+            "count": 63,
+            "rate": 2.0542904164403937
+        },
+        "data_sent": {
+            "count": 47867,
+            "rate": 1560.8368152976561
+        },
+        "successful_requests": {
+            "passes": 63,
+            "fails": 0,
+            "thresholds": {
+                "rate>0.95": false
+            },
+            "value": 1
+        }
+    },
+    "setup_data": {
+        "sessionCookie": "__Secure-better-auth.session_token=q5d3cq4nzHgegcT1UvtvZZJmv6qbvfCZ.Qv8uIjz0OuSan2RN5LuKdNWB5ZkLD0%2F7zTQ82VMeRHA%3D",
+        "token": "q5d3cq4nzHgegcT1UvtvZZJmv6qbvfCZ",
+        "userId": "mHe2a4J4yxEBTzW2M0lhSliJzoeRclIx"
+    },
+    "root_group": {
+        "name": "",
+        "path": "",
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {
+            "setup": {
+                "name": "setup",
+                "path": "::setup",
+                "id": "5c0f8025f7e0b6654089e5b00e950f1a",
+                "groups": {},
+                "checks": {
+                        "✅ Login status is 200": {
+                            "path": "::setup::✅ Login status is 200",
+                            "id": "ef5748235dba7417d2a94f2e9e0282c6",
+                            "passes": 1,
+                            "fails": 0,
+                            "name": "✅ Login status is 200"
+                        }
+                    }
+            }
+        },
+        "checks": {
+            "✅ Admin search-users status is 200": {
+                "id": "5cad04a758b9628592a252489c58a90a",
+                "passes": 63,
+                "fails": 0,
+                "name": "✅ Admin search-users status is 200",
+                "path": "::✅ Admin search-users status is 200"
+            },
+            "✅ Response has users array": {
+                "fails": 0,
+                "name": "✅ Response has users array",
+                "path": "::✅ Response has users array",
+                "id": "a94bc8497824a32ee1abc462a6f27a24",
+                "passes": 63
+            },
+            "✅ Search response structure is valid": {
+                "name": "✅ Search response structure is valid",
+                "path": "::✅ Search response structure is valid",
+                "id": "e197bc1ef037b593ef164d0c9ab09bad",
+                "passes": 63,
+                "fails": 0
+            },
+            "✅ Users match search criteria": {
+                "passes": 39,
+                "fails": 0,
+                "name": "✅ Users match search criteria",
+                "path": "::✅ Users match search criteria",
+                "id": "4b454d58c2203e39e4e806a489d160d8"
+            }
+        }
+    }
+}
