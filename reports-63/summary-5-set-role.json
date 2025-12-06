@@ -1,0 +1,2271 @@
+{
+    "metrics": {
+        "data_sent": {
+            "count": 35708,
+            "rate": 1148.7668015521688
+        },
+        "http_reqs": {
+            "count": 65,
+            "rate": 2.0911236165814655
+        },
+        "http_req_blocked": {
+            "min": 0.003547,
+            "med": 0.00553,
+            "max": 179.000401,
+            "p(90)": 0.011176800000000008,
+            "p(95)": 67.30780459999977,
+            "avg": 6.8709792923076956
+        },
+        "http_req_duration{expected_response:true}": {
+            "avg": 47.35998072307693,
+            "min": 34.58167,
+            "med": 37.953441,
+            "max": 393.370855,
+            "p(90)": 40.5902798,
+            "p(95)": 48.71040839999999
+        },
+        "iteration_duration": {
+            "min": 1035.764412,
+            "med": 1038.912428,
+            "max": 1394.34145,
+            "p(90)": 1043.229524,
+            "p(95)": 1113.4087341999998,
+            "avg": 1048.9766556825396
+        },
+        "http_req_waiting": {
+            "med": 37.8722,
+            "max": 393.280097,
+            "p(90)": 40.5041134,
+            "p(95)": 48.638046599999996,
+            "avg": 47.25027984615384,
+            "min": 34.498124
+        },
+        "http_req_connecting": {
+            "avg": 1.7754145076923078,
+            "min": 0,
+            "med": 0,
+            "max": 29.941785,
+            "p(90)": 0,
+            "p(95)": 22.11734399999992
+        },
+        "vus_max": {
+            "min": 3,
+            "max": 3,
+            "value": 3
+        },
+        "successful_requests": {
+            "passes": 63,
+            "fails": 0,
+            "thresholds": {
+                "rate>0.95": false
+            },
+            "value": 1
+        },
+        "http_req_tls_handshaking": {
+            "avg": 3.6738797692307688,
+            "min": 0,
+            "med": 0,
+            "max": 61.72444,
+            "p(90)": 0,
+            "p(95)": 44.953250399999845
+        },
+        "checks": {
+            "passes": 127,
+            "fails": 0,
+            "value": 1
+        },
+        "vus": {
+            "value": 1,
+            "min": 1,
+            "max": 3
+        },
+        "data_received": {
+            "count": 90620,
+            "rate": 2915.348032840191
+        },
+        "http_req_duration": {
+            "avg": 47.35998072307693,
+            "min": 34.58167,
+            "med": 37.953441,
+            "max": 393.370855,
+            "p(90)": 40.5902798,
+            "p(95)": 48.71040839999999,
+            "thresholds": {
+                "p(95)<3000": false
+            }
+        },
+        "http_req_failed": {
+            "passes": 0,
+            "fails": 65,
+            "thresholds": {
+                "rate<0.05": false
+            },
+            "value": 0
+        },
+        "iterations": {
+            "count": 63,
+            "rate": 2.026781351455882
+        },
+        "http_req_sending": {
+            "p(95)": 0.0515844,
+            "avg": 0.030964184615384607,
+            "min": 0.015168,
+            "med": 0.028093,
+            "max": 0.059771,
+            "p(90)": 0.042339
+        },
+        "http_req_receiving": {
+            "avg": 0.07873669230769231,
+            "min": 0.034303,
+            "med": 0.056024,
+            "max": 1.370214,
+            "p(90)": 0.0725292,
+            "p(95)": 0.08268599999999998
+        }
+    },
+    "setup_data": {
+        "userId": "mHe2a4J4yxEBTzW2M0lhSliJzoeRclIx",
+        "usersToModify": [
+            {
+                "canEdit": false,
+                "updatedAt": "2025-12-06T17:53:52.567Z",
+                "createdAt": "2025-12-04T15:34:00.269Z",
+                "emailVerified": false,
+                "image": null,
+                "name": "VU1_Iter27_301",
+                "role": "scribe",
+                "banExpires": null,
+                "banned": false,
+                "email": "testuser17648624402621923@example.com",
+                "id": "07a1xCRbkHKFM4neiBhK7ISJOUGhViEi",
+                "lang": [
+                    "en"
+                ],
+                "templateId": [
+                    28
+                ],
+                "banReason": null,
+                "twoFactorEnabled": null
+            },
+            {
+                "canEdit": false,
+                "createdAt": "2025-12-02T17:55:33.750Z",
+                "email": "testuser17646981337346788@example.com",
+                "image": null,
+                "lang": [
+                    "en"
+                ],
+                "twoFactorEnabled": null,
+                "banned": false,
+                "emailVerified": false,
+                "templateId": [
+                    28
+                ],
+                "banExpires": null,
+                "banReason": null,
+                "name": "VU1_Iter14_740",
+                "updatedAt": "2025-12-04T15:21:31.898Z",
+                "id": "0BN9yoFtEFh9jmSgVUYeUuSuX0pNoeZN",
+                "role": "scribeAdmin"
+            },
+            {
+                "templateId": [
+                    28
+                ],
+                "twoFactorEnabled": null,
+                "banReason": null,
+                "canEdit": false,
+                "emailVerified": false,
+                "name": "Test User 1765043498531_20",
+                "banned": false,
+                "createdAt": "2025-12-06T17:51:38.543Z",
+                "email": "testuser17650434985314175@example.com",
+                "id": "0C7vgyZWCnsnebtr45SzUilYZVAEXY6W",
+                "image": null,
+                "lang": [
+                    "en"
+                ],
+                "role": "provider",
+                "updatedAt": "2025-12-06T17:51:38.543Z",
+                "banExpires": null
+            },
+            {
+                "createdAt": "2025-11-28T17:51:06.566Z",
+                "banExpires": null,
+                "email": "testuser17643522665395820@example.com",
+                "role": "demo",
+                "twoFactorEnabled": null,
+                "templateId": [
+                    28
+                ],
+                "banReason": null,
+                "banned": false,
+                "canEdit": false,
+                "emailVerified": false,
+                "id": "0cny5HQcnwByHa7E4TRNReFB5VOH7ZNQ",
+                "image": null,
+                "lang": [
+                    "en"
+                ],
+                "updatedAt": "2025-12-02T17:01:45.879Z",
+                "name": "VU1_Iter16_847"
+            },
+            {
+                "name": "Test User 1764784535160_914",
+                "banExpires": null,
+                "canEdit": false,
+                "image": null,
+                "lang": [
+                    "en"
+                ],
+                "updatedAt": "2025-12-03T17:55:35.174Z",
+                "role": "scribe",
+                "banReason": null,
+                "banned": false,
+                "createdAt": "2025-12-03T17:55:35.174Z",
+                "email": "testuser17647845351606546@example.com",
+                "emailVerified": false,
+                "id": "0daAZBs0AfFpL66ghk03n2fiTUaeZBPN",
+                "templateId": [
+                    28
+                ],
+                "twoFactorEnabled": null
+            },
+            {
+                "banned": false,
+                "createdAt": "2025-11-25T15:04:58.957Z",
+                "id": "0EVJLPNg1rI51VyHAyJwUcCi8U9iw3fN",
+                "email": "sdad@efsaed.fghdf",
+                "name": "new user",
+                "role": "scribeAdmin",
+                "updatedAt": "2025-11-25T15:04:58.957Z",
+                "banExpires": null,
+                "banReason": null,
+                "emailVerified": false,
+                "image": null,
+                "twoFactorEnabled": null,
+                "canEdit": false,
+                "lang": [
+                    "en"
+                ],
+                "templateId": [
+                    28
+                ]
+            },
+            {
+                "image": null,
+                "role": "provider",
+                "updatedAt": "2025-12-04T15:33:10.443Z",
+                "banned": false,
+                "createdAt": "2025-12-04T15:33:10.443Z",
+                "twoFactorEnabled": null,
+                "banExpires": null,
+                "canEdit": false,
+                "lang": [
+                    "en"
+                ],
+                "templateId": [
+                    28
+                ],
+                "banReason": null,
+                "email": "testuser17648623904171915@example.com",
+                "emailVerified": false,
+                "id": "0EyCo3JBe3b4h9lh8JewmMCrmxr2Z4e6",
+                "name": "Test User 1764862390417_781"
+            },
+            {
+                "email": "testuser17646884672129893@example.com",
+                "id": "0fcc1ZHTPZfVkadOzq4C1VuAUk2e5r6A",
+                "templateId": [
+                    28
+                ],
+                "banExpires": null,
+                "banReason": null,
+                "emailVerified": false,
+                "lang": [
+                    "en"
+                ],
+                "updatedAt": "2025-12-02T15:14:33.735Z",
+                "image": null,
+                "banned": false,
+                "canEdit": false,
+                "createdAt": "2025-12-02T15:14:33.735Z",
+                "name": "Test User 1764688467212_118",
+                "role": "demo",
+                "twoFactorEnabled": null
+            },
+            {
+                "banReason": null,
+                "createdAt": "2025-11-27T17:53:38.531Z",
+                "id": "0fqUr1A737TY0BR5fwaUaxnDiBIGz6aU",
+                "templateId": [
+                    28
+                ],
+                "banned": false,
+                "email": "testuser17642660185245416@example.com",
+                "image": null,
+                "lang": [
+                    "en"
+                ],
+                "name": "Test User 1764266018524_312",
+                "role": "scribe",
+                "updatedAt": "2025-11-27T17:53:38.531Z",
+                "banExpires": null,
+                "canEdit": false,
+                "emailVerified": false,
+                "twoFactorEnabled": null
+            },
+            {
+                "email": "testuser17649571991029414@example.com",
+                "emailVerified": false,
+                "image": null,
+                "templateId": [
+                    28
+                ],
+                "banReason": null,
+                "id": "0HFDNvM7AmFfmpOeS6pv274AObFJpLMQ",
+                "role": "scribeAdmin",
+                "updatedAt": "2025-12-05T17:53:19.119Z",
+                "lang": [
+                    "en"
+                ],
+                "banExpires": null,
+                "name": "Test User 1764957199102_140",
+                "twoFactorEnabled": null,
+                "banned": false,
+                "canEdit": false,
+                "createdAt": "2025-12-05T17:53:19.119Z"
+            },
+            {
+                "canEdit": false,
+                "createdAt": "2025-11-28T17:53:35.618Z",
+                "emailVerified": false,
+                "id": "0IoCMxXyqkE8yiK59MFNbwTs9Ws50eNg",
+                "role": "provider",
+                "templateId": [
+                    28
+                ],
+                "twoFactorEnabled": null,
+                "updatedAt": "2025-11-28T17:53:35.618Z",
+                "banned": false,
+                "banExpires": null,
+                "banReason": null,
+                "image": null,
+                "lang": [
+                    "en"
+                ],
+                "email": "testuser17643524154225151@example.com",
+                "name": "Test User 1764352415422_238"
+            },
+            {
+                "banReason": null,
+                "banned": false,
+                "canEdit": false,
+                "emailVerified": false,
+                "createdAt": "2025-11-27T17:53:47.841Z",
+                "image": null,
+                "banExpires": null,
+                "email": "testuser17642660278332937@example.com",
+                "id": "0kK476qJVgOqGHKNSH9R2ZYlIf7hHDOi",
+                "lang": [
+                    "en"
+                ],
+                "role": "demo",
+                "twoFactorEnabled": null,
+                "updatedAt": "2025-11-27T17:53:47.841Z",
+                "name": "Test User 1764266027833_890",
+                "templateId": [
+                    28
+                ]
+            },
+            {
+                "banExpires": null,
+                "banReason": null,
+                "createdAt": "2025-12-04T15:34:07.547Z",
+                "emailVerified": false,
+                "id": "0LfJU9CRAcwKRHP0C91RPvPtl1JYhpPN",
+                "image": null,
+                "name": "Test User 1764862447534_734",
+                "banned": false,
+                "email": "testuser17648624475344822@example.com",
+                "updatedAt": "2025-12-04T15:34:07.547Z",
+                "lang": [
+                    "en"
+                ],
+                "role": "scribe",
+                "templateId": [
+                    28
+                ],
+                "twoFactorEnabled": null,
+                "canEdit": false
+            },
+            {
+                "banExpires": null,
+                "banned": false,
+                "email": "testuser17649572133011007@example.com",
+                "lang": [
+                    "en"
+                ],
+                "templateId": [
+                    28
+                ],
+                "updatedAt": "2025-12-05T17:53:33.317Z",
+                "id": "0LUbQN5nc3QVmDEvQuXAVkybL4tPPpK5",
+                "image": null,
+                "role": "scribeAdmin",
+                "twoFactorEnabled": null,
+                "name": "Test User 1764957213301_15",
+                "banReason": null,
+                "canEdit": false,
+                "createdAt": "2025-12-05T17:53:33.317Z",
+                "emailVerified": false
+            },
+            {
+                "createdAt": "2025-11-25T17:53:43.582Z",
+                "image": null,
+                "name": "Test User 1764093223526_481",
+                "banned": false,
+                "email": "testuser17640932235268041@example.com",
+                "emailVerified": false,
+                "id": "0NqsnfaIxsQQ5DxfOqW8j8RrQ2a1rZQP",
+                "banReason": null,
+                "updatedAt": "2025-11-25T17:53:43.582Z",
+                "twoFactorEnabled": null,
+                "banExpires": null,
+                "lang": [
+                    "en"
+                ],
+                "role": "provider",
+                "templateId": [
+                    28
+                ],
+                "canEdit": false
+            },
+            {
+                "email": "testuser17641795814784557@example.com",
+                "emailVerified": false,
+                "id": "0q3Y8hjaNlareLUySRHS4qVcrQ8wRcQg",
+                "role": "demo",
+                "lang": [
+                    "en"
+                ],
+                "templateId": [
+                    28
+                ],
+                "twoFactorEnabled": null,
+                "banExpires": null,
+                "banned": false,
+                "canEdit": false,
+                "createdAt": "2025-11-26T17:53:01.502Z",
+                "banReason": null,
+                "image": null,
+                "name": "Test User 1764179581478_104",
+                "updatedAt": "2025-11-26T17:53:01.502Z"
+            },
+            {
+                "banned": false,
+                "createdAt": "2025-11-27T15:50:41.371Z",
+                "templateId": [
+                    28
+                ],
+                "banExpires": null,
+                "email": "testuser17642586345062824@example.com",
+                "image": null,
+                "emailVerified": false,
+                "id": "0TvskpvrqSweSmsKFrkF8cnTWVI7u30r",
+                "lang": [
+                    "en"
+                ],
+                "name": "Test User 1764258634505_669",
+                "role": "scribe",
+                "twoFactorEnabled": null,
+                "updatedAt": "2025-11-27T15:50:41.371Z",
+                "banReason": null,
+                "canEdit": false
+            },
+            {
+                "lang": [
+                    "en"
+                ],
+                "name": "Test User 1764171700006_324",
+                "canEdit": false,
+                "email": "testuser17641717000064716@example.com",
+                "templateId": [
+                    28
+                ],
+                "emailVerified": false,
+                "id": "0uGadaSUqEBRkGS5AFdhaZm9hkUFLxGa",
+                "updatedAt": "2025-11-26T15:41:40.038Z",
+                "banReason": null,
+                "role": "scribeAdmin",
+                "twoFactorEnabled": null,
+                "banExpires": null,
+                "banned": false,
+                "createdAt": "2025-11-26T15:41:40.038Z",
+                "image": null
+            },
+            {
+                "name": "Test User 1764172445911_593",
+                "banReason": null,
+                "id": "0V5r4caH2s4mEAGL5MnBpvglMqN8qVZc",
+                "twoFactorEnabled": null,
+                "banExpires": null,
+                "banned": false,
+                "canEdit": false,
+                "image": null,
+                "role": "provider",
+                "createdAt": "2025-11-26T15:54:05.919Z",
+                "email": "testuser17641724459115829@example.com",
+                "emailVerified": false,
+                "lang": [
+                    "en"
+                ],
+                "templateId": [
+                    28
+                ],
+                "updatedAt": "2025-11-26T15:54:05.919Z"
+            },
+            {
+                "role": "demo",
+                "lang": [
+                    "en"
+                ],
+                "banReason": null,
+                "createdAt": "2025-11-25T17:52:05.380Z",
+                "twoFactorEnabled": null,
+                "canEdit": false,
+                "emailVerified": false,
+                "image": null,
+                "templateId": [
+                    28
+                ],
+                "updatedAt": "2025-11-25T17:52:05.380Z",
+                "banExpires": null,
+                "banned": false,
+                "email": "testuser17640931253551703@example.com",
+                "id": "0VfPaRNtVR9YkMchWugrqcOWWy2sqhJ2",
+                "name": "Test User 1764093125355_683"
+            },
+            {
+                "email": "testuser17646982087049768@example.com",
+                "image": null,
+                "name": "Test User 1764698208704_384",
+                "templateId": [
+                    28
+                ],
+                "banReason": null,
+                "banned": false,
+                "banExpires": null,
+                "id": "0Wi0eiWyr8FifqFooDjjvjj65pH9bZGy",
+                "role": "scribe",
+                "updatedAt": "2025-12-02T17:56:48.731Z",
+                "createdAt": "2025-12-02T17:56:48.731Z",
+                "emailVerified": false,
+                "lang": [
+                    "en"
+                ],
+                "twoFactorEnabled": null,
+                "canEdit": false
+            },
+            {
+                "lang": [
+                    "en"
+                ],
+                "updatedAt": "2025-11-30T17:51:17.461Z",
+                "banExpires": null,
+                "createdAt": "2025-11-30T17:51:17.461Z",
+                "banReason": null,
+                "banned": false,
+                "email": "testuser17645250774366848@example.com",
+                "id": "0Xad9a4yyX3LmVkr6SuKJb713mdFsSRb",
+                "image": null,
+                "name": "Test User 1764525077436_310",
+                "templateId": [
+                    28
+                ],
+                "canEdit": false,
+                "emailVerified": false,
+                "role": "scribeAdmin",
+                "twoFactorEnabled": null
+            },
+            {
+                "banned": null,
+                "banExpires": null,
+                "banReason": null,
+                "id": "0xCvMYkonK3ovSAP5khGQnqKhDF5dQ9v",
+                "lang": [
+                    "en"
+                ],
+                "canEdit": false,
+                "name": "Test User 1764957093988_313",
+                "role": "provider",
+                "twoFactorEnabled": null,
+                "updatedAt": "2025-12-05T17:51:34.001Z",
+                "createdAt": "2025-12-05T17:51:34.001Z",
+                "email": "testuser17649570939882471@example.com",
+                "emailVerified": false,
+                "image": null,
+                "templateId": [
+                    28
+                ]
+            },
+            {
+                "name": "Test User 1764957114325_63",
+                "banReason": null,
+                "image": null,
+                "updatedAt": "2025-12-05T17:51:54.537Z",
+                "banned": null,
+                "createdAt": "2025-12-05T17:51:54.537Z",
+                "lang": [
+                    "en"
+                ],
+                "role": "demo",
+                "banExpires": null,
+                "emailVerified": false,
+                "twoFactorEnabled": null,
+                "templateId": [
+                    28
+                ],
+                "canEdit": false,
+                "email": "testuser17649571143251472@example.com",
+                "id": "0ztP7mLEx5ZHPhhEds0UOh6Or6pAtVD7"
+            },
+            {
+                "email": "testuser17645250737277694@example.com",
+                "emailVerified": false,
+                "role": "scribe",
+                "templateId": [
+                    28
+                ],
+                "updatedAt": "2025-11-30T17:51:13.752Z",
+                "banned": false,
+                "createdAt": "2025-11-30T17:51:13.752Z",
+                "twoFactorEnabled": null,
+                "canEdit": false,
+                "id": "10wS9gXbna6aL9lTTpJFe0gHKNNdNfyF",
+                "name": "Test User 1764525073727_765",
+                "banExpires": null,
+                "image": null,
+                "lang": [
+                    "en"
+                ],
+                "banReason": null
+            },
+            {
+                "id": "11SvpQ2aAq7MgusipxlblzeLlaGSbTIv",
+                "lang": [
+                    "en"
+                ],
+                "twoFactorEnabled": null,
+                "name": "Test User 1764525208414_934",
+                "role": "scribeAdmin",
+                "templateId": [
+                    28
+                ],
+                "updatedAt": "2025-11-30T17:53:28.622Z",
+                "banExpires": null,
+                "banned": false,
+                "createdAt": "2025-11-30T17:53:28.622Z",
+                "emailVerified": false,
+                "image": null,
+                "banReason": null,
+                "canEdit": false,
+                "email": "testuser17645252084146373@example.com"
+            },
+            {
+                "banExpires": null,
+                "image": null,
+                "banned": null,
+                "canEdit": false,
+                "email": "testuser17649572185173714@example.com",
+                "emailVerified": false,
+                "lang": [
+                    "en"
+                ],
+                "updatedAt": "2025-12-05T17:53:38.535Z",
+                "banReason": null,
+                "name": "Test User 1764957218517_475",
+                "role": "provider",
+                "templateId": [
+                    28
+                ],
+                "twoFactorEnabled": null,
+                "createdAt": "2025-12-05T17:53:38.535Z",
+                "id": "13gkbUtcMnGu1aEHegjfvl0sm7Hev1S3"
+            },
+            {
+                "image": null,
+                "role": "demo",
+                "templateId": [
+                    28
+                ],
+                "email": "testuser17641795728037322@example.com",
+                "emailVerified": false,
+                "lang": [
+                    "en"
+                ],
+                "twoFactorEnabled": null,
+                "banExpires": null,
+                "banReason": null,
+                "canEdit": false,
+                "id": "17aHDNS3itfHHE5Sa3n3JHj27nWzS8i0",
+                "banned": false,
+                "createdAt": "2025-11-26T17:52:52.841Z",
+                "name": "Test User 1764179572803_923",
+                "updatedAt": "2025-11-26T17:52:52.841Z"
+            },
+            {
+                "twoFactorEnabled": null,
+                "banReason": null,
+                "emailVerified": false,
+                "role": "scribe",
+                "updatedAt": "2025-11-28T17:53:25.366Z",
+                "banned": false,
+                "createdAt": "2025-11-28T17:53:25.366Z",
+                "email": "testuser17643524052461811@example.com",
+                "canEdit": false,
+                "id": "17KIA1h505txuyiTzkynGgs226ry9fEs",
+                "name": "Test User 1764352405246_447",
+                "banExpires": null,
+                "image": null,
+                "lang": [
+                    "en"
+                ],
+                "templateId": [
+                    28
+                ]
+            },
+            {
+                "emailVerified": false,
+                "image": null,
+                "name": "Test User 1764689457924_183",
+                "updatedAt": "2025-12-02T15:30:57.950Z",
+                "canEdit": false,
+                "id": "197Qn08fTAxFYNdXzwgf9aQHpEhm8UPC",
+                "role": "scribe",
+                "templateId": [
+                    28
+                ],
+                "twoFactorEnabled": null,
+                "banReason": null,
+                "lang": [
+                    "en"
+                ],
+                "banExpires": null,
+                "banned": null,
+                "createdAt": "2025-12-02T15:30:57.950Z",
+                "email": "testuser17646894579245819@example.com"
+            },
+            {
+                "email": "testuser17646981887646984@example.com",
+                "role": "provider",
+                "banReason": null,
+                "createdAt": "2025-12-02T17:56:28.791Z",
+                "emailVerified": false,
+                "id": "1BbUnUyqtH5BVX0i50kt39TTThGkZ1if",
+                "image": null,
+                "canEdit": false,
+                "lang": [
+                    "en"
+                ],
+                "twoFactorEnabled": null,
+                "banExpires": null,
+                "banned": null,
+                "name": "Test User 1764698188764_247",
+                "templateId": [
+                    28
+                ],
+                "updatedAt": "2025-12-02T17:56:28.791Z"
+            },
+            {
+                "banExpires": null,
+                "banReason": null,
+                "banned": null,
+                "emailVerified": false,
+                "image": null,
+                "lang": [
+                    "en"
+                ],
+                "email": "testuser17648709777376943@example.com",
+                "name": "Test User 1764870977737_961",
+                "role": "demo",
+                "twoFactorEnabled": null,
+                "id": "1c3Y763NgKAvOT5CUGAmaU1nhjlOcebh",
+                "canEdit": false,
+                "createdAt": "2025-12-04T17:56:17.768Z",
+                "templateId": [
+                    28
+                ],
+                "updatedAt": "2025-12-04T17:56:17.768Z"
+            },
+            {
+                "canEdit": false,
+                "emailVerified": false,
+                "image": null,
+                "templateId": [
+                    28
+                ],
+                "updatedAt": "2025-12-05T17:53:27.313Z",
+                "banExpires": null,
+                "banReason": null,
+                "createdAt": "2025-12-05T17:53:27.313Z",
+                "email": "testuser17649572070961853@example.com",
+                "role": "admin",
+                "banned": null,
+                "id": "1cBQiXgjuam9wfETBBMv9EPGeDb1ePVj",
+                "lang": [
+                    "en"
+                ],
+                "name": "Test User 1764957207096_274",
+                "twoFactorEnabled": null
+            },
+            {
+                "banReason": null,
+                "email": "testuser17646884595589352@example.com",
+                "twoFactorEnabled": null,
+                "canEdit": false,
+                "id": "1crBtYgSuYjgjbal9wDB3qYwFMuHBawk",
+                "lang": [
+                    "en"
+                ],
+                "banExpires": null,
+                "emailVerified": false,
+                "image": null,
+                "role": "scribe",
+                "templateId": [
+                    28
+                ],
+                "banned": null,
+                "createdAt": "2025-12-02T15:14:26.080Z",
+                "name": "Test User 1764688459558_764",
+                "updatedAt": "2025-12-02T15:14:26.080Z"
+            },
+            {
+                "banned": null,
+                "createdAt": "2025-12-02T17:55:32.925Z",
+                "name": "Test User 1764698132909_153",
+                "banExpires": null,
+                "email": "testuser17646981329094782@example.com",
+                "emailVerified": false,
+                "twoFactorEnabled": null,
+                "canEdit": false,
+                "id": "1d0gSGQeuAx4vOUT3e80c4IEYMmRwinn",
+                "image": null,
+                "lang": [
+                    "en"
+                ],
+                "role": "demo",
+                "templateId": [
+                    28
+                ],
+                "updatedAt": "2025-12-02T17:55:32.925Z",
+                "banReason": null
+            },
+            {
+                "banReason": null,
+                "createdAt": "2025-12-02T17:56:27.553Z",
+                "emailVerified": false,
+                "image": null,
+                "twoFactorEnabled": null,
+                "updatedAt": "2025-12-02T17:56:27.553Z",
+                "banned": null,
+                "banExpires": null,
+                "canEdit": false,
+                "id": "1FU2Oedgzg2nyKHoBXIfBSWNHDiA5sbn",
+                "lang": [
+                    "en"
+                ],
+                "name": "Test User 1764698187526_753",
+                "templateId": [
+                    28
+                ],
+                "email": "testuser17646981875262150@example.com",
+                "role": "scribe"
+            },
+            {
+                "createdAt": "2025-12-02T15:29:22.107Z",
+                "emailVerified": false,
+                "twoFactorEnabled": null,
+                "banExpires": null,
+                "canEdit": false,
+                "email": "testuser17646893620813658@example.com",
+                "id": "1GlDK6qce3fYUcdiKdTiJj45bhn9JWwk",
+                "image": null,
+                "lang": [
+                    "en"
+                ],
+                "name": "Test User 1764689362081_700",
+                "banReason": null,
+                "updatedAt": "2025-12-02T15:29:22.107Z",
+                "role": "scribe",
+                "templateId": [
+                    28
+                ],
+                "banned": null
+            },
+            {
+                "banExpires": null,
+                "banned": false,
+                "canEdit": false,
+                "name": "Test User 1764258623446_427",
+                "role": "scribeAdmin",
+                "banReason": null,
+                "twoFactorEnabled": null,
+                "id": "1hkjwzJDJuPiNK0k5pNzgzF0rdDfTwM2",
+                "image": null,
+                "templateId": [
+                    28
+                ],
+                "createdAt": "2025-11-27T15:50:30.313Z",
+                "email": "testuser17642586234467430@example.com",
+                "emailVerified": false,
+                "lang": [
+                    "en"
+                ],
+                "updatedAt": "2025-11-27T15:50:30.313Z"
+            },
+            {
+                "lang": [
+                    "en"
+                ],
+                "templateId": [
+                    28
+                ],
+                "banExpires": null,
+                "banReason": null,
+                "createdAt": "2025-12-03T17:55:26.862Z",
+                "id": "1I5vV7jx1J1EKkvFg2Kx1roLa7f5GURs",
+                "image": null,
+                "name": "Test User 1764784526755_423",
+                "twoFactorEnabled": null,
+                "email": "testuser17647845267556482@example.com",
+                "emailVerified": false,
+                "role": "demo",
+                "updatedAt": "2025-12-03T17:55:26.862Z",
+                "canEdit": false,
+                "banned": null
+            },
+            {
+                "banExpires": null,
+                "createdAt": "2025-11-26T15:41:34.792Z",
+                "email": "testuser17641716947623693@example.com",
+                "emailVerified": false,
+                "banReason": null,
+                "role": "scribe",
+                "templateId": [
+                    28
+                ],
+                "twoFactorEnabled": null,
+                "banned": false,
+                "id": "1jorQJ7n1VquJrPksehZgrXDL7GVM9AL",
+                "lang": [
+                    "en"
+                ],
+                "name": "Test User 1764171694762_257",
+                "canEdit": false,
+                "image": null,
+                "updatedAt": "2025-11-26T15:41:34.792Z"
+            },
+            {
+                "id": "1kZKefihkHHZe3gyEh0s7Q4XSTkPlhYA",
+                "name": "rohit",
+                "twoFactorEnabled": null,
+                "banned": false,
+                "canEdit": false,
+                "createdAt": "2025-11-20T14:59:59.553Z",
+                "email": "testuser17636507940217895@example.com",
+                "image": null,
+                "lang": [
+                    "en"
+                ],
+                "role": "scribeAdmin",
+                "templateId": [
+                    28
+                ],
+                "updatedAt": "2025-11-25T14:34:11.021Z",
+                "banReason": null,
+                "banExpires": null,
+                "emailVerified": false
+            },
+            {
+                "canEdit": false,
+                "emailVerified": false,
+                "templateId": [
+                    28
+                ],
+                "banned": null,
+                "createdAt": "2025-12-02T15:14:35.712Z",
+                "email": "testuser17646884691926919@example.com",
+                "image": null,
+                "lang": [
+                    "en"
+                ],
+                "id": "1lhHfCCeybGR36VuBYk2c0rKKsTdmd9K",
+                "updatedAt": "2025-12-02T15:14:35.712Z",
+                "role": "scribe",
+                "twoFactorEnabled": null,
+                "banExpires": null,
+                "banReason": null,
+                "name": "Test User 1764688469192_759"
+            },
+            {
+                "banned": false,
+                "createdAt": "2025-11-26T15:41:30.675Z",
+                "role": "scribeAdmin",
+                "templateId": [
+                    28
+                ],
+                "updatedAt": "2025-11-26T15:41:30.675Z",
+                "banExpires": null,
+                "canEdit": false,
+                "email": "testuser17641716904894344@example.com",
+                "image": null,
+                "lang": [
+                    "en"
+                ],
+                "name": "Test User 1764171690489_287",
+                "twoFactorEnabled": null,
+                "banReason": null,
+                "emailVerified": false,
+                "id": "1nDdNr5Wsw60jtmugTO8Ax4NuS96UWle"
+            },
+            {
+                "lang": [
+                    "en"
+                ],
+                "name": "Test User 1764862413129_281",
+                "templateId": [
+                    28
+                ],
+                "banExpires": null,
+                "banReason": null,
+                "canEdit": false,
+                "emailVerified": false,
+                "id": "1nkppopbyswl5na4GaIaaychesaY9SH5",
+                "role": "admin",
+                "updatedAt": "2025-12-04T15:33:33.156Z",
+                "banned": null,
+                "createdAt": "2025-12-04T15:33:33.156Z",
+                "email": "testuser17648624131294841@example.com",
+                "image": null,
+                "twoFactorEnabled": null
+            },
+            {
+                "image": null,
+                "role": "admin",
+                "updatedAt": "2025-12-02T17:56:33.956Z",
+                "banReason": null,
+                "canEdit": false,
+                "templateId": [
+                    28
+                ],
+                "twoFactorEnabled": null,
+                "banExpires": null,
+                "createdAt": "2025-12-02T17:56:33.956Z",
+                "email": "testuser17646981936495121@example.com",
+                "lang": [
+                    "en"
+                ],
+                "name": "Test User 1764698193649_805",
+                "banned": null,
+                "emailVerified": false,
+                "id": "1NqXPZuFBYxc0zcDiCClvgkaKL6Lih7M"
+            },
+            {
+                "banned": false,
+                "canEdit": false,
+                "createdAt": "2025-11-26T17:53:10.188Z",
+                "id": "1pej69o1gT58Y6Jh6kBYwpl92rngbith",
+                "role": "scribeAdmin",
+                "banExpires": null,
+                "emailVerified": false,
+                "twoFactorEnabled": null,
+                "banReason": null,
+                "lang": [
+                    "en"
+                ],
+                "email": "testuser17641795901656646@example.com",
+                "image": null,
+                "name": "Test User 1764179590165_580",
+                "templateId": [
+                    28
+                ],
+                "updatedAt": "2025-11-26T17:53:10.188Z"
+            },
+            {
+                "banExpires": null,
+                "banReason": null,
+                "banned": false,
+                "id": "1qfXcI2h6dIfLIVa6MjFll1n9RYfDtuU",
+                "name": "Test User 1763661216254_137",
+                "twoFactorEnabled": null,
+                "email": "testuser17636612162542235@example.com",
+                "lang": [
+                    "en"
+                ],
+                "role": "provider",
+                "updatedAt": "2025-11-20T17:53:36.280Z",
+                "canEdit": false,
+                "emailVerified": false,
+                "image": null,
+                "templateId": [
+                    28
+                ],
+                "createdAt": "2025-11-20T17:53:36.280Z"
+            },
+            {
+                "banReason": null,
+                "emailVerified": false,
+                "banExpires": null,
+                "banned": false,
+                "createdAt": "2025-11-24T17:53:40.400Z",
+                "twoFactorEnabled": null,
+                "canEdit": false,
+                "email": "testuser17640068203946317@example.com",
+                "id": "1RitbmifUDi2JwIMTbOALUHQkiTW6Wwm",
+                "lang": [
+                    "en"
+                ],
+                "name": "Test User 1764006820394_677",
+                "image": null,
+                "role": "demo",
+                "templateId": [
+                    28
+                ],
+                "updatedAt": "2025-11-24T17:53:40.400Z"
+            },
+            {
+                "templateId": [
+                    28
+                ],
+                "banReason": null,
+                "emailVerified": false,
+                "lang": [
+                    "en"
+                ],
+                "name": "Test User 1764957201681_648",
+                "banExpires": null,
+                "banned": null,
+                "image": null,
+                "role": "admin",
+                "twoFactorEnabled": null,
+                "updatedAt": "2025-12-05T17:53:21.699Z",
+                "canEdit": false,
+                "id": "1RXPm9GhyHoTcizkFJkechY0mmIw7Wjx",
+                "createdAt": "2025-12-05T17:53:21.699Z",
+                "email": "testuser17649572016817957@example.com"
+            },
+            {
+                "banExpires": null,
+                "banned": null,
+                "id": "1s23e65sIxDS3rq1yJvbLbFXI494DPdL",
+                "image": null,
+                "role": "admin",
+                "templateId": [
+                    28
+                ],
+                "createdAt": "2025-12-03T17:55:30.327Z",
+                "emailVerified": false,
+                "lang": [
+                    "en"
+                ],
+                "name": "Test User 1764784530315_609",
+                "twoFactorEnabled": null,
+                "banReason": null,
+                "canEdit": false,
+                "email": "testuser17647845303155936@example.com",
+                "updatedAt": "2025-12-03T17:55:30.327Z"
+            },
+            {
+                "banExpires": null,
+                "banReason": null,
+                "id": "1TWfNadYiAoryyiS47eCkEcebCdD2f3t",
+                "lang": [
+                    "en"
+                ],
+                "updatedAt": "2025-12-02T15:14:29.893Z",
+                "createdAt": "2025-12-02T15:14:29.893Z",
+                "email": "testuser17646884633556047@example.com",
+                "role": "scribe",
+                "banned": null,
+                "emailVerified": false,
+                "name": "Test User 1764688463355_21",
+                "twoFactorEnabled": null,
+                "canEdit": false,
+                "image": null,
+                "templateId": [
+                    28
+                ]
+            },
+            {
+                "banExpires": null,
+                "email": "testuser17650435888413458@example.com",
+                "lang": [
+                    "en"
+                ],
+                "templateId": [
+                    28
+                ],
+                "banned": null,
+                "canEdit": false,
+                "createdAt": "2025-12-06T17:53:08.861Z",
+                "image": null,
+                "role": "admin",
+                "name": "Test User 1765043588841_31",
+                "twoFactorEnabled": null,
+                "updatedAt": "2025-12-06T17:53:08.861Z",
+                "banReason": null,
+                "emailVerified": false,
+                "id": "1U2UIJLExNHItZryiIvd6ywSRbtAiSou"
+            },
+            {
+                "twoFactorEnabled": null,
+                "canEdit": false,
+                "emailVerified": false,
+                "image": null,
+                "templateId": [
+                    28
+                ],
+                "updatedAt": "2025-11-19T17:53:35.699Z",
+                "banReason": null,
+                "email": "testuser17635748156836199@example.com",
+                "id": "1uDLi7Ts1arUhBJ7CTCXGVhA3y67xYrI",
+                "lang": [
+                    "en"
+                ],
+                "role": "demo",
+                "banExpires": null,
+                "banned": false,
+                "createdAt": "2025-11-19T17:53:35.699Z",
+                "name": "Test User 1763574815683_239"
+            },
+            {
+                "createdAt": "2025-12-02T15:14:42.551Z",
+                "name": "Test User 1764688476030_625",
+                "templateId": [
+                    28
+                ],
+                "updatedAt": "2025-12-02T15:14:42.551Z",
+                "banExpires": null,
+                "emailVerified": false,
+                "twoFactorEnabled": null,
+                "email": "testuser17646884760301403@example.com",
+                "image": null,
+                "role": "admin",
+                "banned": null,
+                "canEdit": false,
+                "id": "1veBXE54yrDTHCY8NireVDH7qFce1juH",
+                "lang": [
+                    "en"
+                ],
+                "banReason": null
+            },
+            {
+                "lang": [
+                    "en"
+                ],
+                "createdAt": "2025-11-26T14:16:28.909Z",
+                "id": "1YBr89zHDX61PcJepG1wFSNaUArSuJtf",
+                "twoFactorEnabled": null,
+                "canEdit": false,
+                "email": "testuser17641665823949239@example.com",
+                "image": null,
+                "updatedAt": "2025-11-26T14:16:28.909Z",
+                "banExpires": null,
+                "emailVerified": false,
+                "name": "Test User 1764166582394_684",
+                "role": "scribe",
+                "templateId": [
+                    28
+                ],
+                "banReason": null,
+                "banned": false
+            },
+            {
+                "id": "1yNV4iWlPsmhnL0Sr7ZP9CpGTy2f7pzf",
+                "lang": [
+                    "en"
+                ],
+                "twoFactorEnabled": null,
+                "banExpires": null,
+                "banned": false,
+                "createdAt": "2025-11-25T15:50:44.235Z",
+                "name": "Test User 1764085844221_199",
+                "emailVerified": false,
+                "updatedAt": "2025-11-25T15:50:44.235Z",
+                "templateId": [
+                    28
+                ],
+                "banReason": null,
+                "canEdit": false,
+                "image": null,
+                "role": "scribeAdmin",
+                "email": "testuser17640858442227351@example.com"
+            },
+            {
+                "twoFactorEnabled": null,
+                "banExpires": null,
+                "banReason": null,
+                "canEdit": false,
+                "id": "25Ab0pQ9csD1cT2j2GhED94jhgzyGYTY",
+                "image": null,
+                "name": "Test User",
+                "role": "provider",
+                "banned": null,
+                "createdAt": "2025-11-29T17:42:25.098Z",
+                "email": "testuser+1764438142542@gmail.com",
+                "emailVerified": false,
+                "lang": [
+                    "en"
+                ],
+                "templateId": [
+                    28
+                ],
+                "updatedAt": "2025-11-29T17:42:25.098Z"
+            },
+            {
+                "banReason": null,
+                "createdAt": "2025-12-01T17:56:47.264Z",
+                "updatedAt": "2025-12-01T17:56:47.264Z",
+                "banned": null,
+                "canEdit": false,
+                "emailVerified": false,
+                "image": null,
+                "email": "testuser1764611807245639@example.com",
+                "id": "26u6wOmoe4qdo9HoSivtlc9nfc0eSXL3",
+                "lang": [
+                    "en"
+                ],
+                "name": "Test User 1764611807245_3",
+                "role": "demo",
+                "templateId": [
+                    28
+                ],
+                "banExpires": null,
+                "twoFactorEnabled": null
+            },
+            {
+                "banReason": null,
+                "banned": null,
+                "lang": [
+                    "en"
+                ],
+                "twoFactorEnabled": null,
+                "email": "testuser17648709098552164@example.com",
+                "image": null,
+                "name": "Test User 1764870909855_762",
+                "role": "admin",
+                "canEdit": false,
+                "updatedAt": "2025-12-04T17:55:09.882Z",
+                "banExpires": null,
+                "createdAt": "2025-12-04T17:55:09.882Z",
+                "emailVerified": false,
+                "id": "273zy6O8wTEPbXQfTnH9lPvze6h5ASOg",
+                "templateId": [
+                    28
+                ]
+            },
+            {
+                "lang": [
+                    "en"
+                ],
+                "templateId": [
+                    28
+                ],
+                "banExpires": null,
+                "image": null,
+                "twoFactorEnabled": null,
+                "updatedAt": "2025-11-27T17:51:17.328Z",
+                "banned": null,
+                "canEdit": false,
+                "banReason": null,
+                "name": "Test User 1764265877310_626",
+                "role": "scribe",
+                "createdAt": "2025-11-27T17:51:17.328Z",
+                "email": "testuser17642658773102293@example.com",
+                "emailVerified": false,
+                "id": "28u8KG8TGuC8crt96sOIsZ8SxxQqIlc3"
+            },
+            {
+                "banned": null,
+                "createdAt": "2025-11-29T17:53:39.867Z",
+                "name": "Test User 1764438819857_593",
+                "role": "scribeAdmin",
+                "banExpires": null,
+                "canEdit": false,
+                "emailVerified": false,
+                "templateId": [
+                    28
+                ],
+                "updatedAt": "2025-11-29T17:53:39.867Z",
+                "id": "2aAw2BdWB0THs7sFl9neMzvpvd6dL1by",
+                "image": null,
+                "twoFactorEnabled": null,
+                "email": "testuser17644388198587212@example.com",
+                "lang": [
+                    "en"
+                ],
+                "banReason": null
+            },
+            {
+                "id": "2BSeMMgOyVb8ZliaZyjqzQnYjsteB8Db",
+                "role": "scribeAdmin",
+                "banned": false,
+                "email": "testuser1764085837933946@example.com",
+                "emailVerified": false,
+                "lang": [
+                    "en"
+                ],
+                "banExpires": null,
+                "canEdit": false,
+                "image": null,
+                "name": "Test User 1764085837933_130",
+                "templateId": [
+                    28
+                ],
+                "twoFactorEnabled": null,
+                "updatedAt": "2025-11-25T15:50:37.948Z",
+                "banReason": null,
+                "createdAt": "2025-11-25T15:50:37.948Z"
+            },
+            {
+                "canEdit": false,
+                "createdAt": "2025-11-24T17:53:45.707Z",
+                "email": "testuser17640068256991330@example.com",
+                "templateId": [
+                    28
+                ],
+                "banned": false,
+                "lang": [
+                    "en"
+                ],
+                "role": "demo",
+                "banExpires": null,
+                "emailVerified": false,
+                "id": "2bsKptJiXOFgfOmZ5ae91MSqgdLDG8sA",
+                "image": null,
+                "banReason": null,
+                "name": "Test User 1764006825699_467",
+                "twoFactorEnabled": null,
+                "updatedAt": "2025-11-24T17:53:45.707Z"
+            },
+            {
+                "role": "admin",
+                "templateId": [
+                    28
+                ],
+                "twoFactorEnabled": null,
+                "updatedAt": "2025-12-03T17:55:19.111Z",
+                "banned": null,
+                "canEdit": false,
+                "emailVerified": false,
+                "image": null,
+                "name": "Test User 1764784519101_979",
+                "banExpires": null,
+                "banReason": null,
+                "createdAt": "2025-12-03T17:55:19.111Z",
+                "email": "testuser17647845191013993@example.com",
+                "id": "2C9LNkEOPGNPa8KlRghFEgYBAlnHHtzW",
+                "lang": [
+                    "en"
+                ]
+            },
+            {
+                "banned": false,
+                "id": "2EYClGXBuTlAEX1K8DDvOBPzDwoIwzYq",
+                "name": "Test User 1764093213655_592",
+                "canEdit": false,
+                "createdAt": "2025-11-25T17:53:33.684Z",
+                "emailVerified": false,
+                "templateId": [
+                    28
+                ],
+                "twoFactorEnabled": null,
+                "banExpires": null,
+                "email": "testuser17640932136559120@example.com",
+                "image": null,
+                "lang": [
+                    "en"
+                ],
+                "updatedAt": "2025-11-25T17:53:33.684Z",
+                "role": "scribe",
+                "banReason": null
+            },
+            {
+                "banReason": null,
+                "createdAt": "2025-11-30T17:53:40.005Z",
+                "emailVerified": false,
+                "image": null,
+                "twoFactorEnabled": null,
+                "id": "2fEo1IbgzOrfIpLFQhfxznzUV8HBTGzQ",
+                "name": "Test User 1764525219995_814",
+                "role": "admin",
+                "templateId": [
+                    28
+                ],
+                "banned": null,
+                "canEdit": false,
+                "lang": [
+                    "en"
+                ],
+                "banExpires": null,
+                "email": "testuser17645252199958507@example.com",
+                "updatedAt": "2025-11-30T17:53:40.005Z"
+            },
+            {
+                "banReason": null,
+                "emailVerified": false,
+                "createdAt": "2025-12-05T17:53:44.726Z",
+                "image": null,
+                "role": "admin",
+                "templateId": [
+                    28
+                ],
+                "twoFactorEnabled": null,
+                "updatedAt": "2025-12-05T17:53:44.726Z",
+                "banExpires": null,
+                "email": "testuser17649572247073379@example.com",
+                "banned": null,
+                "canEdit": false,
+                "id": "2Gk7KXGPNvGyOprAvgcOLK6oQCegeYYT",
+                "lang": [
+                    "en"
+                ],
+                "name": "Test User 1764957224707_221"
+            },
+            {
+                "id": "2htK6mHT27ztTPZcOdJwfCe67Rjw9T3b",
+                "lang": [
+                    "en"
+                ],
+                "email": "testuser17645250803995397@example.com",
+                "role": "admin",
+                "twoFactorEnabled": null,
+                "updatedAt": "2025-11-30T17:51:20.424Z",
+                "templateId": [
+                    28
+                ],
+                "banExpires": null,
+                "createdAt": "2025-11-30T17:51:20.424Z",
+                "emailVerified": false,
+                "image": null,
+                "banReason": null,
+                "name": "Test User 1764525080399_164",
+                "banned": null,
+                "canEdit": false
+            },
+            {
+                "twoFactorEnabled": null,
+                "banned": null,
+                "emailVerified": false,
+                "role": "admin",
+                "canEdit": false,
+                "id": "2kEM8L6ePGc3I20Y9CRinNMBRzXl2931",
+                "lang": [
+                    "en"
+                ],
+                "banExpires": null,
+                "banReason": null,
+                "email": "testuser17646117942007464@example.com",
+                "name": "Test User 1764611794200_74",
+                "updatedAt": "2025-12-01T17:56:34.216Z",
+                "createdAt": "2025-12-01T17:56:34.216Z",
+                "image": null,
+                "templateId": [
+                    28
+                ]
+            },
+            {
+                "banExpires": null,
+                "banReason": null,
+                "name": "Test User 1763646714781_894",
+                "updatedAt": "2025-11-20T13:52:00.974Z",
+                "canEdit": false,
+                "createdAt": "2025-11-20T13:52:00.974Z",
+                "lang": [
+                    "en"
+                ],
+                "role": "scribeAdmin",
+                "twoFactorEnabled": null,
+                "banned": false,
+                "email": "testuser17636467147816599@example.com",
+                "emailVerified": false,
+                "id": "2KhTebZhtDU8ra20C3zFNaDl8iODuqZd",
+                "image": null,
+                "templateId": [
+                    28
+                ]
+            },
+            {
+                "emailVerified": false,
+                "banExpires": null,
+                "lang": [
+                    "en"
+                ],
+                "templateId": [
+                    28
+                ],
+                "banReason": null,
+                "canEdit": false,
+                "createdAt": "2025-11-26T15:54:21.075Z",
+                "email": "testuser1764172461063778@example.com",
+                "role": "scribe",
+                "twoFactorEnabled": null,
+                "updatedAt": "2025-11-26T15:54:21.075Z",
+                "banned": null,
+                "id": "2KqrfrpmlGDe0iYxwGZ9GeO6LdfTfJHz",
+                "image": null,
+                "name": "Test User 1764172461063_558"
+            },
+            {
+                "id": "2Kz4xNCNEbh5DoilZO7YXzlN9JimyQnA",
+                "updatedAt": "2025-11-25T17:53:26.157Z",
+                "canEdit": false,
+                "lang": [
+                    "en"
+                ],
+                "role": "demo",
+                "banExpires": null,
+                "banned": null,
+                "createdAt": "2025-11-25T17:53:26.157Z",
+                "email": "testuser17640932060025997@example.com",
+                "name": "Test User 1764093206002_113",
+                "templateId": [
+                    28
+                ],
+                "banReason": null,
+                "emailVerified": false,
+                "image": null,
+                "twoFactorEnabled": null
+            },
+            {
+                "image": null,
+                "twoFactorEnabled": null,
+                "banExpires": null,
+                "emailVerified": false,
+                "id": "2lREaPIjewy40XWyB1JiDJAjFoYXpqoI",
+                "role": "scribe",
+                "templateId": [
+                    28
+                ],
+                "banReason": null,
+                "canEdit": false,
+                "lang": [
+                    "en"
+                ],
+                "updatedAt": "2025-11-24T17:53:54.071Z",
+                "banned": false,
+                "email": "testuser17640068340649997@example.com",
+                "name": "Test User 1764006834064_85",
+                "createdAt": "2025-11-24T17:53:54.071Z"
+            },
+            {
+                "banExpires": null,
+                "banReason": null,
+                "updatedAt": "2025-11-28T17:50:57.302Z",
+                "canEdit": false,
+                "createdAt": "2025-11-28T17:50:57.302Z",
+                "email": "testuser17643522571434345@example.com",
+                "emailVerified": false,
+                "id": "2mwPkKFvDOhK2XN40lLrikUdo2SWVGyI",
+                "name": "Test User 1764352257143_56",
+                "twoFactorEnabled": null,
+                "banned": null,
+                "image": null,
+                "lang": [
+                    "en"
+                ],
+                "templateId": [
+                    28
+                ],
+                "role": "admin"
+            },
+            {
+                "banReason": null,
+                "banned": null,
+                "createdAt": "2025-12-04T17:56:20.253Z",
+                "emailVerified": false,
+                "canEdit": false,
+                "email": "testuser17648709802266185@example.com",
+                "image": null,
+                "id": "2n7tok7WqA1j4hdTWbwKqApA8GLWNf0g",
+                "twoFactorEnabled": null,
+                "lang": [
+                    "en"
+                ],
+                "name": "Test User 1764870980226_693",
+                "role": "admin",
+                "templateId": [
+                    28
+                ],
+                "updatedAt": "2025-12-04T17:56:20.253Z",
+                "banExpires": null
+            },
+            {
+                "banReason": null,
+                "id": "2NfsueQZ2D0ufaSqrUcZjcGbxzDJBuWV",
+                "image": null,
+                "banExpires": null,
+                "twoFactorEnabled": null,
+                "banned": null,
+                "createdAt": "2025-12-02T15:14:41.523Z",
+                "emailVerified": false,
+                "lang": [
+                    "en"
+                ],
+                "templateId": [
+                    28
+                ],
+                "canEdit": false,
+                "email": "testuser17646884750047486@example.com",
+                "name": "Test User 1764688475004_973",
+                "role": "admin",
+                "updatedAt": "2025-12-02T15:14:41.523Z"
+            },
+            {
+                "templateId": [
+                    28
+                ],
+                "twoFactorEnabled": null,
+                "id": "2o4DGzOERgXtUjIP2wH39pmYAdfR901e",
+                "image": null,
+                "name": "Test User 1764265873003_776",
+                "updatedAt": "2025-11-27T17:51:13.075Z",
+                "lang": [
+                    "en"
+                ],
+                "banReason": null,
+                "banned": null,
+                "email": "testuser1764265873004720@example.com",
+                "banExpires": null,
+                "canEdit": false,
+                "createdAt": "2025-11-27T17:51:13.075Z",
+                "emailVerified": false,
+                "role": "scribeAdmin"
+            },
+            {
+                "name": "Test User 1764862389160_794",
+                "role": "admin",
+                "twoFactorEnabled": null,
+                "banExpires": null,
+                "emailVerified": false,
+                "id": "2ojT9q0Z5Cep5buNbwAN06MDk5d1adbF",
+                "image": null,
+                "lang": [
+                    "en"
+                ],
+                "templateId": [
+                    28
+                ],
+                "banReason": null,
+                "canEdit": false,
+                "email": "testuser17648623891608168@example.com",
+                "banned": null,
+                "createdAt": "2025-12-04T15:33:09.188Z",
+                "updatedAt": "2025-12-04T15:33:09.188Z"
+            },
+            {
+                "role": "admin",
+                "banned": null,
+                "canEdit": false,
+                "lang": [
+                    "en"
+                ],
+                "name": "Test User 1764689474464_297",
+                "emailVerified": false,
+                "id": "2OLDTnblvc1DqE6ZDDOT9oVRwDcBWtjD",
+                "twoFactorEnabled": null,
+                "image": null,
+                "templateId": [
+                    28
+                ],
+                "updatedAt": "2025-12-02T15:31:14.483Z",
+                "banExpires": null,
+                "banReason": null,
+                "createdAt": "2025-12-02T15:31:14.483Z",
+                "email": "testuser17646894744645720@example.com"
+            },
+            {
+                "banReason": null,
+                "canEdit": false,
+                "emailVerified": false,
+                "id": "2saDLZloTSP5FYgMII6IHGQPIg4xNOJR",
+                "templateId": [
+                    28
+                ],
+                "twoFactorEnabled": null,
+                "banExpires": null,
+                "image": null,
+                "name": "Test User 1763574805152_290",
+                "updatedAt": "2025-11-19T17:53:25.168Z",
+                "banned": false,
+                "email": "testuser17635748051528868@example.com",
+                "role": "scribe",
+                "createdAt": "2025-11-19T17:53:25.168Z",
+                "lang": [
+                    "en"
+                ]
+            },
+            {
+                "updatedAt": "2025-12-02T15:29:23.345Z",
+                "email": "testuser17646893633199029@example.com",
+                "templateId": [
+                    28
+                ],
+                "banExpires": null,
+                "banReason": null,
+                "emailVerified": false,
+                "lang": [
+                    "en"
+                ],
+                "id": "2TlH1xvcF2iuuw62IRN5s2q7ByAmudR0",
+                "role": "admin",
+                "banned": null,
+                "canEdit": false,
+                "createdAt": "2025-12-02T15:29:23.345Z",
+                "image": null,
+                "name": "Test User 1764689363319_929",
+                "twoFactorEnabled": null
+            },
+            {
+                "banExpires": null,
+                "banned": null,
+                "id": "2umY7UHBMnIxQRp4OOvIxCujeJPpt2MY",
+                "lang": [
+                    "en"
+                ],
+                "canEdit": false,
+                "createdAt": "2025-12-02T17:55:42.797Z",
+                "email": "testuser17646981427173057@example.com",
+                "emailVerified": false,
+                "twoFactorEnabled": null,
+                "banReason": null,
+                "image": null,
+                "updatedAt": "2025-12-02T17:55:42.797Z",
+                "name": "Test User 1764698142717_759",
+                "role": "admin",
+                "templateId": [
+                    28
+                ]
+            },
+            {
+                "banReason": null,
+                "emailVerified": false,
+                "lang": [
+                    "en"
+                ],
+                "createdAt": "2025-12-02T15:29:24.578Z",
+                "email": "testuser17646893645517382@example.com",
+                "name": "Test User 1764689364551_216",
+                "templateId": [
+                    28
+                ],
+                "twoFactorEnabled": null,
+                "banned": null,
+                "image": null,
+                "updatedAt": "2025-12-02T15:29:24.578Z",
+                "canEdit": false,
+                "id": "2vsFeR4ghzx5kDZjI9SS3GalxwPa70Sd",
+                "role": "admin",
+                "banExpires": null
+            },
+            {
+                "name": "Test User 1764179589214_43",
+                "role": "scribeAdmin",
+                "twoFactorEnabled": null,
+                "banExpires": null,
+                "banReason": null,
+                "banned": null,
+                "createdAt": "2025-11-26T17:53:09.249Z",
+                "emailVerified": false,
+                "email": "testuser17641795892141941@example.com",
+                "lang": [
+                    "en"
+                ],
+                "canEdit": false,
+                "id": "2Wbm4YccRDka8H4tQNG9lc3WhhQLAYpN",
+                "image": null,
+                "templateId": [
+                    28
+                ],
+                "updatedAt": "2025-11-26T17:53:09.249Z"
+            },
+            {
+                "canEdit": false,
+                "emailVerified": false,
+                "updatedAt": "2025-12-02T15:14:34.070Z",
+                "banExpires": null,
+                "lang": [
+                    "en"
+                ],
+                "templateId": [
+                    28
+                ],
+                "twoFactorEnabled": null,
+                "banReason": null,
+                "banned": null,
+                "id": "2WUdZnY6QSBFFdScpvXrweTO5WoCvuML",
+                "createdAt": "2025-12-02T15:14:34.070Z",
+                "email": "testuser17646884675457314@example.com",
+                "image": null,
+                "name": "Test User 1764688467545_554",
+                "role": "admin"
+            },
+            {
+                "canEdit": false,
+                "email": "testuser17645252044234273@example.com",
+                "id": "2Y31cdzo91qFyhQ05UAikWFbgGbY4j1s",
+                "image": null,
+                "banReason": null,
+                "banned": null,
+                "createdAt": "2025-11-30T17:53:24.434Z",
+                "templateId": [
+                    28
+                ],
+                "emailVerified": false,
+                "lang": [
+                    "en"
+                ],
+                "role": "admin",
+                "twoFactorEnabled": null,
+                "updatedAt": "2025-11-30T17:53:24.434Z",
+                "banExpires": null,
+                "name": "Test User 1764525204423_730"
+            },
+            {
+                "banExpires": null,
+                "canEdit": false,
+                "emailVerified": false,
+                "id": "2zldDj3apiJQJiakuhah5gCjEYebwymX",
+                "lang": [
+                    "en"
+                ],
+                "role": "admin",
+                "banned": null,
+                "email": "testuser17647845391468749@example.com",
+                "templateId": [
+                    28
+                ],
+                "twoFactorEnabled": null,
+                "banReason": null,
+                "createdAt": "2025-12-03T17:55:39.155Z",
+                "image": null,
+                "name": "Test User 1764784539146_586",
+                "updatedAt": "2025-12-03T17:55:39.155Z"
+            },
+            {
+                "banned": null,
+                "canEdit": false,
+                "createdAt": "2025-11-26T15:54:08.604Z",
+                "emailVerified": false,
+                "id": "35RYwQfFhTHkdnNz2r9La3OM3WMdjaWE",
+                "email": "testuser1764172448569514@example.com",
+                "lang": [
+                    "en"
+                ],
+                "role": "scribe",
+                "banReason": null,
+                "image": null,
+                "templateId": [
+                    28
+                ],
+                "twoFactorEnabled": null,
+                "banExpires": null,
+                "name": "Test User 1764172448569_33",
+                "updatedAt": "2025-11-26T15:54:08.604Z"
+            },
+            {
+                "banExpires": null,
+                "lang": [
+                    "en"
+                ],
+                "name": "Test User 1764171696192_864",
+                "templateId": [
+                    28
+                ],
+                "twoFactorEnabled": null,
+                "banReason": null,
+                "id": "37C7UuEU5mBUElpS0Yx9vzqiZny8zsGI",
+                "image": null,
+                "role": "demo",
+                "createdAt": "2025-11-26T15:41:36.226Z",
+                "email": "testuser17641716961922796@example.com",
+                "banned": null,
+                "canEdit": false,
+                "emailVerified": false,
+                "updatedAt": "2025-11-26T15:41:36.226Z"
+            },
+            {
+                "updatedAt": "2025-11-26T15:54:03.372Z",
+                "twoFactorEnabled": null,
+                "canEdit": false,
+                "image": null,
+                "role": "scribe",
+                "templateId": [
+                    28
+                ],
+                "banExpires": null,
+                "banReason": null,
+                "createdAt": "2025-11-26T15:54:03.372Z",
+                "email": "testuser17641724433648952@example.com",
+                "lang": [
+                    "en"
+                ],
+                "banned": null,
+                "emailVerified": false,
+                "id": "3bFaY0cHEBgBnIyERiwyuzNMHcU3ODZA",
+                "name": "Test User 1764172443364_511"
+            },
+            {
+                "id": "3chYMarPUCHvau21OfgWWp0V3icwcAeO",
+                "image": null,
+                "twoFactorEnabled": null,
+                "banExpires": null,
+                "banReason": null,
+                "name": "Test User 1764611815672_224",
+                "emailVerified": false,
+                "lang": [
+                    "en"
+                ],
+                "templateId": [
+                    28
+                ],
+                "createdAt": "2025-12-01T17:56:55.690Z",
+                "email": "testuser17646118156723396@example.com",
+                "role": "admin",
+                "updatedAt": "2025-12-01T17:56:55.690Z",
+                "banned": null,
+                "canEdit": false
+            },
+            {
+                "role": "admin",
+                "lang": [
+                    "en"
+                ],
+                "name": "Test User 1764438690671_424",
+                "templateId": [
+                    28
+                ],
+                "banExpires": null,
+                "banned": null,
+                "canEdit": false,
+                "email": "testuser17644386906713661@example.com",
+                "twoFactorEnabled": null,
+                "banReason": null,
+                "createdAt": "2025-11-29T17:51:30.696Z",
+                "emailVerified": false,
+                "id": "3dE6bMiVAhnPKmvLdCSdV32Qxy1UT4P2",
+                "image": null,
+                "updatedAt": "2025-11-29T17:51:30.696Z"
+            },
+            {
+                "name": "Test User 1764957204296_874",
+                "role": "admin",
+                "updatedAt": "2025-12-05T17:53:24.317Z",
+                "banExpires": null,
+                "banReason": null,
+                "createdAt": "2025-12-05T17:53:24.317Z",
+                "image": null,
+                "twoFactorEnabled": null,
+                "canEdit": false,
+                "email": "testuser17649572042961601@example.com",
+                "emailVerified": false,
+                "id": "3dTNzDEQpa9sLJepmRmnVPn5R1lpX9Zu",
+                "templateId": [
+                    28
+                ],
+                "banned": null,
+                "lang": [
+                    "en"
+                ]
+            },
+            {
+                "banExpires": null,
+                "name": "Test User 1764525212169_420",
+                "canEdit": false,
+                "image": null,
+                "banReason": null,
+                "createdAt": "2025-11-30T17:53:32.179Z",
+                "email": "testuser17645252121699425@example.com",
+                "emailVerified": false,
+                "lang": [
+                    "en"
+                ],
+                "role": "admin",
+                "updatedAt": "2025-11-30T17:53:32.179Z",
+                "banned": null,
+                "id": "3ePzqRSlo1TgKiVEgy3aFBKQksGjPWGM",
+                "twoFactorEnabled": null,
+                "templateId": [
+                    28
+                ]
+            },
+            {
+                "banReason": null,
+                "banned": null,
+                "createdAt": "2025-12-04T17:56:19.006Z",
+                "image": null,
+                "lang": [
+                    "en"
+                ],
+                "updatedAt": "2025-12-04T17:56:19.006Z",
+                "id": "3G9NfK3iAVtMSZIF7BxCVdMs8VPh9PcS",
+                "role": "admin",
+                "canEdit": false,
+                "emailVerified": false,
+                "name": "Test User 1764870978978_991",
+                "twoFactorEnabled": null,
+                "banExpires": null,
+                "email": "testuser17648709789782662@example.com",
+                "templateId": [
+                    28
+                ]
+            },
+            {
+                "createdAt": "2025-11-20T17:53:24.763Z",
+                "image": null,
+                "name": "Test User 1763661204735_78",
+                "banExpires": null,
+                "banned": false,
+                "email": "testuser17636612047359649@example.com",
+                "id": "3gFo7PgUvvOneadqHNfma9ut98MsoaIb",
+                "templateId": [
+                    28
+                ],
+                "lang": [
+                    "en"
+                ],
+                "role": "demo",
+                "twoFactorEnabled": null,
+                "updatedAt": "2025-11-20T17:53:24.763Z",
+                "canEdit": false,
+                "emailVerified": false,
+                "banReason": null
+            },
+            {
+                "emailVerified": false,
+                "lang": [
+                    "en"
+                ],
+                "name": "Test User 1764085833141_74",
+                "canEdit": false,
+                "createdAt": "2025-11-25T15:50:33.156Z",
+                "image": null,
+                "templateId": [
+                    28
+                ],
+                "twoFactorEnabled": null,
+                "id": "3GJ3wtGdnmXVmwlneKflaH6rzJRueiVU",
+                "updatedAt": "2025-11-25T15:50:33.156Z",
+                "role": "scribe",
+                "banExpires": null,
+                "banReason": null,
+                "banned": null,
+                "email": "testuser17640858331418318@example.com"
+            },
+            {
+                "email": "testuser17647845317157973@example.com",
+                "canEdit": false,
+                "id": "3ImuRdnue4gM37qQ17nYyzgUqR6OgIDk",
+                "name": "Test User 1764784531715_847",
+                "banReason": null,
+                "banned": null,
+                "createdAt": "2025-12-03T17:55:31.733Z",
+                "lang": [
+                    "en"
+                ],
+                "templateId": [
+                    28
+                ],
+                "twoFactorEnabled": null,
+                "banExpires": null,
+                "emailVerified": false,
+                "image": null,
+                "role": "admin",
+                "updatedAt": "2025-12-03T17:55:31.733Z"
+            },
+            {
+                "banReason": null,
+                "createdAt": "2025-12-04T17:55:23.223Z",
+                "email": "testuser17648709231963094@example.com",
+                "id": "3jdNn9F4XJSCWDViUX5d7N2bEhR3xM9N",
+                "role": "admin",
+                "banExpires": null,
+                "banned": null,
+                "emailVerified": false,
+                "name": "Test User 1764870923196_807",
+                "templateId": [
+                    28
+                ],
+                "twoFactorEnabled": null,
+                "canEdit": false,
+                "image": null,
+                "lang": [
+                    "en"
+                ],
+                "updatedAt": "2025-12-04T17:55:23.223Z"
+            },
+            {
+                "id": "3jIXXzGF8QFu9zr7KoZ4lTaJmdZ5eXOt",
+                "lang": [
+                    "en"
+                ],
+                "templateId": [
+                    28
+                ],
+                "canEdit": false,
+                "name": "Test User 1764438819647_78",
+                "twoFactorEnabled": null,
+                "createdAt": "2025-11-29T17:53:39.658Z",
+                "emailVerified": false,
+                "banExpires": null,
+                "banReason": null,
+                "image": null,
+                "role": "admin",
+                "updatedAt": "2025-11-29T17:53:39.658Z",
+                "banned": null,
+                "email": "testuser17644388196478625@example.com"
+            }
+        ],
+        "sessionCookie": "__Secure-better-auth.session_token=2BffjXj64r1heOXMYKPZsm12gQgqz2ZQ.eSHaQ6GuIfU%2FTRvtF4w%2BxFppIpjRp5BJMLhLD9PFIFY%3D",
+        "token": "2BffjXj64r1heOXMYKPZsm12gQgqz2ZQ"
+    },
+    "root_group": {
+        "name": "",
+        "path": "",
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {
+            "setup": {
+                "name": "setup",
+                "path": "::setup",
+                "id": "5c0f8025f7e0b6654089e5b00e950f1a",
+                "groups": {},
+                "checks": {
+                        "✅ Login status is 200": {
+                            "name": "✅ Login status is 200",
+                            "path": "::setup::✅ Login status is 200",
+                            "id": "ef5748235dba7417d2a94f2e9e0282c6",
+                            "passes": 1,
+                            "fails": 0
+                        }
+                    }
+            }
+        },
+        "checks": {
+            "✅ API returned 200 status": {
+                "name": "✅ API returned 200 status",
+                "path": "::✅ API returned 200 status",
+                "id": "dca346b3e004edbfe22098bf941b9228",
+                "passes": 63,
+                "fails": 0
+            },
+            "✅ Response is valid JSON": {
+                "name": "✅ Response is valid JSON",
+                "path": "::✅ Response is valid JSON",
+                "id": "6a935f00b13d143c5e946cdf38456f14",
+                "passes": 63,
+                "fails": 0
+            }
+        }
+    }
+}
