@@ -1,0 +1,2474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>k6 Test Report - 2025-11-20T14-59-29-514Z</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f6fa;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 30px;
+            background: #f8f9fa;
+        }
+        .summary-card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .summary-card .value {
+            font-size: 2em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .success { color: #10b981; }
+        .failure { color: #ef4444; }
+        .info { color: #3b82f6; }
+        
+        .overview {
+            padding: 30px;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .overview h2 {
+            margin-bottom: 20px;
+            color: #1f2937;
+        }
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .overview-item {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .overview-item .label {
+            font-size: 0.9em;
+            color: #6b7280;
+            margin-bottom: 5px;
+        }
+        .overview-item .value {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #1f2937;
+        }
+        
+        .test-results {
+            padding: 30px;
+        }
+        .test-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        .test-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f3f4f6;
+        }
+        .test-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #1f2937;
+        }
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.8em;
+        }
+        .status-passed {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .status-failed {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .test-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .metric {
+            text-align: center;
+            padding: 10px;
+            background: #f9fafb;
+            border-radius: 6px;
+        }
+        .metric-value {
+            font-size: 1.4em;
+            font-weight: 700;
+            color: #3b82f6;
+        }
+        .metric-label {
+            font-size: 0.8em;
+            color: #6b7280;
+            margin-top: 5px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            color: #666;
+        }
+        .error {
+            background: #fee2e2;
+            border-left: 4px solid #ef4444;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 5px;
+            color: #991b1b;
+        }
+        details {
+            margin: 10px 0;
+        }
+        details summary {
+            cursor: pointer;
+            font-weight: 600;
+            padding: 5px;
+            user-select: none;
+        }
+        details summary:hover {
+            background: #f3f4f6;
+            border-radius: 4px;
+        }
+        pre {
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 k6 Performance Test Report</h1>
+            <p>Generated on 11/20/2025, 8:39:03 PM</p>
+        </div>
+        
+        <div class="summary">
+            <div class="summary-card">
+                <div class="label">Total Tests</div>
+                <div class="value info">14</div>
+            </div>
+            <div class="summary-card">
+                <div class="label">Passed</div>
+                <div class="value success">6</div>
+            </div>
+            <div class="summary-card">
+                <div class="label">Failed</div>
+                <div class="value failure">8</div>
+            </div>
+            <div class="summary-card">
+                <div class="label">Success Rate</div>
+                <div class="value failure">42.9%</div>
+            </div>
+        </div>
+        
+        <div class="overview">
+            <h2>📊 Overall Performance</h2>
+            <div class="overview-grid">
+                <div class="overview-item">
+                    <div class="label">Total HTTP Requests</div>
+                    <div class="value">198</div>
+                </div>
+                <div class="overview-item">
+                    <div class="label">Total Iterations</div>
+                    <div class="value">1186</div>
+                </div>
+                <div class="overview-item">
+                    <div class="label">Average Response Time</div>
+                    <div class="value">385.38ms</div>
+                </div>
+                <div class="overview-item">
+                    <div class="label">Total Duration</div>
+                    <div class="value">574.34s</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="test-results">
+            <h2 style="margin-bottom: 20px; color: #1f2937;">Detailed Test Results</h2>
+            
+            
+                <div class="test-card">
+                    <div class="test-header">
+                        <div class="test-title">Login Test</div>
+                        <div class="status-badge status-passed">PASSED</div>
+                    </div>
+                    
+                    <p style="color: #6b7280;">Single user login authentication test</p>
+                    <p style="color: #6b7280; font-size: 0.9em; margin-top: 5px;">File: tests/admin/login.js | Duration: 4.60s</p>
+                    
+                    
+                        <div class="test-metrics">
+                            <div class="metric">
+                                <div class="metric-value">30</div>
+                                <div class="metric-label">Iterations</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">1</div>
+                                <div class="metric-label">HTTP Requests</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">1.69ms</div>
+                                <div class="metric-label">Avg Response Time</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">1.69ms</div>
+                                <div class="metric-label">P95 Response Time</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value" style="color: #10b981">100%</div>
+                                <div class="metric-label">Success Rate</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">0%</div>
+                                <div class="metric-label">Fail Rate</div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 15px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; font-size: 0.9em; color: #6b7280;">
+                            <div><strong>Duration Details:</strong> Min: 1.69ms, Med: 1.69ms, Max: 1.69ms</div>
+                            <div><strong>Data:</strong> Received: 3.1 kB, Sent: 673 B</div>
+                            <div><strong>VUs:</strong> Max: 1</div>
+                            <div><strong>Checks:</strong> 0/0 passed</div>
+                        </div>
+                    
+                    
+                    
+                </div>
+            
+                <div class="test-card">
+                    <div class="test-header">
+                        <div class="test-title">Admin Create User Test</div>
+                        <div class="status-badge status-passed">PASSED</div>
+                    </div>
+                    
+                    <p style="color: #6b7280;">User creation endpoint load test</p>
+                    <p style="color: #6b7280; font-size: 0.9em; margin-top: 5px;">File: tests/admin/create-user.js | Duration: 33.99s</p>
+                    
+                    
+                        <div class="test-metrics">
+                            <div class="metric">
+                                <div class="metric-value">331</div>
+                                <div class="metric-label">Iterations</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">34</div>
+                                <div class="metric-label">HTTP Requests</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">980.8ms</div>
+                                <div class="metric-label">Avg Response Time</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">1.43ms</div>
+                                <div class="metric-label">P95 Response Time</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value" style="color: #10b981">100%</div>
+                                <div class="metric-label">Success Rate</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">0%</div>
+                                <div class="metric-label">Fail Rate</div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 15px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; font-size: 0.9em; color: #6b7280;">
+                            <div><strong>Duration Details:</strong> Min: 613.81ms, Med: 987.59ms, Max: 2.11ms</div>
+                            <div><strong>Data:</strong> Received: 32 kB, Sent: 19 kB</div>
+                            <div><strong>VUs:</strong> Max: 3</div>
+                            <div><strong>Checks:</strong> 0/0 passed</div>
+                        </div>
+                    
+                    
+                    
+                </div>
+            
+                <div class="test-card">
+                    <div class="test-header">
+                        <div class="test-title">Admin List Users Test</div>
+                        <div class="status-badge status-passed">PASSED</div>
+                    </div>
+                    
+                    <p style="color: #6b7280;">Admin list users endpoint load test</p>
+                    <p style="color: #6b7280; font-size: 0.9em; margin-top: 5px;">File: tests/admin/list-users.js | Duration: 35.83s</p>
+                    
+                    
+                        <div class="test-metrics">
+                            <div class="metric">
+                                <div class="metric-value">153</div>
+                                <div class="metric-label">Iterations</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">39</div>
+                                <div class="metric-label">HTTP Requests</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">753.77ms</div>
+                                <div class="metric-label">Avg Response Time</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">1.23ms</div>
+                                <div class="metric-label">P95 Response Time</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value" style="color: #10b981">100%</div>
+                                <div class="metric-label">Success Rate</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">0%</div>
+                                <div class="metric-label">Fail Rate</div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 15px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; font-size: 0.9em; color: #6b7280;">
+                            <div><strong>Duration Details:</strong> Min: 285.32ms, Med: 635.19ms, Max: 2.76ms</div>
+                            <div><strong>Data:</strong> Received: 1.4 MB, Sent: 15 kB</div>
+                            <div><strong>VUs:</strong> Max: 3</div>
+                            <div><strong>Checks:</strong> 0/0 passed</div>
+                        </div>
+                    
+                    
+                    
+                </div>
+            
+                <div class="test-card">
+                    <div class="test-header">
+                        <div class="test-title">Admin Ban and Unban Users Test</div>
+                        <div class="status-badge status-passed">PASSED</div>
+                    </div>
+                    
+                    <p style="color: #6b7280;">Ban and Unban users endpoint load test</p>
+                    <p style="color: #6b7280; font-size: 0.9em; margin-top: 5px;">File: tests/admin/ban-unban-users.js | Duration: 35.13s</p>
+                    
+                    
+                        <div class="test-metrics">
+                            <div class="metric">
+                                <div class="metric-value">90</div>
+                                <div class="metric-label">Iterations</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">46</div>
+                                <div class="metric-label">HTTP Requests</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">573.87ms</div>
+                                <div class="metric-label">Avg Response Time</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">949.43ms</div>
+                                <div class="metric-label">P95 Response Time</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value" style="color: #10b981">100%</div>
+                                <div class="metric-label">Success Rate</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">0%</div>
+                                <div class="metric-label">Fail Rate</div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 15px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; font-size: 0.9em; color: #6b7280;">
+                            <div><strong>Duration Details:</strong> Min: 282.32ms, Med: 524.15ms, Max: 2.28ms</div>
+                            <div><strong>Data:</strong> Received: 79 kB, Sent: 22 kB</div>
+                            <div><strong>VUs:</strong> Max: 3</div>
+                            <div><strong>Checks:</strong> 0/0 passed</div>
+                        </div>
+                    
+                    
+                    
+                </div>
+            
+                <div class="test-card">
+                    <div class="test-header">
+                        <div class="test-title">Admin Set Role Test</div>
+                        <div class="status-badge status-passed">PASSED</div>
+                    </div>
+                    
+                    <p style="color: #6b7280;">Set Role endpoint load test</p>
+                    <p style="color: #6b7280; font-size: 0.9em; margin-top: 5px;">File: tests/admin/set-role.js | Duration: 35.22s</p>
+                    
+                    
+                        <div class="test-metrics">
+                            <div class="metric">
+                                <div class="metric-value">65</div>
+                                <div class="metric-label">Iterations</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">34</div>
+                                <div class="metric-label">HTTP Requests</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">1.02ms</div>
+                                <div class="metric-label">Avg Response Time</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">1.93ms</div>
+                                <div class="metric-label">P95 Response Time</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value" style="color: #10b981">100%</div>
+                                <div class="metric-label">Success Rate</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">0%</div>
+                                <div class="metric-label">Fail Rate</div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 15px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; font-size: 0.9em; color: #6b7280;">
+                            <div><strong>Duration Details:</strong> Min: 427.89ms, Med: 857.28ms, Max: 4.73ms</div>
+                            <div><strong>Data:</strong> Received: 70 kB, Sent: 17 kB</div>
+                            <div><strong>VUs:</strong> Max: 3</div>
+                            <div><strong>Checks:</strong> 0/0 passed</div>
+                        </div>
+                    
+                    
+                    
+                </div>
+            
+                <div class="test-card">
+                    <div class="test-header">
+                        <div class="test-title">Admin Edit Users Test</div>
+                        <div class="status-badge status-failed">FAILED</div>
+                    </div>
+                    
+                    <p style="color: #6b7280;">Edit users endpoint load test</p>
+                    <p style="color: #6b7280; font-size: 0.9em; margin-top: 5px;">File: tests/admin/edit-user.js | Duration: 42.60s</p>
+                    
+                    
+                    
+                    
+                        <div class="error">
+                            <strong>❌ Error:</strong> Command failed: k6 run --summary-export=reports/summary-6-edit-user.json tests/admin/edit-user.js
+                            
+                                <details style="margin-top: 10px;">
+                                    <summary style="cursor: pointer; font-weight: 600; color: #991b1b;">
+                                        🔍 View Error Details
+                                    </summary>
+                                    <div style="margin-top: 10px; padding: 10px; background: #fef2f2; border-radius: 5px; font-family: monospace; font-size: 0.85em;">
+                                        
+                                        
+                                        
+                                            <details style="margin-top: 10px;">
+                                                <summary style="cursor: pointer; font-weight: 600;">Console Output (stdout)</summary>
+                                                <pre style="margin-top: 5px; padding: 10px; background: white; border: 1px solid #fecaca; border-radius: 4px; overflow-x: auto; max-height: 300px; overflow-y: auto; white-space: pre-wrap; word-wrap: break-word;">
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+     execution: local
+        script: tests/admin/edit-user.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 3 max VUs, 40s max duration (incl. graceful stop):
+              * admin_edit_users: Up to 3 looping VUs for 30s over 3 stages (gracefulRampDown: 10s, gracefulStop: 30s)
+
+
+Run                [ 100% ] setup()
+admin_edit_users   [   0% ]
+
+Run                [ 100% ] setup()
+admin_edit_users   [   0% ]
+
+Run                [ 100% ] setup()
+admin_edit_users   [   0% ]
+
+Run                [ 100% ] setup()
+admin_edit_users   [   0% ]
+
+Run                [ 100% ] setup()
+admin_edit_users   [   0% ]
+
+Run                [ 100% ] setup()
+admin_edit_users   [   0% ]
+
+Run                [ 100% ] setup()
+admin_edit_users   [   0% ]
+
+Run                [ 100% ] setup()
+admin_edit_users   [   0% ]
+
+Run                [ 100% ] setup()
+admin_edit_users   [   0% ]
+
+Run                [ 100% ] setup()
+admin_edit_users   [   0% ]
+
+running (11.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+admin_edit_users   [   3% ] 1/3 VUs  00.8s/30.0s
+
+running (12.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+admin_edit_users   [   6% ] 1/3 VUs  01.8s/30.0s
+
+running (13.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+admin_edit_users   [   9% ] 1/3 VUs  02.8s/30.0s
+
+running (14.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+admin_edit_users   [  13% ] 1/3 VUs  03.8s/30.0s
+
+running (15.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+admin_edit_users   [  16% ] 1/3 VUs  04.8s/30.0s
+
+running (16.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+admin_edit_users   [  19% ] 2/3 VUs  05.8s/30.0s
+
+running (17.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+admin_edit_users   [  23% ] 2/3 VUs  06.8s/30.0s
+
+running (18.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+admin_edit_users   [  26% ] 2/3 VUs  07.8s/30.0s
+
+running (19.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+admin_edit_users   [  29% ] 2/3 VUs  08.8s/30.0s
+
+running (20.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+admin_edit_users   [  33% ] 2/3 VUs  09.8s/30.0s
+
+running (21.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+admin_edit_users   [  36% ] 3/3 VUs  10.8s/30.0s
+
+running (22.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+admin_edit_users   [  39% ] 3/3 VUs  11.8s/30.0s
+
+running (23.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+admin_edit_users   [  43% ] 3/3 VUs  12.8s/30.0s
+
+running (24.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+admin_edit_users   [  46% ] 3/3 VUs  13.8s/30.0s
+
+running (25.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+admin_edit_users   [  49% ] 3/3 VUs  14.8s/30.0s
+
+running (26.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+admin_edit_users   [  53% ] 3/3 VUs  15.8s/30.0s
+
+running (27.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+admin_edit_users   [  56% ] 3/3 VUs  16.8s/30.0s
+
+running (28.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+admin_edit_users   [  59% ] 3/3 VUs  17.8s/30.0s
+
+running (29.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+admin_edit_users   [  63% ] 3/3 VUs  18.8s/30.0s
+
+running (30.0s), 3/3 VUs, 3 complete and 0 interrupted iterations
+admin_edit_users   [  66% ] 3/3 VUs  19.8s/30.0s
+
+running (31.0s), 3/3 VUs, 3 complete and 0 interrupted iterations
+admin_edit_users   [  69% ] 3/3 VUs  20.8s/30.0s
+
+running (32.0s), 3/3 VUs, 3 complete and 0 interrupted iterations
+admin_edit_users   [  73% ] 3/3 VUs  21.8s/30.0s
+
+running (33.0s), 3/3 VUs, 3 complete and 0 interrupted iterations
+admin_edit_users   [  76% ] 3/3 VUs  22.8s/30.0s
+
+running (34.0s), 3/3 VUs, 3 complete and 0 interrupted iterations
+admin_edit_users   [  79% ] 3/3 VUs  23.8s/30.0s
+
+running (35.0s), 3/3 VUs, 3 complete and 0 interrupted iterations
+admin_edit_users   [  83% ] 3/3 VUs  24.8s/30.0s
+
+running (36.0s), 3/3 VUs, 3 complete and 0 interrupted iterations
+admin_edit_users   [  86% ] 3/3 VUs  25.8s/30.0s
+
+running (37.0s), 3/3 VUs, 3 complete and 0 interrupted iterations
+admin_edit_users   [  89% ] 3/3 VUs  26.8s/30.0s
+
+running (38.0s), 1/3 VUs, 6 complete and 0 interrupted iterations
+admin_edit_users   [  93% ] 1/3 VUs  27.8s/30.0s
+
+running (39.0s), 1/3 VUs, 6 complete and 0 interrupted iterations
+admin_edit_users   [  96% ] 1/3 VUs  28.8s/30.0s
+
+running (40.0s), 1/3 VUs, 6 complete and 0 interrupted iterations
+admin_edit_users   [  99% ] 1/3 VUs  29.8s/30.0s
+
+running (41.0s), 1/3 VUs, 6 complete and 0 interrupted iterations
+admin_edit_users ↓ [ 100% ] 1/3 VUs  30s
+
+
+  █ THRESHOLDS 
+
+    api_failures
+    ✓ &#039;count&lt;5&#039; count=0
+
+    checks
+    ✓ &#039;rate&gt;0.95&#039; rate=100.00%
+
+    http_req_duration
+    ✗ &#039;p(95)&lt;3000&#039; p(95)=11.79s
+
+    successful_requests
+    ✓ &#039;rate&gt;0.95&#039; rate=100.00%
+
+    user_updates
+    ✓ &#039;count&gt;0&#039; count=7
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 15      0.357791/s
+    checks_succeeded...: 100.00% 15 out of 15
+    checks_failed......: 0.00%   0 out of 15
+
+    ✓ ✅ Login status is 200
+    ✓ ✅ Admin edit-user status is 200
+    ✓ ✅ Response received
+
+    CUSTOM
+    api_failures...................: 0       0/s
+    successful_requests............: 100.00% 7 out of 7
+    user_updates...................: 7       0.166969/s
+
+    HTTP
+    http_req_duration..............: avg=4.69s  min=544.08ms med=2.59s max=14.74s p(90)=9.8s   p(95)=11.79s
+      { expected_response:true }...: avg=4.69s  min=544.08ms med=2.59s max=14.74s p(90)=9.8s   p(95)=11.79s
+    http_req_failed................: 0.00%   0 out of 15
+    http_reqs......................: 15      0.357791/s
+
+    EXECUTION
+    iteration_duration.............: avg=10.27s min=3.99s    med=8.54s max=19.26s p(90)=16.23s p(95)=17.75s
+    iterations.....................: 7       0.166969/s
+    vus............................: 1       min=0       max=3
+    vus_max........................: 3       min=3       max=3
+
+    NETWORK
+    data_received..................: 279 kB  6.6 kB/s
+    data_sent......................: 14 kB   326 B/s
+
+
+
+
+running (41.9s), 0/3 VUs, 7 complete and 0 interrupted iterations
+admin_edit_users ✓ [ 100% ] 0/3 VUs  30s
+</pre>
+                                            </details>
+                                        
+                                        
+                                    </div>
+                                </details>
+                            
+                        </div>
+                    
+                </div>
+            
+                <div class="test-card">
+                    <div class="test-header">
+                        <div class="test-title">Admin Search Email Test</div>
+                        <div class="status-badge status-failed">FAILED</div>
+                    </div>
+                    
+                    <p style="color: #6b7280;">Search Email endpoint load test</p>
+                    <p style="color: #6b7280; font-size: 0.9em; margin-top: 5px;">File: tests/admin/search-email.js | Duration: 39.63s</p>
+                    
+                    
+                    
+                    
+                        <div class="error">
+                            <strong>❌ Error:</strong> Command failed: k6 run --summary-export=reports/summary-7-search-email.json tests/admin/search-email.js
+                            
+                                <details style="margin-top: 10px;">
+                                    <summary style="cursor: pointer; font-weight: 600; color: #991b1b;">
+                                        🔍 View Error Details
+                                    </summary>
+                                    <div style="margin-top: 10px; padding: 10px; background: #fef2f2; border-radius: 5px; font-family: monospace; font-size: 0.85em;">
+                                        
+                                        
+                                        
+                                            <details style="margin-top: 10px;">
+                                                <summary style="cursor: pointer; font-weight: 600;">Console Output (stdout)</summary>
+                                                <pre style="margin-top: 5px; padding: 10px; background: white; border: 1px solid #fecaca; border-radius: 4px; overflow-x: auto; max-height: 300px; overflow-y: auto; white-space: pre-wrap; word-wrap: break-word;">
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+     execution: local
+        script: tests/admin/search-email.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 3 max VUs, 40s max duration (incl. graceful stop):
+              * admin_search_users: Up to 3 looping VUs for 30s over 3 stages (gracefulRampDown: 10s, gracefulStop: 30s)
+
+
+Run                  [ 100% ] setup()
+admin_search_users   [   0% ]
+
+Run                  [ 100% ] setup()
+admin_search_users   [   0% ]
+
+Run                  [ 100% ] setup()
+admin_search_users   [   0% ]
+
+Run                  [ 100% ] setup()
+admin_search_users   [   0% ]
+
+Run                  [ 100% ] setup()
+admin_search_users   [   0% ]
+
+Run                  [ 100% ] setup()
+admin_search_users   [   0% ]
+
+Run                  [ 100% ] setup()
+admin_search_users   [   0% ]
+
+Run                  [ 100% ] setup()
+admin_search_users   [   0% ]
+
+running (09.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+admin_search_users   [   1% ] 1/3 VUs  00.2s/30.0s
+
+running (10.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+admin_search_users   [   4% ] 1/3 VUs  01.2s/30.0s
+
+running (11.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+admin_search_users   [   7% ] 1/3 VUs  02.2s/30.0s
+
+running (12.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+admin_search_users   [  11% ] 1/3 VUs  03.2s/30.0s
+
+running (13.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+admin_search_users   [  14% ] 1/3 VUs  04.2s/30.0s
+
+running (14.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+admin_search_users   [  17% ] 2/3 VUs  05.2s/30.0s
+
+running (15.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+admin_search_users   [  21% ] 2/3 VUs  06.2s/30.0s
+
+running (16.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+admin_search_users   [  24% ] 2/3 VUs  07.2s/30.0s
+
+running (17.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+admin_search_users   [  27% ] 2/3 VUs  08.2s/30.0s
+
+running (18.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+admin_search_users   [  31% ] 2/3 VUs  09.2s/30.0s
+
+running (19.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+admin_search_users   [  34% ] 3/3 VUs  10.2s/30.0s
+
+running (20.0s), 3/3 VUs, 1 complete and 0 interrupted iterations
+admin_search_users   [  37% ] 3/3 VUs  11.2s/30.0s
+
+running (21.0s), 3/3 VUs, 2 complete and 0 interrupted iterations
+admin_search_users   [  41% ] 3/3 VUs  12.2s/30.0s
+
+running (22.0s), 3/3 VUs, 5 complete and 0 interrupted iterations
+admin_search_users   [  44% ] 3/3 VUs  13.2s/30.0s
+
+running (23.0s), 3/3 VUs, 7 complete and 0 interrupted iterations
+admin_search_users   [  47% ] 3/3 VUs  14.2s/30.0s
+
+running (24.0s), 3/3 VUs, 7 complete and 0 interrupted iterations
+admin_search_users   [  51% ] 3/3 VUs  15.2s/30.0s
+
+running (25.0s), 3/3 VUs, 9 complete and 0 interrupted iterations
+admin_search_users   [  54% ] 3/3 VUs  16.2s/30.0s
+
+running (26.0s), 3/3 VUs, 12 complete and 0 interrupted iterations
+admin_search_users   [  57% ] 3/3 VUs  17.2s/30.0s
+
+running (27.0s), 3/3 VUs, 14 complete and 0 interrupted iterations
+admin_search_users   [  61% ] 3/3 VUs  18.2s/30.0s
+
+running (28.0s), 3/3 VUs, 16 complete and 0 interrupted iterations
+admin_search_users   [  64% ] 3/3 VUs  19.2s/30.0s
+
+running (29.0s), 3/3 VUs, 18 complete and 0 interrupted iterations
+admin_search_users   [  67% ] 3/3 VUs  20.2s/30.0s
+
+running (30.0s), 3/3 VUs, 21 complete and 0 interrupted iterations
+admin_search_users   [  71% ] 3/3 VUs  21.2s/30.0s
+
+running (31.0s), 3/3 VUs, 23 complete and 0 interrupted iterations
+admin_search_users   [  74% ] 3/3 VUs  22.2s/30.0s
+
+running (32.0s), 3/3 VUs, 25 complete and 0 interrupted iterations
+admin_search_users   [  77% ] 3/3 VUs  23.2s/30.0s
+
+running (33.0s), 2/3 VUs, 27 complete and 0 interrupted iterations
+admin_search_users   [  81% ] 2/3 VUs  24.2s/30.0s
+
+running (34.0s), 2/3 VUs, 28 complete and 0 interrupted iterations
+admin_search_users   [  84% ] 2/3 VUs  25.2s/30.0s
+
+running (35.0s), 2/3 VUs, 28 complete and 0 interrupted iterations
+admin_search_users   [  87% ] 2/3 VUs  26.2s/30.0s
+
+running (36.0s), 2/3 VUs, 30 complete and 0 interrupted iterations
+admin_search_users   [  91% ] 2/3 VUs  27.2s/30.0s
+
+running (37.0s), 1/3 VUs, 32 complete and 0 interrupted iterations
+admin_search_users   [  94% ] 1/3 VUs  28.2s/30.0s
+
+running (38.0s), 1/3 VUs, 33 complete and 0 interrupted iterations
+admin_search_users   [  97% ] 1/3 VUs  29.2s/30.0s
+
+running (39.0s), 1/3 VUs, 33 complete and 0 interrupted iterations
+admin_search_users ↓ [ 100% ] 1/3 VUs  30s
+
+
+  █ THRESHOLDS 
+
+    api_failures
+    ✓ &#039;count&lt;5&#039; count=0
+
+    checks
+    ✓ &#039;rate&gt;0.95&#039; rate=100.00%
+
+    http_req_duration
+    ✗ &#039;p(95)&lt;3000&#039; p(95)=5.21s
+
+    search_operations
+    ✓ &#039;count&gt;0&#039; count=34
+
+    successful_requests
+    ✓ &#039;rate&gt;0.95&#039; rate=100.00%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 123     3.15054/s
+    checks_succeeded...: 100.00% 123 out of 123
+    checks_failed......: 0.00%   0 out of 123
+
+    ✓ ✅ Login status is 200
+    ✓ ✅ Admin search-users status is 200
+    ✓ ✅ Response has users array
+    ✓ ✅ Search response structure is valid
+    ✓ ✅ Users match search criteria
+
+    CUSTOM
+    api_failures...................: 0       0/s
+    search_operations..............: 34      0.870881/s
+    successful_requests............: 100.00% 34 out of 34
+
+    HTTP
+    http_req_duration..............: avg=1.05s min=269.03ms med=330.11ms max=9.12s  p(90)=2.41s p(95)=5.21s
+      { expected_response:true }...: avg=1.05s min=269.03ms med=330.11ms max=9.12s  p(90)=2.41s p(95)=5.21s
+    http_req_failed................: 0.00%   0 out of 35
+    http_reqs......................: 35      0.896495/s
+
+    EXECUTION
+    iteration_duration.............: avg=1.95s min=1.26s    med=1.33s    max=11.35s p(90)=2.81s p(95)=4.6s 
+    iterations.....................: 34      0.870881/s
+    vus............................: 1       min=0        max=3
+    vus_max........................: 3       min=3        max=3
+
+    NETWORK
+    data_received..................: 99 kB   2.5 kB/s
+    data_sent......................: 25 kB   628 B/s
+
+
+
+
+running (39.0s), 0/3 VUs, 34 complete and 0 interrupted iterations
+admin_search_users ✓ [ 100% ] 0/3 VUs  30s
+</pre>
+                                            </details>
+                                        
+                                        
+                                    </div>
+                                </details>
+                            
+                        </div>
+                    
+                </div>
+            
+                <div class="test-card">
+                    <div class="test-header">
+                        <div class="test-title">Admin Role Filter Test</div>
+                        <div class="status-badge status-failed">FAILED</div>
+                    </div>
+                    
+                    <p style="color: #6b7280;">Role Filter load test</p>
+                    <p style="color: #6b7280; font-size: 0.9em; margin-top: 5px;">File: tests/admin/role-filter.js | Duration: 48.84s</p>
+                    
+                    
+                    
+                    
+                        <div class="error">
+                            <strong>❌ Error:</strong> Command failed: k6 run --summary-export=reports/summary-8-role-filter.json tests/admin/role-filter.js
+                            
+                                <details style="margin-top: 10px;">
+                                    <summary style="cursor: pointer; font-weight: 600; color: #991b1b;">
+                                        🔍 View Error Details
+                                    </summary>
+                                    <div style="margin-top: 10px; padding: 10px; background: #fef2f2; border-radius: 5px; font-family: monospace; font-size: 0.85em;">
+                                        
+                                        
+                                        
+                                            <details style="margin-top: 10px;">
+                                                <summary style="cursor: pointer; font-weight: 600;">Console Output (stdout)</summary>
+                                                <pre style="margin-top: 5px; padding: 10px; background: white; border: 1px solid #fecaca; border-radius: 4px; overflow-x: auto; max-height: 300px; overflow-y: auto; white-space: pre-wrap; word-wrap: break-word;">
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+     execution: local
+        script: tests/admin/role-filter.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 3 max VUs, 40s max duration (incl. graceful stop):
+              * admin_role_filter: Up to 3 looping VUs for 30s over 3 stages (gracefulRampDown: 10s, gracefulStop: 30s)
+
+
+Run                 [ 100% ] setup()
+admin_role_filter   [   0% ]
+
+Run                 [ 100% ] setup()
+admin_role_filter   [   0% ]
+
+Run                 [ 100% ] setup()
+admin_role_filter   [   0% ]
+
+Run                 [ 100% ] setup()
+admin_role_filter   [   0% ]
+
+Run                 [ 100% ] setup()
+admin_role_filter   [   0% ]
+
+Run                 [ 100% ] setup()
+admin_role_filter   [   0% ]
+
+Run                 [ 100% ] setup()
+admin_role_filter   [   0% ]
+
+Run                 [ 100% ] setup()
+admin_role_filter   [   0% ]
+
+Run                 [ 100% ] setup()
+admin_role_filter   [   0% ]
+
+Run                 [ 100% ] setup()
+admin_role_filter   [   0% ]
+
+Run                 [ 100% ] setup()
+admin_role_filter   [   0% ]
+
+Run                 [ 100% ] setup()
+admin_role_filter   [   0% ]
+
+Run                 [ 100% ] setup()
+admin_role_filter   [   0% ]
+
+Run                 [ 100% ] setup()
+admin_role_filter   [   0% ]
+
+Run                 [ 100% ] setup()
+admin_role_filter   [   0% ]
+
+Run                 [ 100% ] setup()
+admin_role_filter   [   0% ]
+
+Run                 [ 100% ] setup()
+admin_role_filter   [   0% ]
+
+running (18.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+admin_role_filter   [   0% ] 1/3 VUs  00.0s/30.0s
+
+running (19.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+admin_role_filter   [   3% ] 1/3 VUs  01.0s/30.0s
+
+running (20.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+admin_role_filter   [   7% ] 1/3 VUs  02.0s/30.0s
+
+running (21.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+admin_role_filter   [  10% ] 1/3 VUs  03.0s/30.0s
+
+running (22.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+admin_role_filter   [  13% ] 1/3 VUs  04.0s/30.0s
+
+running (23.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+admin_role_filter   [  17% ] 2/3 VUs  05.0s/30.0s
+
+running (24.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+admin_role_filter   [  20% ] 2/3 VUs  06.0s/30.0s
+
+running (25.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+admin_role_filter   [  23% ] 2/3 VUs  07.0s/30.0s
+
+running (26.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+admin_role_filter   [  27% ] 2/3 VUs  08.0s/30.0s
+
+running (27.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+admin_role_filter   [  30% ] 2/3 VUs  09.0s/30.0s
+
+running (28.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+admin_role_filter   [  33% ] 3/3 VUs  10.0s/30.0s
+
+running (29.0s), 3/3 VUs, 1 complete and 0 interrupted iterations
+admin_role_filter   [  37% ] 3/3 VUs  11.0s/30.0s
+
+running (30.0s), 3/3 VUs, 2 complete and 0 interrupted iterations
+admin_role_filter   [  40% ] 3/3 VUs  12.0s/30.0s
+
+running (31.0s), 3/3 VUs, 2 complete and 0 interrupted iterations
+admin_role_filter   [  43% ] 3/3 VUs  13.0s/30.0s
+
+running (32.0s), 3/3 VUs, 4 complete and 0 interrupted iterations
+admin_role_filter   [  47% ] 3/3 VUs  14.0s/30.0s
+
+running (33.0s), 3/3 VUs, 5 complete and 0 interrupted iterations
+admin_role_filter   [  50% ] 3/3 VUs  15.0s/30.0s
+
+running (34.0s), 3/3 VUs, 6 complete and 0 interrupted iterations
+admin_role_filter   [  53% ] 3/3 VUs  16.0s/30.0s
+
+running (35.0s), 3/3 VUs, 9 complete and 0 interrupted iterations
+admin_role_filter   [  57% ] 3/3 VUs  17.0s/30.0s
+
+running (36.0s), 3/3 VUs, 11 complete and 0 interrupted iterations
+admin_role_filter   [  60% ] 3/3 VUs  18.0s/30.0s
+
+running (37.0s), 3/3 VUs, 13 complete and 0 interrupted iterations
+admin_role_filter   [  63% ] 3/3 VUs  19.0s/30.0s
+
+running (38.0s), 3/3 VUs, 15 complete and 0 interrupted iterations
+admin_role_filter   [  67% ] 3/3 VUs  20.0s/30.0s
+
+running (39.0s), 3/3 VUs, 18 complete and 0 interrupted iterations
+admin_role_filter   [  70% ] 3/3 VUs  21.0s/30.0s
+
+running (40.0s), 3/3 VUs, 20 complete and 0 interrupted iterations
+admin_role_filter   [  73% ] 3/3 VUs  22.0s/30.0s
+
+running (41.0s), 3/3 VUs, 23 complete and 0 interrupted iterations
+admin_role_filter   [  77% ] 3/3 VUs  23.0s/30.0s
+
+running (42.0s), 3/3 VUs, 24 complete and 0 interrupted iterations
+admin_role_filter   [  80% ] 3/3 VUs  24.0s/30.0s
+
+running (43.0s), 2/3 VUs, 27 complete and 0 interrupted iterations
+admin_role_filter   [  83% ] 2/3 VUs  25.0s/30.0s
+
+running (44.0s), 2/3 VUs, 28 complete and 0 interrupted iterations
+admin_role_filter   [  87% ] 2/3 VUs  26.0s/30.0s
+
+running (45.0s), 2/3 VUs, 30 complete and 0 interrupted iterations
+admin_role_filter   [  90% ] 2/3 VUs  27.0s/30.0s
+
+running (46.0s), 1/3 VUs, 31 complete and 0 interrupted iterations
+admin_role_filter   [  93% ] 1/3 VUs  28.0s/30.0s
+
+running (47.0s), 1/3 VUs, 32 complete and 0 interrupted iterations
+admin_role_filter   [  97% ] 1/3 VUs  29.0s/30.0s
+
+running (48.0s), 1/3 VUs, 32 complete and 0 interrupted iterations
+admin_role_filter ↓ [ 100% ] 1/3 VUs  30s
+
+
+  █ THRESHOLDS 
+
+    api_failures
+    ✓ &#039;count&lt;5&#039; count=0
+
+    checks
+    ✓ &#039;rate&gt;0.95&#039; rate=100.00%
+
+    http_req_duration
+    ✗ &#039;p(95)&lt;3000&#039; p(95)=6.44s
+
+    role_filter_operations
+    ✓ &#039;count&gt;0&#039; count=33
+
+    successful_requests
+    ✓ &#039;rate&gt;0.95&#039; rate=100.00%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 161     3.328293/s
+    checks_succeeded...: 100.00% 161 out of 161
+    checks_failed......: 0.00%   0 out of 161
+
+    ✓ ✅ Login status is 200
+    ✓ ✅ Admin role-filter status is 200
+    ✓ ✅ Response has users array
+    ✓ ✅ Search response structure is valid
+    ✓ ✅ User objects have required fields
+    ✓ ✅ User role is valid
+    ✓ ✅ All users match selected role
+
+    CUSTOM
+    api_failures...................: 0       0/s
+    role_filter_operations.........: 33      0.682197/s
+    successful_requests............: 100.00% 33 out of 33
+
+    HTTP
+    http_req_duration..............: avg=1.41s min=258.42ms med=265.83ms max=16.7s  p(90)=3.45s p(95)=6.44s
+      { expected_response:true }...: avg=1.41s min=258.42ms med=265.83ms max=16.7s  p(90)=3.45s p(95)=6.44s
+    http_req_failed................: 0.00%   0 out of 34
+    http_reqs......................: 34      0.702869/s
+
+    EXECUTION
+    iteration_duration.............: avg=2.03s min=1.25s    med=1.26s    max=11.32s p(90)=3.38s p(95)=5.91s
+    iterations.....................: 33      0.682197/s
+    vus............................: 1       min=0        max=3
+    vus_max........................: 3       min=3        max=3
+
+    NETWORK
+    data_received..................: 93 kB   1.9 kB/s
+    data_sent......................: 24 kB   492 B/s
+
+
+
+
+running (48.4s), 0/3 VUs, 33 complete and 0 interrupted iterations
+admin_role_filter ✓ [ 100% ] 0/3 VUs  30s
+</pre>
+                                            </details>
+                                        
+                                        
+                                    </div>
+                                </details>
+                            
+                        </div>
+                    
+                </div>
+            
+                <div class="test-card">
+                    <div class="test-header">
+                        <div class="test-title">Admin Role Filter and Search Email Test</div>
+                        <div class="status-badge status-failed">FAILED</div>
+                    </div>
+                    
+                    <p style="color: #6b7280;">Role Filter and Search Email load test</p>
+                    <p style="color: #6b7280; font-size: 0.9em; margin-top: 5px;">File: tests/admin/role-filter-search-email.js | Duration: 45.18s</p>
+                    
+                    
+                    
+                    
+                        <div class="error">
+                            <strong>❌ Error:</strong> Command failed: k6 run --summary-export=reports/summary-9-role-filter-search-email.json tests/admin/role-filter-search-email.js
+                            
+                                <details style="margin-top: 10px;">
+                                    <summary style="cursor: pointer; font-weight: 600; color: #991b1b;">
+                                        🔍 View Error Details
+                                    </summary>
+                                    <div style="margin-top: 10px; padding: 10px; background: #fef2f2; border-radius: 5px; font-family: monospace; font-size: 0.85em;">
+                                        
+                                        
+                                        
+                                            <details style="margin-top: 10px;">
+                                                <summary style="cursor: pointer; font-weight: 600;">Console Output (stdout)</summary>
+                                                <pre style="margin-top: 5px; padding: 10px; background: white; border: 1px solid #fecaca; border-radius: 4px; overflow-x: auto; max-height: 300px; overflow-y: auto; white-space: pre-wrap; word-wrap: break-word;">
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+     execution: local
+        script: tests/admin/role-filter-search-email.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 3 max VUs, 40s max duration (incl. graceful stop):
+              * admin_role_filter_search: Up to 3 looping VUs for 30s over 3 stages (gracefulRampDown: 10s, gracefulStop: 30s)
+
+
+Run                        [ 100% ] setup()
+admin_role_filter_search   [   0% ]
+
+Run                        [ 100% ] setup()
+admin_role_filter_search   [   0% ]
+
+Run                        [ 100% ] setup()
+admin_role_filter_search   [   0% ]
+
+Run                        [ 100% ] setup()
+admin_role_filter_search   [   0% ]
+
+Run                        [ 100% ] setup()
+admin_role_filter_search   [   0% ]
+
+Run                        [ 100% ] setup()
+admin_role_filter_search   [   0% ]
+
+Run                        [ 100% ] setup()
+admin_role_filter_search   [   0% ]
+
+Run                        [ 100% ] setup()
+admin_role_filter_search   [   0% ]
+
+Run                        [ 100% ] setup()
+admin_role_filter_search   [   0% ]
+
+Run                        [ 100% ] setup()
+admin_role_filter_search   [   0% ]
+
+Run                        [ 100% ] setup()
+admin_role_filter_search   [   0% ]
+
+Run                        [ 100% ] setup()
+admin_role_filter_search   [   0% ]
+
+Run                        [ 100% ] setup()
+admin_role_filter_search   [   0% ]
+
+running (14.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+admin_role_filter_search   [   1% ] 1/3 VUs  00.2s/30.0s
+
+running (15.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+admin_role_filter_search   [   4% ] 1/3 VUs  01.2s/30.0s
+
+running (16.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+admin_role_filter_search   [   7% ] 1/3 VUs  02.2s/30.0s
+
+running (17.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+admin_role_filter_search   [  11% ] 1/3 VUs  03.2s/30.0s
+
+running (18.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+admin_role_filter_search   [  14% ] 1/3 VUs  04.2s/30.0s
+
+running (19.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+admin_role_filter_search   [  17% ] 2/3 VUs  05.2s/30.0s
+
+running (20.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+admin_role_filter_search   [  21% ] 2/3 VUs  06.2s/30.0s
+
+running (21.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+admin_role_filter_search   [  24% ] 2/3 VUs  07.2s/30.0s
+
+running (22.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+admin_role_filter_search   [  27% ] 2/3 VUs  08.2s/30.0s
+
+running (23.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+admin_role_filter_search   [  31% ] 2/3 VUs  09.2s/30.0s
+
+running (24.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+admin_role_filter_search   [  34% ] 3/3 VUs  10.2s/30.0s
+
+running (25.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+admin_role_filter_search   [  37% ] 3/3 VUs  11.2s/30.0s
+
+running (26.0s), 3/3 VUs, 2 complete and 0 interrupted iterations
+admin_role_filter_search   [  41% ] 3/3 VUs  12.2s/30.0s
+
+running (27.0s), 3/3 VUs, 5 complete and 0 interrupted iterations
+admin_role_filter_search   [  44% ] 3/3 VUs  13.2s/30.0s
+
+running (28.0s), 3/3 VUs, 8 complete and 0 interrupted iterations
+admin_role_filter_search   [  47% ] 3/3 VUs  14.2s/30.0s
+
+running (29.0s), 3/3 VUs, 9 complete and 0 interrupted iterations
+admin_role_filter_search   [  51% ] 3/3 VUs  15.2s/30.0s
+
+running (30.0s), 3/3 VUs, 12 complete and 0 interrupted iterations
+admin_role_filter_search   [  54% ] 3/3 VUs  16.2s/30.0s
+
+running (31.0s), 3/3 VUs, 14 complete and 0 interrupted iterations
+admin_role_filter_search   [  57% ] 3/3 VUs  17.2s/30.0s
+
+running (32.0s), 3/3 VUs, 17 complete and 0 interrupted iterations
+admin_role_filter_search   [  61% ] 3/3 VUs  18.2s/30.0s
+
+running (33.0s), 3/3 VUs, 20 complete and 0 interrupted iterations
+admin_role_filter_search   [  64% ] 3/3 VUs  19.2s/30.0s
+
+running (34.0s), 3/3 VUs, 21 complete and 0 interrupted iterations
+admin_role_filter_search   [  67% ] 3/3 VUs  20.2s/30.0s
+
+running (35.0s), 3/3 VUs, 23 complete and 0 interrupted iterations
+admin_role_filter_search   [  71% ] 3/3 VUs  21.2s/30.0s
+
+running (36.0s), 3/3 VUs, 25 complete and 0 interrupted iterations
+admin_role_filter_search   [  74% ] 3/3 VUs  22.2s/30.0s
+
+running (37.0s), 3/3 VUs, 27 complete and 0 interrupted iterations
+admin_role_filter_search   [  77% ] 3/3 VUs  23.2s/30.0s
+
+running (38.0s), 3/3 VUs, 28 complete and 0 interrupted iterations
+admin_role_filter_search   [  81% ] 3/3 VUs  24.2s/30.0s
+
+running (39.0s), 3/3 VUs, 28 complete and 0 interrupted iterations
+admin_role_filter_search   [  84% ] 3/3 VUs  25.2s/30.0s
+
+running (40.0s), 2/3 VUs, 31 complete and 0 interrupted iterations
+admin_role_filter_search   [  87% ] 2/3 VUs  26.2s/30.0s
+
+running (41.0s), 2/3 VUs, 33 complete and 0 interrupted iterations
+admin_role_filter_search   [  91% ] 2/3 VUs  27.2s/30.0s
+
+running (42.0s), 1/3 VUs, 34 complete and 0 interrupted iterations
+admin_role_filter_search   [  94% ] 1/3 VUs  28.2s/30.0s
+
+running (43.0s), 1/3 VUs, 35 complete and 0 interrupted iterations
+admin_role_filter_search   [  97% ] 1/3 VUs  29.2s/30.0s
+
+running (44.0s), 1/3 VUs, 36 complete and 0 interrupted iterations
+admin_role_filter_search ↓ [ 100% ] 1/3 VUs  30s
+
+
+  █ THRESHOLDS 
+
+    api_failures
+    ✓ &#039;count&lt;5&#039; count=0
+
+    checks
+    ✓ &#039;rate&gt;0.95&#039; rate=100.00%
+
+    http_req_duration
+    ✗ &#039;p(95)&lt;3000&#039; p(95)=5.36s
+
+    search_operations
+    ✓ &#039;count&gt;0&#039; count=37
+
+    successful_requests
+    ✓ &#039;rate&gt;0.95&#039; rate=100.00%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 184     4.114051/s
+    checks_succeeded...: 100.00% 184 out of 184
+    checks_failed......: 0.00%   0 out of 184
+
+    ✓ ✅ Login status is 200
+    ✓ ✅ Admin role-filter-search status is 200
+    ✓ ✅ Response has users array
+    ✓ ✅ Search response structure is valid
+    ✓ ✅ All users match selected role
+    ✓ ✅ User objects have required fields
+    ✓ ✅ User role is valid
+    ✓ ✅ Users match email search criteria
+
+    CUSTOM
+    api_failures...................: 0       0/s
+    search_operations..............: 37      0.827282/s
+    successful_requests............: 100.00% 37 out of 37
+
+    HTTP
+    http_req_duration..............: avg=1.06s min=257.53ms med=262.57ms max=11.34s p(90)=1.86s p(95)=5.36s
+      { expected_response:true }...: avg=1.06s min=257.53ms med=262.57ms max=11.34s p(90)=1.86s p(95)=5.36s
+    http_req_failed................: 0.00%   0 out of 38
+    http_reqs......................: 38      0.849641/s
+
+    EXECUTION
+    iteration_duration.............: avg=1.87s min=1.25s    med=1.26s    max=11.29s p(90)=2.65s p(95)=3.66s
+    iterations.....................: 37      0.827282/s
+    vus............................: 1       min=0        max=3
+    vus_max........................: 3       min=3        max=3
+
+    NETWORK
+    data_received..................: 88 kB   2.0 kB/s
+    data_sent......................: 27 kB   607 B/s
+
+
+
+
+running (44.7s), 0/3 VUs, 37 complete and 0 interrupted iterations
+admin_role_filter_search ✓ [ 100% ] 0/3 VUs  30s
+</pre>
+                                            </details>
+                                        
+                                        
+                                    </div>
+                                </details>
+                            
+                        </div>
+                    
+                </div>
+            
+                <div class="test-card">
+                    <div class="test-header">
+                        <div class="test-title">Provider List Users Test</div>
+                        <div class="status-badge status-failed">FAILED</div>
+                    </div>
+                    
+                    <p style="color: #6b7280;">Provider list users endpoint load test</p>
+                    <p style="color: #6b7280; font-size: 0.9em; margin-top: 5px;">File: tests/provider/list-users.js | Duration: 49.87s</p>
+                    
+                    
+                    
+                    
+                        <div class="error">
+                            <strong>❌ Error:</strong> Command failed: k6 run --summary-export=reports/summary-10-list-users.json tests/provider/list-users.js
+                            
+                                <details style="margin-top: 10px;">
+                                    <summary style="cursor: pointer; font-weight: 600; color: #991b1b;">
+                                        🔍 View Error Details
+                                    </summary>
+                                    <div style="margin-top: 10px; padding: 10px; background: #fef2f2; border-radius: 5px; font-family: monospace; font-size: 0.85em;">
+                                        
+                                        
+                                        
+                                            <details style="margin-top: 10px;">
+                                                <summary style="cursor: pointer; font-weight: 600;">Console Output (stdout)</summary>
+                                                <pre style="margin-top: 5px; padding: 10px; background: white; border: 1px solid #fecaca; border-radius: 4px; overflow-x: auto; max-height: 300px; overflow-y: auto; white-space: pre-wrap; word-wrap: break-word;">
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+     execution: local
+        script: tests/provider/list-users.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 3 max VUs, 40s max duration (incl. graceful stop):
+              * rsc_tasks_load: Up to 3 looping VUs for 30s over 3 stages (gracefulRampDown: 10s, gracefulStop: 30s)
+
+
+Run              [ 100% ] setup()
+rsc_tasks_load   [   0% ]
+
+Run              [ 100% ] setup()
+rsc_tasks_load   [   0% ]
+
+Run              [ 100% ] setup()
+rsc_tasks_load   [   0% ]
+
+Run              [ 100% ] setup()
+rsc_tasks_load   [   0% ]
+
+Run              [ 100% ] setup()
+rsc_tasks_load   [   0% ]
+
+Run              [ 100% ] setup()
+rsc_tasks_load   [   0% ]
+
+Run              [ 100% ] setup()
+rsc_tasks_load   [   0% ]
+
+Run              [ 100% ] setup()
+rsc_tasks_load   [   0% ]
+
+Run              [ 100% ] setup()
+rsc_tasks_load   [   0% ]
+
+running (10.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+rsc_tasks_load   [   1% ] 1/3 VUs  00.2s/30.0s
+
+running (11.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+rsc_tasks_load   [   4% ] 1/3 VUs  01.2s/30.0s
+
+running (12.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+rsc_tasks_load   [   7% ] 1/3 VUs  02.2s/30.0s
+
+running (13.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+rsc_tasks_load   [  11% ] 1/3 VUs  03.2s/30.0s
+
+running (14.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+rsc_tasks_load   [  14% ] 1/3 VUs  04.2s/30.0s
+
+running (15.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+rsc_tasks_load   [  17% ] 2/3 VUs  05.2s/30.0s
+
+running (16.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+rsc_tasks_load   [  21% ] 2/3 VUs  06.2s/30.0s
+
+running (17.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+rsc_tasks_load   [  24% ] 2/3 VUs  07.2s/30.0s
+
+running (18.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+rsc_tasks_load   [  27% ] 2/3 VUs  08.2s/30.0s
+
+running (19.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+rsc_tasks_load   [  31% ] 2/3 VUs  09.2s/30.0s
+
+running (20.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_tasks_load   [  34% ] 3/3 VUs  10.2s/30.0s
+
+running (21.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_tasks_load   [  37% ] 3/3 VUs  11.2s/30.0s
+
+running (22.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_tasks_load   [  41% ] 3/3 VUs  12.2s/30.0s
+
+running (23.0s), 3/3 VUs, 1 complete and 0 interrupted iterations
+rsc_tasks_load   [  44% ] 3/3 VUs  13.2s/30.0s
+
+running (24.0s), 3/3 VUs, 1 complete and 0 interrupted iterations
+rsc_tasks_load   [  47% ] 3/3 VUs  14.2s/30.0s
+
+running (25.0s), 3/3 VUs, 1 complete and 0 interrupted iterations
+rsc_tasks_load   [  51% ] 3/3 VUs  15.2s/30.0s
+
+running (26.0s), 3/3 VUs, 1 complete and 0 interrupted iterations
+rsc_tasks_load   [  54% ] 3/3 VUs  16.2s/30.0s
+
+running (27.0s), 3/3 VUs, 1 complete and 0 interrupted iterations
+rsc_tasks_load   [  57% ] 3/3 VUs  17.2s/30.0s
+
+running (28.0s), 3/3 VUs, 1 complete and 0 interrupted iterations
+rsc_tasks_load   [  61% ] 3/3 VUs  18.2s/30.0s
+
+running (29.0s), 3/3 VUs, 1 complete and 0 interrupted iterations
+rsc_tasks_load   [  64% ] 3/3 VUs  19.2s/30.0s
+
+running (30.0s), 3/3 VUs, 1 complete and 0 interrupted iterations
+rsc_tasks_load   [  67% ] 3/3 VUs  20.2s/30.0s
+
+running (31.0s), 3/3 VUs, 1 complete and 0 interrupted iterations
+rsc_tasks_load   [  71% ] 3/3 VUs  21.2s/30.0s
+
+running (32.0s), 3/3 VUs, 2 complete and 0 interrupted iterations
+rsc_tasks_load   [  74% ] 3/3 VUs  22.2s/30.0s
+
+running (33.0s), 3/3 VUs, 2 complete and 0 interrupted iterations
+rsc_tasks_load   [  77% ] 3/3 VUs  23.2s/30.0s
+
+running (34.0s), 3/3 VUs, 2 complete and 0 interrupted iterations
+rsc_tasks_load   [  81% ] 3/3 VUs  24.2s/30.0s
+
+running (35.0s), 3/3 VUs, 2 complete and 0 interrupted iterations
+rsc_tasks_load   [  84% ] 3/3 VUs  25.2s/30.0s
+
+running (36.0s), 3/3 VUs, 2 complete and 0 interrupted iterations
+rsc_tasks_load   [  87% ] 3/3 VUs  26.2s/30.0s
+
+running (37.0s), 3/3 VUs, 2 complete and 0 interrupted iterations
+rsc_tasks_load   [  91% ] 3/3 VUs  27.2s/30.0s
+
+running (38.0s), 3/3 VUs, 2 complete and 0 interrupted iterations
+rsc_tasks_load   [  94% ] 3/3 VUs  28.2s/30.0s
+
+running (39.0s), 3/3 VUs, 2 complete and 0 interrupted iterations
+rsc_tasks_load   [  97% ] 3/3 VUs  29.2s/30.0s
+
+running (40.0s), 3/3 VUs, 2 complete and 0 interrupted iterations
+rsc_tasks_load ↓ [ 100% ] 3/3 VUs  30s
+
+running (41.0s), 2/3 VUs, 3 complete and 0 interrupted iterations
+rsc_tasks_load ↓ [ 100% ] 3/3 VUs  30s
+
+running (42.0s), 2/3 VUs, 3 complete and 0 interrupted iterations
+rsc_tasks_load ↓ [ 100% ] 3/3 VUs  30s
+
+running (43.0s), 2/3 VUs, 3 complete and 0 interrupted iterations
+rsc_tasks_load ↓ [ 100% ] 3/3 VUs  30s
+
+running (44.0s), 2/3 VUs, 3 complete and 0 interrupted iterations
+rsc_tasks_load ↓ [ 100% ] 3/3 VUs  30s
+
+running (45.0s), 2/3 VUs, 3 complete and 0 interrupted iterations
+rsc_tasks_load ↓ [ 100% ] 3/3 VUs  30s
+
+running (46.0s), 2/3 VUs, 3 complete and 0 interrupted iterations
+rsc_tasks_load ↓ [ 100% ] 3/3 VUs  30s
+
+running (47.0s), 1/3 VUs, 3 complete and 1 interrupted iterations
+rsc_tasks_load ↓ [ 100% ] 3/3 VUs  30s
+
+running (48.0s), 1/3 VUs, 3 complete and 1 interrupted iterations
+rsc_tasks_load ↓ [ 100% ] 3/3 VUs  30s
+
+running (49.0s), 1/3 VUs, 3 complete and 1 interrupted iterations
+rsc_tasks_load ↓ [ 100% ] 3/3 VUs  30s
+
+
+  █ THRESHOLDS 
+
+    api_failures
+    ✓ &#039;count&lt;5&#039; count=0
+
+    checks
+    ✗ &#039;rate&gt;0.95&#039; rate=48.64%
+
+    http_req_duration
+    ✗ &#039;p(95)&lt;3000&#039; p(95)=19.13s
+
+    successful_requests
+    ✓ &#039;rate&gt;0.95&#039; rate=100.00%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 37     0.748599/s
+    checks_succeeded...: 48.64% 18 out of 37
+    checks_failed......: 51.35% 19 out of 37
+
+    ✓ ✅ Provider Login status is 200
+    ✓ ✅ RSC status is 200
+    ✓ ✅ Response contains RSC format
+    ✓ ✅ Response has React components
+    ✗ ✅ Response includes task data
+      ↳  0% — ✓ 0 / ✗ 4
+    ✗ ✅ Response time under 3s
+      ↳  25% — ✓ 1 / ✗ 3
+    ✗ ✅ Contains loading skeleton
+      ↳  0% — ✓ 0 / ✗ 4
+    ✗ ✅ Contains actual task data
+      ↳  0% — ✓ 0 / ✗ 4
+    ✗ ✅ Contains provider data
+      ↳  0% — ✓ 0 / ✗ 4
+    ✓ ✅ Proper RSC content type
+
+    CUSTOM
+    api_failures...................: 0       0/s
+    rsc_response_time..............: 56104   1135.119136/s
+    successful_requests............: 100.00% 4 out of 4
+
+    HTTP
+    http_req_duration..............: avg=12.52s min=1.15s med=16.5s max=19.58s p(90)=18.67s p(95)=19.13s
+      { expected_response:true }...: avg=12.52s min=1.15s med=16.5s max=19.58s p(90)=18.67s p(95)=19.13s
+    http_req_failed................: 0.00%   0 out of 5
+    http_reqs......................: 5       0.101162/s
+
+    EXECUTION
+    iteration_duration.............: avg=15.02s min=2.94s med=17.9s max=21.34s p(90)=20.43s p(95)=20.89s
+    iterations.....................: 4       0.08093/s
+    vus............................: 1       min=0         max=3
+    vus_max........................: 3       min=3         max=3
+
+    NETWORK
+    data_received..................: 17 kB   338 B/s
+    data_sent......................: 5.8 kB  117 B/s
+
+
+
+
+running (49.4s), 0/3 VUs, 4 complete and 1 interrupted iterations
+rsc_tasks_load ✓ [ 100% ] 0/3 VUs  30s
+</pre>
+                                            </details>
+                                        
+                                        
+                                    </div>
+                                </details>
+                            
+                        </div>
+                    
+                </div>
+            
+                <div class="test-card">
+                    <div class="test-header">
+                        <div class="test-title">Provider status filter test</div>
+                        <div class="status-badge status-failed">FAILED</div>
+                    </div>
+                    
+                    <p style="color: #6b7280;">Provider status filter load test</p>
+                    <p style="color: #6b7280; font-size: 0.9em; margin-top: 5px;">File: tests/provider/status-filter.js | Duration: 49.50s</p>
+                    
+                    
+                    
+                    
+                        <div class="error">
+                            <strong>❌ Error:</strong> Command failed: k6 run --summary-export=reports/summary-11-status-filter.json tests/provider/status-filter.js
+                            
+                                <details style="margin-top: 10px;">
+                                    <summary style="cursor: pointer; font-weight: 600; color: #991b1b;">
+                                        🔍 View Error Details
+                                    </summary>
+                                    <div style="margin-top: 10px; padding: 10px; background: #fef2f2; border-radius: 5px; font-family: monospace; font-size: 0.85em;">
+                                        
+                                        
+                                        
+                                            <details style="margin-top: 10px;">
+                                                <summary style="cursor: pointer; font-weight: 600;">Console Output (stdout)</summary>
+                                                <pre style="margin-top: 5px; padding: 10px; background: white; border: 1px solid #fecaca; border-radius: 4px; overflow-x: auto; max-height: 300px; overflow-y: auto; white-space: pre-wrap; word-wrap: break-word;">
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+     execution: local
+        script: tests/provider/status-filter.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 3 max VUs, 40s max duration (incl. graceful stop):
+              * rsc_filtered_tasks: Up to 3 looping VUs for 30s over 3 stages (gracefulRampDown: 10s, gracefulStop: 30s)
+
+
+Run                  [ 100% ] setup()
+rsc_filtered_tasks   [   0% ]
+
+Run                  [ 100% ] setup()
+rsc_filtered_tasks   [   0% ]
+
+Run                  [ 100% ] setup()
+rsc_filtered_tasks   [   0% ]
+
+Run                  [ 100% ] setup()
+rsc_filtered_tasks   [   0% ]
+
+Run                  [ 100% ] setup()
+rsc_filtered_tasks   [   0% ]
+
+Run                  [ 100% ] setup()
+rsc_filtered_tasks   [   0% ]
+
+Run                  [ 100% ] setup()
+rsc_filtered_tasks   [   0% ]
+
+Run                  [ 100% ] setup()
+rsc_filtered_tasks   [   0% ]
+
+Run                  [ 100% ] setup()
+rsc_filtered_tasks   [   0% ]
+
+running (10.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+rsc_filtered_tasks   [   3% ] 1/3 VUs  00.9s/30.0s
+
+running (11.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+rsc_filtered_tasks   [   6% ] 1/3 VUs  01.9s/30.0s
+
+running (12.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+rsc_filtered_tasks   [  10% ] 1/3 VUs  02.9s/30.0s
+
+running (13.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+rsc_filtered_tasks   [  13% ] 1/3 VUs  03.9s/30.0s
+
+running (14.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+rsc_filtered_tasks   [  16% ] 1/3 VUs  04.9s/30.0s
+
+running (15.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+rsc_filtered_tasks   [  20% ] 2/3 VUs  05.9s/30.0s
+
+running (16.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+rsc_filtered_tasks   [  23% ] 2/3 VUs  06.9s/30.0s
+
+running (17.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+rsc_filtered_tasks   [  26% ] 2/3 VUs  07.9s/30.0s
+
+running (18.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+rsc_filtered_tasks   [  30% ] 2/3 VUs  08.9s/30.0s
+
+running (19.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+rsc_filtered_tasks   [  33% ] 2/3 VUs  09.9s/30.0s
+
+running (20.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_filtered_tasks   [  36% ] 3/3 VUs  10.9s/30.0s
+
+running (21.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_filtered_tasks   [  40% ] 3/3 VUs  11.9s/30.0s
+
+running (22.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_filtered_tasks   [  43% ] 3/3 VUs  12.9s/30.0s
+
+running (23.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_filtered_tasks   [  46% ] 3/3 VUs  13.9s/30.0s
+
+running (24.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_filtered_tasks   [  50% ] 3/3 VUs  14.9s/30.0s
+
+running (25.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_filtered_tasks   [  53% ] 3/3 VUs  15.9s/30.0s
+
+running (26.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_filtered_tasks   [  56% ] 3/3 VUs  16.9s/30.0s
+
+running (27.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_filtered_tasks   [  60% ] 3/3 VUs  17.9s/30.0s
+
+running (28.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_filtered_tasks   [  63% ] 3/3 VUs  18.9s/30.0s
+
+running (29.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_filtered_tasks   [  66% ] 3/3 VUs  19.9s/30.0s
+
+running (30.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_filtered_tasks   [  70% ] 3/3 VUs  20.9s/30.0s
+
+running (31.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_filtered_tasks   [  73% ] 3/3 VUs  21.9s/30.0s
+
+running (32.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_filtered_tasks   [  76% ] 3/3 VUs  22.9s/30.0s
+
+running (33.0s), 3/3 VUs, 1 complete and 0 interrupted iterations
+rsc_filtered_tasks   [  80% ] 3/3 VUs  23.9s/30.0s
+
+running (34.0s), 3/3 VUs, 1 complete and 0 interrupted iterations
+rsc_filtered_tasks   [  83% ] 3/3 VUs  24.9s/30.0s
+
+running (35.0s), 3/3 VUs, 1 complete and 0 interrupted iterations
+rsc_filtered_tasks   [  86% ] 3/3 VUs  25.9s/30.0s
+
+running (36.0s), 3/3 VUs, 1 complete and 0 interrupted iterations
+rsc_filtered_tasks   [  90% ] 3/3 VUs  26.9s/30.0s
+
+running (37.0s), 3/3 VUs, 1 complete and 0 interrupted iterations
+rsc_filtered_tasks   [  93% ] 3/3 VUs  27.9s/30.0s
+
+running (38.0s), 3/3 VUs, 1 complete and 0 interrupted iterations
+rsc_filtered_tasks   [  96% ] 3/3 VUs  28.9s/30.0s
+
+running (39.0s), 3/3 VUs, 1 complete and 0 interrupted iterations
+rsc_filtered_tasks   [ 100% ] 3/3 VUs  29.9s/30.0s
+
+running (40.0s), 3/3 VUs, 1 complete and 0 interrupted iterations
+rsc_filtered_tasks ↓ [ 100% ] 3/3 VUs  30s
+
+running (41.0s), 3/3 VUs, 1 complete and 0 interrupted iterations
+rsc_filtered_tasks ↓ [ 100% ] 3/3 VUs  30s
+
+running (42.0s), 3/3 VUs, 1 complete and 0 interrupted iterations
+rsc_filtered_tasks ↓ [ 100% ] 3/3 VUs  30s
+
+running (43.0s), 2/3 VUs, 1 complete and 1 interrupted iterations
+rsc_filtered_tasks ↓ [ 100% ] 3/3 VUs  30s
+
+running (44.0s), 2/3 VUs, 1 complete and 1 interrupted iterations
+rsc_filtered_tasks ↓ [ 100% ] 3/3 VUs  30s
+
+running (45.0s), 2/3 VUs, 1 complete and 1 interrupted iterations
+rsc_filtered_tasks ↓ [ 100% ] 3/3 VUs  30s
+
+running (46.0s), 1/3 VUs, 1 complete and 2 interrupted iterations
+rsc_filtered_tasks ↓ [ 100% ] 3/3 VUs  30s
+
+running (47.0s), 1/3 VUs, 1 complete and 2 interrupted iterations
+rsc_filtered_tasks ↓ [ 100% ] 3/3 VUs  30s
+
+running (48.0s), 1/3 VUs, 1 complete and 2 interrupted iterations
+rsc_filtered_tasks ↓ [ 100% ] 3/3 VUs  30s
+
+running (49.0s), 1/3 VUs, 1 complete and 2 interrupted iterations
+rsc_filtered_tasks ↓ [ 100% ] 3/3 VUs  30s
+
+
+  █ THRESHOLDS 
+
+    api_failures
+    ✓ &#039;count&lt;5&#039; count=0
+
+    checks
+    ✗ &#039;rate&gt;0.95&#039; rate=30.43%
+
+    http_req_duration
+    ✗ &#039;p(95)&lt;3000&#039; p(95)=22.29s
+
+    successful_requests
+    ✓ &#039;rate&gt;0.95&#039; rate=100.00%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 23     0.468762/s
+    checks_succeeded...: 30.43% 7 out of 23
+    checks_failed......: 69.56% 16 out of 23
+
+    ✓ ✅ Provider Login status is 200
+    ✓ ✅ Filtered RSC status is 200
+    ✓ ✅ Response contains RSC format
+    ✗ ✅ Response includes status filter
+      ↳  0% — ✓ 0 / ✗ 2
+    ✗ ✅ Response has AI Draft tasks
+      ↳  0% — ✓ 0 / ✗ 2
+    ✗ ✅ Response includes task data
+      ↳  0% — ✓ 0 / ✗ 2
+    ✗ ✅ Response time under 3s
+      ↳  0% — ✓ 0 / ✗ 2
+    ✗ ✅ Contains loading skeleton
+      ↳  0% — ✓ 0 / ✗ 2
+    ✗ ✅ Contains filtered task data
+      ↳  0% — ✓ 0 / ✗ 2
+    ✗ ✅ Contains provider data
+      ↳  0% — ✓ 0 / ✗ 2
+    ✗ ✅ Has correct filter arguments
+      ↳  0% — ✓ 0 / ✗ 2
+    ✓ ✅ Proper RSC content type
+
+    CUSTOM
+    api_failures...................: 0       0/s
+    rsc_response_time..............: 45490   927.130555/s
+    successful_requests............: 100.00% 2 out of 2
+
+    HTTP
+    http_req_duration..............: avg=17.38s min=8.28s  med=21.49s max=22.38s p(90)=22.2s  p(95)=22.29s
+      { expected_response:true }...: avg=17.38s min=8.28s  med=21.49s max=22.38s p(90)=22.2s  p(95)=22.29s
+    http_req_failed................: 0.00%   0 out of 3
+    http_reqs......................: 3       0.061143/s
+
+    EXECUTION
+    iteration_duration.............: avg=23.34s min=23.34s med=23.34s max=23.34s p(90)=23.34s p(95)=23.34s
+    iterations.....................: 1       0.020381/s
+    vus............................: 1       min=0        max=3
+    vus_max........................: 3       min=3        max=3
+
+    NETWORK
+    data_received..................: 14 kB   276 B/s
+    data_sent......................: 4.9 kB  101 B/s
+
+
+
+
+running (49.1s), 0/3 VUs, 1 complete and 3 interrupted iterations
+rsc_filtered_tasks ✓ [ 100% ] 1/3 VUs  30s
+</pre>
+                                            </details>
+                                        
+                                        
+                                    </div>
+                                </details>
+                            
+                        </div>
+                    
+                </div>
+            
+                <div class="test-card">
+                    <div class="test-header">
+                        <div class="test-title">Provider priority filter test</div>
+                        <div class="status-badge status-failed">FAILED</div>
+                    </div>
+                    
+                    <p style="color: #6b7280;">Provider priority filter load test</p>
+                    <p style="color: #6b7280; font-size: 0.9em; margin-top: 5px;">File: tests/provider/priority-filter.js | Duration: 44.98s</p>
+                    
+                    
+                    
+                    
+                        <div class="error">
+                            <strong>❌ Error:</strong> Command failed: k6 run --summary-export=reports/summary-12-priority-filter.json tests/provider/priority-filter.js
+                            
+                                <details style="margin-top: 10px;">
+                                    <summary style="cursor: pointer; font-weight: 600; color: #991b1b;">
+                                        🔍 View Error Details
+                                    </summary>
+                                    <div style="margin-top: 10px; padding: 10px; background: #fef2f2; border-radius: 5px; font-family: monospace; font-size: 0.85em;">
+                                        
+                                        
+                                        
+                                            <details style="margin-top: 10px;">
+                                                <summary style="cursor: pointer; font-weight: 600;">Console Output (stdout)</summary>
+                                                <pre style="margin-top: 5px; padding: 10px; background: white; border: 1px solid #fecaca; border-radius: 4px; overflow-x: auto; max-height: 300px; overflow-y: auto; white-space: pre-wrap; word-wrap: break-word;">
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+     execution: local
+        script: tests/provider/priority-filter.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 3 max VUs, 40s max duration (incl. graceful stop):
+              * rsc_priority_tasks: Up to 3 looping VUs for 30s over 3 stages (gracefulRampDown: 10s, gracefulStop: 30s)
+
+
+Run                  [ 100% ] setup()
+rsc_priority_tasks   [   0% ]
+
+Run                  [ 100% ] setup()
+rsc_priority_tasks   [   0% ]
+
+Run                  [ 100% ] setup()
+rsc_priority_tasks   [   0% ]
+
+Run                  [ 100% ] setup()
+rsc_priority_tasks   [   0% ]
+
+running (05.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+rsc_priority_tasks   [   1% ] 1/3 VUs  00.4s/30.0s
+
+running (06.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+rsc_priority_tasks   [   5% ] 1/3 VUs  01.4s/30.0s
+
+running (07.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+rsc_priority_tasks   [   8% ] 1/3 VUs  02.4s/30.0s
+
+running (08.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+rsc_priority_tasks   [  11% ] 1/3 VUs  03.4s/30.0s
+
+running (09.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+rsc_priority_tasks   [  15% ] 1/3 VUs  04.4s/30.0s
+
+running (10.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+rsc_priority_tasks   [  18% ] 2/3 VUs  05.4s/30.0s
+
+running (11.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+rsc_priority_tasks   [  21% ] 2/3 VUs  06.4s/30.0s
+
+running (12.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+rsc_priority_tasks   [  25% ] 2/3 VUs  07.4s/30.0s
+
+running (13.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+rsc_priority_tasks   [  28% ] 2/3 VUs  08.4s/30.0s
+
+running (14.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+rsc_priority_tasks   [  31% ] 2/3 VUs  09.4s/30.0s
+
+running (15.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_priority_tasks   [  35% ] 3/3 VUs  10.4s/30.0s
+
+running (16.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_priority_tasks   [  38% ] 3/3 VUs  11.4s/30.0s
+
+running (17.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_priority_tasks   [  41% ] 3/3 VUs  12.4s/30.0s
+
+running (18.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_priority_tasks   [  45% ] 3/3 VUs  13.4s/30.0s
+
+running (19.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_priority_tasks   [  48% ] 3/3 VUs  14.4s/30.0s
+
+running (20.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_priority_tasks   [  51% ] 3/3 VUs  15.4s/30.0s
+
+running (21.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_priority_tasks   [  55% ] 3/3 VUs  16.4s/30.0s
+
+running (22.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_priority_tasks   [  58% ] 3/3 VUs  17.4s/30.0s
+
+running (23.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_priority_tasks   [  61% ] 3/3 VUs  18.4s/30.0s
+
+running (24.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_priority_tasks   [  65% ] 3/3 VUs  19.4s/30.0s
+
+running (25.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_priority_tasks   [  68% ] 3/3 VUs  20.4s/30.0s
+
+running (26.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_priority_tasks   [  71% ] 3/3 VUs  21.4s/30.0s
+
+running (27.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_priority_tasks   [  75% ] 3/3 VUs  22.4s/30.0s
+
+running (28.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_priority_tasks   [  78% ] 3/3 VUs  23.4s/30.0s
+
+running (29.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_priority_tasks   [  81% ] 3/3 VUs  24.4s/30.0s
+
+running (30.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_priority_tasks   [  85% ] 3/3 VUs  25.4s/30.0s
+
+running (31.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_priority_tasks   [  88% ] 3/3 VUs  26.4s/30.0s
+
+running (32.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_priority_tasks   [  91% ] 3/3 VUs  27.4s/30.0s
+
+running (33.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_priority_tasks   [  95% ] 3/3 VUs  28.4s/30.0s
+
+running (34.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_priority_tasks   [  98% ] 3/3 VUs  29.4s/30.0s
+
+running (35.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_priority_tasks ↓ [ 100% ] 3/3 VUs  30s
+
+running (36.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_priority_tasks ↓ [ 100% ] 3/3 VUs  30s
+
+running (37.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_priority_tasks ↓ [ 100% ] 3/3 VUs  30s
+
+running (38.0s), 2/3 VUs, 0 complete and 1 interrupted iterations
+rsc_priority_tasks ↓ [ 100% ] 3/3 VUs  30s
+
+running (39.0s), 2/3 VUs, 0 complete and 1 interrupted iterations
+rsc_priority_tasks ↓ [ 100% ] 3/3 VUs  30s
+
+running (40.0s), 2/3 VUs, 0 complete and 1 interrupted iterations
+rsc_priority_tasks ↓ [ 100% ] 3/3 VUs  30s
+
+running (41.0s), 2/3 VUs, 0 complete and 1 interrupted iterations
+rsc_priority_tasks ↓ [ 100% ] 3/3 VUs  30s
+
+running (42.0s), 1/3 VUs, 0 complete and 2 interrupted iterations
+rsc_priority_tasks ↓ [ 100% ] 3/3 VUs  30s
+
+running (43.0s), 1/3 VUs, 0 complete and 2 interrupted iterations
+rsc_priority_tasks ↓ [ 100% ] 3/3 VUs  30s
+
+running (44.0s), 1/3 VUs, 0 complete and 2 interrupted iterations
+rsc_priority_tasks ↓ [ 100% ] 3/3 VUs  30s
+
+
+  █ THRESHOLDS 
+
+    api_failures
+    ✓ &#039;count&lt;5&#039; count=0
+
+    checks
+    ✓ &#039;rate&gt;0.95&#039; rate=100.00%
+
+    http_req_duration
+    ✗ &#039;p(95)&lt;3000&#039; p(95)=3.44s
+
+    successful_requests
+    ✓ &#039;rate&gt;0.95&#039; rate=0.00%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 1       0.022436/s
+    checks_succeeded...: 100.00% 1 out of 1
+    checks_failed......: 0.00%   0 out of 1
+
+    ✓ ✅ Provider Login status is 200
+
+    CUSTOM
+    api_failures...................: 0      0/s
+    successful_requests............: 0.00%  0 out of 0
+
+    HTTP
+    http_req_duration..............: avg=3.44s min=3.44s med=3.44s max=3.44s p(90)=3.44s p(95)=3.44s
+      { expected_response:true }...: avg=3.44s min=3.44s med=3.44s max=3.44s p(90)=3.44s p(95)=3.44s
+    http_req_failed................: 0.00%  0 out of 1
+    http_reqs......................: 1      0.022436/s
+
+    EXECUTION
+    vus............................: 1      min=0      max=3
+    vus_max........................: 3      min=3      max=3
+
+    NETWORK
+    data_received..................: 10 kB  228 B/s
+    data_sent......................: 4.2 kB 94 B/s
+
+
+
+
+running (44.6s), 0/3 VUs, 0 complete and 3 interrupted iterations
+rsc_priority_tasks ✓ [ 100% ] 1/3 VUs  30s
+</pre>
+                                            </details>
+                                        
+                                        
+                                    </div>
+                                </details>
+                            
+                        </div>
+                    
+                </div>
+            
+                <div class="test-card">
+                    <div class="test-header">
+                        <div class="test-title">Provider sort test</div>
+                        <div class="status-badge status-failed">FAILED</div>
+                    </div>
+                    
+                    <p style="color: #6b7280;">Provider sort load test</p>
+                    <p style="color: #6b7280; font-size: 0.9em; margin-top: 5px;">File: tests/provider/sort.js | Duration: 47.63s</p>
+                    
+                    
+                    
+                    
+                        <div class="error">
+                            <strong>❌ Error:</strong> Command failed: k6 run --summary-export=reports/summary-13-sort.json tests/provider/sort.js
+                            
+                                <details style="margin-top: 10px;">
+                                    <summary style="cursor: pointer; font-weight: 600; color: #991b1b;">
+                                        🔍 View Error Details
+                                    </summary>
+                                    <div style="margin-top: 10px; padding: 10px; background: #fef2f2; border-radius: 5px; font-family: monospace; font-size: 0.85em;">
+                                        
+                                        
+                                        
+                                            <details style="margin-top: 10px;">
+                                                <summary style="cursor: pointer; font-weight: 600;">Console Output (stdout)</summary>
+                                                <pre style="margin-top: 5px; padding: 10px; background: white; border: 1px solid #fecaca; border-radius: 4px; overflow-x: auto; max-height: 300px; overflow-y: auto; white-space: pre-wrap; word-wrap: break-word;">
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+     execution: local
+        script: tests/provider/sort.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 3 max VUs, 40s max duration (incl. graceful stop):
+              * rsc_sorted_tasks: Up to 3 looping VUs for 30s over 3 stages (gracefulRampDown: 10s, gracefulStop: 30s)
+
+
+Run                [ 100% ] setup()
+rsc_sorted_tasks   [   0% ]
+
+Run                [ 100% ] setup()
+rsc_sorted_tasks   [   0% ]
+
+Run                [ 100% ] setup()
+rsc_sorted_tasks   [   0% ]
+
+Run                [ 100% ] setup()
+rsc_sorted_tasks   [   0% ]
+
+Run                [ 100% ] setup()
+rsc_sorted_tasks   [   0% ]
+
+Run                [ 100% ] setup()
+rsc_sorted_tasks   [   0% ]
+
+Run                [ 100% ] setup()
+rsc_sorted_tasks   [   0% ]
+
+running (08.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+rsc_sorted_tasks   [   3% ] 1/3 VUs  00.8s/30.0s
+
+running (09.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+rsc_sorted_tasks   [   6% ] 1/3 VUs  01.8s/30.0s
+
+running (10.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+rsc_sorted_tasks   [   9% ] 1/3 VUs  02.8s/30.0s
+
+running (11.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+rsc_sorted_tasks   [  13% ] 1/3 VUs  03.8s/30.0s
+
+running (12.0s), 1/3 VUs, 0 complete and 0 interrupted iterations
+rsc_sorted_tasks   [  16% ] 1/3 VUs  04.8s/30.0s
+
+running (13.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+rsc_sorted_tasks   [  19% ] 2/3 VUs  05.8s/30.0s
+
+running (14.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+rsc_sorted_tasks   [  23% ] 2/3 VUs  06.8s/30.0s
+
+running (15.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+rsc_sorted_tasks   [  26% ] 2/3 VUs  07.8s/30.0s
+
+running (16.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+rsc_sorted_tasks   [  29% ] 2/3 VUs  08.8s/30.0s
+
+running (17.0s), 2/3 VUs, 0 complete and 0 interrupted iterations
+rsc_sorted_tasks   [  33% ] 2/3 VUs  09.8s/30.0s
+
+running (18.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_sorted_tasks   [  36% ] 3/3 VUs  10.8s/30.0s
+
+running (19.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_sorted_tasks   [  39% ] 3/3 VUs  11.8s/30.0s
+
+running (20.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_sorted_tasks   [  43% ] 3/3 VUs  12.8s/30.0s
+
+running (21.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_sorted_tasks   [  46% ] 3/3 VUs  13.8s/30.0s
+
+running (22.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_sorted_tasks   [  49% ] 3/3 VUs  14.8s/30.0s
+
+running (23.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_sorted_tasks   [  53% ] 3/3 VUs  15.8s/30.0s
+
+running (24.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_sorted_tasks   [  56% ] 3/3 VUs  16.8s/30.0s
+
+running (25.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_sorted_tasks   [  59% ] 3/3 VUs  17.8s/30.0s
+
+running (26.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_sorted_tasks   [  63% ] 3/3 VUs  18.8s/30.0s
+
+running (27.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_sorted_tasks   [  66% ] 3/3 VUs  19.8s/30.0s
+
+running (28.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_sorted_tasks   [  69% ] 3/3 VUs  20.8s/30.0s
+
+running (29.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_sorted_tasks   [  73% ] 3/3 VUs  21.8s/30.0s
+
+running (30.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_sorted_tasks   [  76% ] 3/3 VUs  22.8s/30.0s
+
+running (31.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_sorted_tasks   [  79% ] 3/3 VUs  23.8s/30.0s
+
+running (32.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_sorted_tasks   [  83% ] 3/3 VUs  24.8s/30.0s
+
+running (33.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_sorted_tasks   [  86% ] 3/3 VUs  25.8s/30.0s
+
+running (34.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_sorted_tasks   [  89% ] 3/3 VUs  26.8s/30.0s
+
+running (35.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_sorted_tasks   [  93% ] 3/3 VUs  27.8s/30.0s
+
+running (36.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_sorted_tasks   [  96% ] 3/3 VUs  28.8s/30.0s
+
+running (37.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_sorted_tasks   [  99% ] 3/3 VUs  29.8s/30.0s
+
+running (38.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_sorted_tasks ↓ [ 100% ] 3/3 VUs  30s
+
+running (39.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_sorted_tasks ↓ [ 100% ] 3/3 VUs  30s
+
+running (40.0s), 3/3 VUs, 0 complete and 0 interrupted iterations
+rsc_sorted_tasks ↓ [ 100% ] 3/3 VUs  30s
+
+running (41.0s), 2/3 VUs, 0 complete and 1 interrupted iterations
+rsc_sorted_tasks ↓ [ 100% ] 3/3 VUs  30s
+
+running (42.0s), 2/3 VUs, 0 complete and 1 interrupted iterations
+rsc_sorted_tasks ↓ [ 100% ] 3/3 VUs  30s
+
+running (43.0s), 2/3 VUs, 0 complete and 1 interrupted iterations
+rsc_sorted_tasks ↓ [ 100% ] 3/3 VUs  30s
+
+running (44.0s), 1/3 VUs, 0 complete and 2 interrupted iterations
+rsc_sorted_tasks ↓ [ 100% ] 3/3 VUs  30s
+
+running (45.0s), 1/3 VUs, 0 complete and 2 interrupted iterations
+rsc_sorted_tasks ↓ [ 100% ] 3/3 VUs  30s
+
+running (46.0s), 1/3 VUs, 0 complete and 2 interrupted iterations
+rsc_sorted_tasks ↓ [ 100% ] 3/3 VUs  30s
+
+running (47.0s), 1/3 VUs, 0 complete and 2 interrupted iterations
+rsc_sorted_tasks ↓ [ 100% ] 3/3 VUs  30s
+
+
+  █ THRESHOLDS 
+
+    api_failures
+    ✓ &#039;count&lt;5&#039; count=0
+
+    checks
+    ✓ &#039;rate&gt;0.95&#039; rate=100.00%
+
+    http_req_duration
+    ✗ &#039;p(95)&lt;3000&#039; p(95)=5.33s
+
+    successful_requests
+    ✓ &#039;rate&gt;0.95&#039; rate=0.00%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 1       0.021193/s
+    checks_succeeded...: 100.00% 1 out of 1
+    checks_failed......: 0.00%   0 out of 1
+
+    ✓ ✅ Provider Login status is 200
+
+    CUSTOM
+    api_failures...................: 0      0/s
+    successful_requests............: 0.00%  0 out of 0
+
+    HTTP
+    http_req_duration..............: avg=5.33s min=5.33s med=5.33s max=5.33s p(90)=5.33s p(95)=5.33s
+      { expected_response:true }...: avg=5.33s min=5.33s med=5.33s max=5.33s p(90)=5.33s p(95)=5.33s
+    http_req_failed................: 0.00%  0 out of 1
+    http_reqs......................: 1      0.021193/s
+
+    EXECUTION
+    vus............................: 1      min=0      max=3
+    vus_max........................: 3      min=3      max=3
+
+    NETWORK
+    data_received..................: 10 kB  215 B/s
+    data_sent......................: 5.1 kB 107 B/s
+
+
+
+
+running (47.2s), 0/3 VUs, 0 complete and 3 interrupted iterations
+rsc_sorted_tasks ✓ [ 100% ] 1/3 VUs  30s
+</pre>
+                                            </details>
+                                        
+                                        
+                                    </div>
+                                </details>
+                            
+                        </div>
+                    
+                </div>
+            
+                <div class="test-card">
+                    <div class="test-header">
+                        <div class="test-title">Provider task detail test</div>
+                        <div class="status-badge status-passed">PASSED</div>
+                    </div>
+                    
+                    <p style="color: #6b7280;">Provider task detail load test</p>
+                    <p style="color: #6b7280; font-size: 0.9em; margin-top: 5px;">File: tests/provider/task-detail.js | Duration: 61.34s</p>
+                    
+                    
+                        <div class="test-metrics">
+                            <div class="metric">
+                                <div class="metric-value">517</div>
+                                <div class="metric-label">Iterations</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">44</div>
+                                <div class="metric-label">HTTP Requests</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">1.13ms</div>
+                                <div class="metric-label">Avg Response Time</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">1.95ms</div>
+                                <div class="metric-label">P95 Response Time</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value" style="color: #10b981">99.8%</div>
+                                <div class="metric-label">Success Rate</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">0%</div>
+                                <div class="metric-label">Fail Rate</div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 15px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; font-size: 0.9em; color: #6b7280;">
+                            <div><strong>Duration Details:</strong> Min: 256.6ms, Med: 260.34ms, Max: 27.7ms</div>
+                            <div><strong>Data:</strong> Received: 117 kB, Sent: 33 kB</div>
+                            <div><strong>VUs:</strong> Max: 3</div>
+                            <div><strong>Checks:</strong> 0/0 passed</div>
+                        </div>
+                    
+                    
+                    
+                </div>
+            
+        </div>
+        
+        <div class="footer">
+            <p>Generated by k6 Test Runner | 11/20/2025, 8:39:03 PM</p>
+        </div>
+    </div>
+</body>
+</html>
