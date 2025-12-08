@@ -1,0 +1,249 @@
+{
+    "root_group": {
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {
+            "setup": {
+                "name": "setup",
+                "path": "::setup",
+                "id": "5c0f8025f7e0b6654089e5b00e950f1a",
+                "groups": {},
+                "checks": {
+                        "✅ Provider Login status is 200": {
+                            "path": "::setup::✅ Provider Login status is 200",
+                            "id": "f25c9fe94ac5469c04c6fa8b42466767",
+                            "passes": 1,
+                            "fails": 0,
+                            "name": "✅ Provider Login status is 200"
+                        }
+                    }
+            }
+        },
+        "checks": {
+            "✅ Filtered RSC status is 200": {
+                "name": "✅ Filtered RSC status is 200",
+                "path": "::✅ Filtered RSC status is 200",
+                "id": "77099928e506e9901afa1b05bd981397",
+                "passes": 60,
+                "fails": 0
+            },
+            "✅ Response contains RSC format": {
+                "name": "✅ Response contains RSC format",
+                "path": "::✅ Response contains RSC format",
+                "id": "230a898fa9dfa0dbed1233df591ab3bd",
+                "passes": 60,
+                "fails": 0
+            },
+            "✅ Response includes status filter": {
+                "fails": 0,
+                "name": "✅ Response includes status filter",
+                "path": "::✅ Response includes status filter",
+                "id": "edceea1ca6a59c96ebe34e25a86ac66b",
+                "passes": 60
+            },
+            "✅ Response has AI Draft tasks": {
+                "name": "✅ Response has AI Draft tasks",
+                "path": "::✅ Response has AI Draft tasks",
+                "id": "4b89c06e5f2cdbd7ab4bf7c3ee0fe05f",
+                "passes": 60,
+                "fails": 0
+            },
+            "✅ Response includes task data": {
+                "name": "✅ Response includes task data",
+                "path": "::✅ Response includes task data",
+                "id": "cfb7f1abc645032f78620942be4508ad",
+                "passes": 60,
+                "fails": 0
+            },
+            "✅ Response time under 3s": {
+                "passes": 60,
+                "fails": 0,
+                "name": "✅ Response time under 3s",
+                "path": "::✅ Response time under 3s",
+                "id": "19037091d6024770979a95a8e1d7234c"
+            },
+            "✅ Contains loading skeleton": {
+                "id": "32a24c641c24883a917a6b14bf6637a8",
+                "passes": 60,
+                "fails": 0,
+                "name": "✅ Contains loading skeleton",
+                "path": "::✅ Contains loading skeleton"
+            },
+            "✅ Contains filtered task data": {
+                "name": "✅ Contains filtered task data",
+                "path": "::✅ Contains filtered task data",
+                "id": "8c8afd6fb901a354a0c398df083e46d7",
+                "passes": 60,
+                "fails": 0
+            },
+            "✅ Contains provider data": {
+                "passes": 60,
+                "fails": 0,
+                "name": "✅ Contains provider data",
+                "path": "::✅ Contains provider data",
+                "id": "a0f7a10f6f324a2087f9d8769b2d1250"
+            },
+            "✅ Has correct filter arguments": {
+                "fails": 0,
+                "name": "✅ Has correct filter arguments",
+                "path": "::✅ Has correct filter arguments",
+                "id": "87fd6e4c459b6e328d1f12f47c13548c",
+                "passes": 60
+            },
+            "✅ Proper RSC content type": {
+                "name": "✅ Proper RSC content type",
+                "path": "::✅ Proper RSC content type",
+                "id": "9bcaab0858bd88d1284a44cd4826b85e",
+                "passes": 60,
+                "fails": 0
+            }
+        },
+        "name": "",
+        "path": ""
+    },
+    "metrics": {
+        "http_req_failed": {
+            "fails": 61,
+            "passes": 0,
+            "value": 0
+        },
+        "http_req_duration": {
+            "avg": 103.49518124590166,
+            "min": 93.059134,
+            "med": 97.681726,
+            "max": 245.599749,
+            "p(90)": 111.698114,
+            "p(95)": 123.252199,
+            "thresholds": {
+                "p(95)<3000": false
+            }
+        },
+        "http_req_waiting": {
+            "avg": 103.24761018032781,
+            "min": 92.863578,
+            "med": 97.498134,
+            "max": 245.400953,
+            "p(90)": 111.498448,
+            "p(95)": 122.953213
+        },
+        "api_failures": {
+            "count": 0,
+            "rate": 0,
+            "thresholds": {
+                "count<5": false
+            }
+        },
+        "http_req_receiving": {
+            "p(95)": 0.671644,
+            "avg": 0.21675740983606565,
+            "min": 0.063138,
+            "med": 0.150652,
+            "max": 1.217361,
+            "p(90)": 0.412872
+        },
+        "successful_requests": {
+            "passes": 60,
+            "fails": 0,
+            "thresholds": {
+                "rate>0.95": false
+            },
+            "value": 1
+        },
+        "http_reqs": {
+            "count": 61,
+            "rate": 1.9389743644672883
+        },
+        "filtered_tasks_count": {
+            "count": 60,
+            "rate": 1.9071878994760214
+        },
+        "http_req_connecting": {
+            "avg": 2.5515157213114756,
+            "min": 0,
+            "med": 0,
+            "max": 39.099774,
+            "p(90)": 0,
+            "p(95)": 38.786882
+        },
+        "iterations": {
+            "count": 60,
+            "rate": 1.9071878994760214
+        },
+        "http_req_duration{expected_response:true}": {
+            "avg": 103.49518124590166,
+            "min": 93.059134,
+            "med": 97.681726,
+            "max": 245.599749,
+            "p(90)": 111.698114,
+            "p(95)": 123.252199
+        },
+        "checks": {
+            "passes": 661,
+            "fails": 0,
+            "thresholds": {
+                "rate>0.95": false
+            },
+            "value": 1
+        },
+        "http_req_tls_handshaking": {
+            "max": 81.9445,
+            "p(90)": 0,
+            "p(95)": 79.074857,
+            "avg": 5.24393306557377,
+            "min": 0,
+            "med": 0
+        },
+        "data_sent": {
+            "count": 51809,
+            "rate": 1646.824964732553
+        },
+        "rsc_response_time": {
+            "count": 6429,
+            "rate": 204.3551834288557
+        },
+        "http_req_blocked": {
+            "min": 0.002745,
+            "med": 0.00535,
+            "max": 143.82031,
+            "p(90)": 0.01055,
+            "p(95)": 118.007587,
+            "avg": 8.177932131147541
+        },
+        "data_received": {
+            "count": 1952373,
+            "rate": 62059.03601439497
+        },
+        "iteration_duration": {
+            "max": 1244.3124,
+            "p(90)": 1121.6179409,
+            "p(95)": 1167.6216728499999,
+            "avg": 1108.2110072333335,
+            "min": 1094.081893,
+            "med": 1099.2619690000001
+        },
+        "vus": {
+            "value": 1,
+            "min": 1,
+            "max": 3
+        },
+        "vus_max": {
+            "value": 3,
+            "min": 3,
+            "max": 3
+        },
+        "http_req_sending": {
+            "avg": 0.030813655737704913,
+            "min": 0.01074,
+            "med": 0.030417,
+            "max": 0.075416,
+            "p(90)": 0.043551,
+            "p(95)": 0.052619
+        }
+    },
+    "setup_data": {
+        "sessionCookie": "__Secure-better-auth.session_token=fJp5F74rjv96i4bztrWdI8Pcp8xhCdKT.qixc2iuOFxgG0m1Qm9ypVt7hNxQuhvfR7AaCOrgYLJY%3D",
+        "token": "fJp5F74rjv96i4bztrWdI8Pcp8xhCdKT",
+        "userEmail": "testprovider@gmail.com",
+        "userId": "yEkCmDnrgxxxwwqAtqQe9pIXWoF8QgT8",
+        "userRole": null
+    }
+}
