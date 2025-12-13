@@ -1,0 +1,197 @@
+{
+    "root_group": {
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {
+            "setup": {
+                "groups": {},
+                "checks": {
+                        "✅ Login status is 200": {
+                            "name": "✅ Login status is 200",
+                            "path": "::setup::✅ Login status is 200",
+                            "id": "ef5748235dba7417d2a94f2e9e0282c6",
+                            "passes": 1,
+                            "fails": 0
+                        }
+                    },
+                "name": "setup",
+                "path": "::setup",
+                "id": "5c0f8025f7e0b6654089e5b00e950f1a"
+            }
+        },
+        "checks": {
+            "✅ Admin search-users status is 200": {
+                "name": "✅ Admin search-users status is 200",
+                "path": "::✅ Admin search-users status is 200",
+                "id": "5cad04a758b9628592a252489c58a90a",
+                "passes": 63,
+                "fails": 0
+            },
+            "✅ Response has users array": {
+                "path": "::✅ Response has users array",
+                "id": "a94bc8497824a32ee1abc462a6f27a24",
+                "passes": 63,
+                "fails": 0,
+                "name": "✅ Response has users array"
+            },
+            "✅ Search response structure is valid": {
+                "path": "::✅ Search response structure is valid",
+                "id": "e197bc1ef037b593ef164d0c9ab09bad",
+                "passes": 63,
+                "fails": 0,
+                "name": "✅ Search response structure is valid"
+            },
+            "✅ Users match search criteria": {
+                "name": "✅ Users match search criteria",
+                "path": "::✅ Users match search criteria",
+                "id": "4b454d58c2203e39e4e806a489d160d8",
+                "passes": 39,
+                "fails": 0
+            }
+        },
+        "name": "",
+        "path": ""
+    },
+    "metrics": {
+        "http_req_waiting": {
+            "max": 259.938958,
+            "p(90)": 55.7339571,
+            "p(95)": 58.93144829999999,
+            "avg": 54.14170751562501,
+            "min": 47.545117,
+            "med": 49.311448
+        },
+        "api_failures": {
+            "count": 0,
+            "rate": 0,
+            "thresholds": {
+                "count<5": false
+            }
+        },
+        "data_received": {
+            "count": 182316,
+            "rate": 5873.227427222014
+        },
+        "successful_requests": {
+            "passes": 63,
+            "fails": 0,
+            "thresholds": {
+                "rate>0.95": false
+            },
+            "value": 1
+        },
+        "http_req_receiving": {
+            "avg": 0.077633703125,
+            "min": 0.043311,
+            "med": 0.0691445,
+            "max": 0.299161,
+            "p(90)": 0.10130810000000001,
+            "p(95)": 0.11230289999999997
+        },
+        "http_req_duration{expected_response:true}": {
+            "avg": 54.249713140625,
+            "min": 47.647189,
+            "med": 49.4009305,
+            "max": 260.144965,
+            "p(90)": 55.8298234,
+            "p(95)": 59.03369865
+        },
+        "http_req_connecting": {
+            "max": 38.881606,
+            "p(90)": 0,
+            "p(95)": 32.654523949999785,
+            "avg": 2.413929,
+            "min": 0,
+            "med": 0
+        },
+        "data_sent": {
+            "count": 48096,
+            "rate": 1549.390872658845
+        },
+        "search_operations": {
+            "count": 63,
+            "rate": 2.0295164873899543,
+            "thresholds": {
+                "count>0": false
+            }
+        },
+        "iteration_duration": {
+            "p(90)": 1059.6450616,
+            "p(95)": 1080.2923941,
+            "avg": 1057.6114789047622,
+            "min": 1049.030606,
+            "med": 1050.628898,
+            "max": 1167.22017
+        },
+        "http_req_duration": {
+            "med": 49.4009305,
+            "max": 260.144965,
+            "p(90)": 55.8298234,
+            "p(95)": 59.03369865,
+            "avg": 54.249713140625,
+            "min": 47.647189,
+            "thresholds": {
+                "p(95)<3000": false
+            }
+        },
+        "http_reqs": {
+            "count": 64,
+            "rate": 2.0617310348088425
+        },
+        "vus_max": {
+            "min": 3,
+            "max": 3,
+            "value": 3
+        },
+        "http_req_sending": {
+            "avg": 0.030371921875000013,
+            "min": 0.022151,
+            "med": 0.028909499999999998,
+            "max": 0.068309,
+            "p(90)": 0.03679,
+            "p(95)": 0.0379822
+        },
+        "vus": {
+            "value": 1,
+            "min": 1,
+            "max": 3
+        },
+        "checks": {
+            "passes": 229,
+            "fails": 0,
+            "thresholds": {
+                "rate>0.95": false
+            },
+            "value": 1
+        },
+        "http_req_failed": {
+            "passes": 0,
+            "fails": 64,
+            "value": 0
+        },
+        "http_req_blocked": {
+            "p(95)": 99.54583404999934,
+            "avg": 7.723447328125,
+            "min": 0.004419,
+            "med": 0.005921,
+            "max": 142.075965,
+            "p(90)": 0.0086747
+        },
+        "http_req_tls_handshaking": {
+            "avg": 4.935276984375,
+            "min": 0,
+            "med": 0,
+            "max": 80.306906,
+            "p(90)": 0,
+            "p(95)": 66.42693814999956
+        },
+        "iterations": {
+            "count": 63,
+            "rate": 2.0295164873899543
+        }
+    },
+    "setup_data": {
+        "userId": "mHe2a4J4yxEBTzW2M0lhSliJzoeRclIx",
+        "sessionCookie": "__Secure-better-auth.session_token=AdnwLNkpfQMKYBxCLObmISrAGBNDleOs.JNOlrgmMt%2Fq%2B3%2F7af6LZZMcJC7X6pPmFdHDq5nH8fJQ%3D",
+        "token": "AdnwLNkpfQMKYBxCLObmISrAGBNDleOs"
+    }
+}
