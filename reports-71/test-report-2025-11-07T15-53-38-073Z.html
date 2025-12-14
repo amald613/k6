@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>k6 Test Report - 2025-11-07T15-53-38-073Z</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f6fa;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 30px;
+            background: #f8f9fa;
+        }
+        .summary-card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .summary-card .value {
+            font-size: 2em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .success { color: #10b981; }
+        .failure { color: #ef4444; }
+        .info { color: #3b82f6; }
+        
+        .overview {
+            padding: 30px;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .overview h2 {
+            margin-bottom: 20px;
+            color: #1f2937;
+        }
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .overview-item {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .overview-item .label {
+            font-size: 0.9em;
+            color: #6b7280;
+            margin-bottom: 5px;
+        }
+        .overview-item .value {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #1f2937;
+        }
+        
+        .test-results {
+            padding: 30px;
+        }
+        .test-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        .test-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f3f4f6;
+        }
+        .test-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #1f2937;
+        }
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.8em;
+        }
+        .status-passed {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .status-failed {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .test-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .metric {
+            text-align: center;
+            padding: 10px;
+            background: #f9fafb;
+            border-radius: 6px;
+        }
+        .metric-value {
+            font-size: 1.4em;
+            font-weight: 700;
+            color: #3b82f6;
+        }
+        .metric-label {
+            font-size: 0.8em;
+            color: #6b7280;
+            margin-top: 5px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            color: #666;
+        }
+        .error {
+            background: #fee2e2;
+            border-left: 4px solid #ef4444;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 5px;
+            color: #991b1b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 k6 Performance Test Report</h1>
+            <p>Generated on 11/7/2025, 9:23:38 PM</p>
+        </div>
+        
+        <div class="summary">
+            <div class="summary-card">
+                <div class="label">Total Tests</div>
+                <div class="value info">9</div>
+            </div>
+            <div class="summary-card">
+                <div class="label">Passed</div>
+                <div class="value success">0</div>
+            </div>
+            <div class="summary-card">
+                <div class="label">Failed</div>
+                <div class="value failure">9</div>
+            </div>
+            <div class="summary-card">
+                <div class="label">Success Rate</div>
+                <div class="value failure">0.0%</div>
+            </div>
+        </div>
+        
+        <div class="overview">
+            <h2>📊 Overall Performance</h2>
+            <div class="overview-grid">
+                <div class="overview-item">
+                    <div class="label">Total HTTP Requests</div>
+                    <div class="value">0</div>
+                </div>
+                <div class="overview-item">
+                    <div class="label">Total Iterations</div>
+                    <div class="value">0</div>
+                </div>
+                <div class="overview-item">
+                    <div class="label">Average Response Time</div>
+                    <div class="value">0ms</div>
+                </div>
+                <div class="overview-item">
+                    <div class="label">Total Duration</div>
+                    <div class="value">0.74s</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="test-results">
+            <h2 style="margin-bottom: 20px; color: #1f2937;">Detailed Test Results</h2>
+            
+            
+                <div class="test-card">
+                    <div class="test-header">
+                        <div class="test-title">Login Test</div>
+                        <div class="status-badge status-failed">FAILED</div>
+                    </div>
+                    
+                    <p style="color: #6b7280;">Single user login authentication test</p>
+                    <p style="color: #6b7280; font-size: 0.9em; margin-top: 5px;">File: tests/login.js | Duration: 0.10s</p>
+                    
+                    
+                    
+                    
+                        <div class="error">
+                            <strong>❌ Error:</strong> Command failed: k6 run --summary-export=reports/summary-1-login.json tests/login.js
+                        </div>
+                    
+                </div>
+            
+                <div class="test-card">
+                    <div class="test-header">
+                        <div class="test-title">Create User Test</div>
+                        <div class="status-badge status-failed">FAILED</div>
+                    </div>
+                    
+                    <p style="color: #6b7280;">User creation endpoint load test</p>
+                    <p style="color: #6b7280; font-size: 0.9em; margin-top: 5px;">File: tests/create-user.js | Duration: 0.08s</p>
+                    
+                    
+                    
+                    
+                        <div class="error">
+                            <strong>❌ Error:</strong> Command failed: k6 run --summary-export=reports/summary-2-create-user.json tests/create-user.js
+                        </div>
+                    
+                </div>
+            
+                <div class="test-card">
+                    <div class="test-header">
+                        <div class="test-title">List Users Test</div>
+                        <div class="status-badge status-failed">FAILED</div>
+                    </div>
+                    
+                    <p style="color: #6b7280;">Admin list users endpoint load test</p>
+                    <p style="color: #6b7280; font-size: 0.9em; margin-top: 5px;">File: tests/list-users.js | Duration: 0.08s</p>
+                    
+                    
+                    
+                    
+                        <div class="error">
+                            <strong>❌ Error:</strong> Command failed: k6 run --summary-export=reports/summary-3-list-users.json tests/list-users.js
+                        </div>
+                    
+                </div>
+            
+                <div class="test-card">
+                    <div class="test-header">
+                        <div class="test-title">Ban and Unban Users Test</div>
+                        <div class="status-badge status-failed">FAILED</div>
+                    </div>
+                    
+                    <p style="color: #6b7280;">Ban and Unban users endpoint load test</p>
+                    <p style="color: #6b7280; font-size: 0.9em; margin-top: 5px;">File: tests/ban-unban-users.js | Duration: 0.07s</p>
+                    
+                    
+                    
+                    
+                        <div class="error">
+                            <strong>❌ Error:</strong> Command failed: k6 run --summary-export=reports/summary-4-ban-unban-users.json tests/ban-unban-users.js
+                        </div>
+                    
+                </div>
+            
+                <div class="test-card">
+                    <div class="test-header">
+                        <div class="test-title">Set Role Test</div>
+                        <div class="status-badge status-failed">FAILED</div>
+                    </div>
+                    
+                    <p style="color: #6b7280;">Set Role endpoint load test</p>
+                    <p style="color: #6b7280; font-size: 0.9em; margin-top: 5px;">File: tests/set-role.js | Duration: 0.08s</p>
+                    
+                    
+                    
+                    
+                        <div class="error">
+                            <strong>❌ Error:</strong> Command failed: k6 run --summary-export=reports/summary-5-set-role.json tests/set-role.js
+                        </div>
+                    
+                </div>
+            
+                <div class="test-card">
+                    <div class="test-header">
+                        <div class="test-title">Edit Users Test</div>
+                        <div class="status-badge status-failed">FAILED</div>
+                    </div>
+                    
+                    <p style="color: #6b7280;">Edit users endpoint load test</p>
+                    <p style="color: #6b7280; font-size: 0.9em; margin-top: 5px;">File: tests/edit-user.js | Duration: 0.08s</p>
+                    
+                    
+                    
+                    
+                        <div class="error">
+                            <strong>❌ Error:</strong> Command failed: k6 run --summary-export=reports/summary-6-edit-user.json tests/edit-user.js
+                        </div>
+                    
+                </div>
+            
+                <div class="test-card">
+                    <div class="test-header">
+                        <div class="test-title">Search Email Test</div>
+                        <div class="status-badge status-failed">FAILED</div>
+                    </div>
+                    
+                    <p style="color: #6b7280;">Search Email endpoint load test</p>
+                    <p style="color: #6b7280; font-size: 0.9em; margin-top: 5px;">File: tests/search-email.js | Duration: 0.09s</p>
+                    
+                    
+                    
+                    
+                        <div class="error">
+                            <strong>❌ Error:</strong> Command failed: k6 run --summary-export=reports/summary-7-search-email.json tests/search-email.js
+                        </div>
+                    
+                </div>
+            
+                <div class="test-card">
+                    <div class="test-header">
+                        <div class="test-title">Role Filter Test</div>
+                        <div class="status-badge status-failed">FAILED</div>
+                    </div>
+                    
+                    <p style="color: #6b7280;">Role Filter load test</p>
+                    <p style="color: #6b7280; font-size: 0.9em; margin-top: 5px;">File: tests/role-filter.js | Duration: 0.08s</p>
+                    
+                    
+                    
+                    
+                        <div class="error">
+                            <strong>❌ Error:</strong> Command failed: k6 run --summary-export=reports/summary-8-role-filter.json tests/role-filter.js
+                        </div>
+                    
+                </div>
+            
+                <div class="test-card">
+                    <div class="test-header">
+                        <div class="test-title">Role Filter and Search Email Test</div>
+                        <div class="status-badge status-failed">FAILED</div>
+                    </div>
+                    
+                    <p style="color: #6b7280;">Role Filter and Search Email load test</p>
+                    <p style="color: #6b7280; font-size: 0.9em; margin-top: 5px;">File: tests/role-filter-search-email.js | Duration: 0.08s</p>
+                    
+                    
+                    
+                    
+                        <div class="error">
+                            <strong>❌ Error:</strong> Command failed: k6 run --summary-export=reports/summary-9-role-filter-search-email.json tests/role-filter-search-email.js
+                        </div>
+                    
+                </div>
+            
+        </div>
+        
+        <div class="footer">
+            <p>Generated by k6 Test Runner | 11/7/2025, 9:23:38 PM</p>
+        </div>
+    </div>
+</body>
+</html>
